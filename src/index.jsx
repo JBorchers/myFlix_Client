@@ -1,4 +1,4 @@
-import React from 'react';
+const React = require("react");
 import ReactDOM from 'react-dom';
 import MainView from './components/main-view/main-view';
 
