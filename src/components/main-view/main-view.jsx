@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 
-// LoginView must be at top
 import { LoginView } from '../login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
@@ -9,10 +8,10 @@ import { MovieView } from '../movie-view/movie-view';
 export class MainView extends React.Component {
   constructor() {
     super();
+    // Initial state is set to null
     this.state = {
       movies: [],
       selectedMovie: null,
-      // default is logged out
       user: null
     };
   }
@@ -30,9 +29,9 @@ export class MainView extends React.Component {
   }
 
   // When a movie is clicked, this function is invoked and updates the state of the `selectedMovie` property to that movie
-  setSelectedMovie(newSelectedMovie) {
+  setSelectedMovie(movie) {
     this.setState({
-      selectedMovie: newSelectedMovie
+      selectedMovie: movie
     });
   }
 
@@ -48,12 +47,12 @@ export class MainView extends React.Component {
   render() {
     const { movies, selectedMovie } = this.state;
 
-    // movies array will remain empty while fetching process takes place in background
-    // If there is no user, the LoginView is rendered.
-    // If there is a user logged in, the user details are passed as a prop to the LoginView
+
     if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
 
     // Before the movies have been loaded
+    if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
+
     if (movies.length === 0) return <div className="main-view" />;
 
     return (
@@ -69,4 +68,5 @@ export class MainView extends React.Component {
       </div>
     );
   }
+
 }
