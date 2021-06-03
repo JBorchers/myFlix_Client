@@ -35,6 +35,7 @@ export class MainView extends React.Component {
   render() {
     const { movies, selectedMovie } = this.state;
 
+    // movies array will remain empty while fetching process takes place in background
     if (movies.length === 0) return <div className="main-view" />;
 
     return (
