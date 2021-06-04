@@ -2,18 +2,20 @@ import React from 'react';
 import axios from 'axios';
 
 import { LoginView } from '../login-view/login-view';
+import { RegistrationView } from '../registration-view/registration-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 
 export class MainView extends React.Component {
+
+  // Initial state is set to null
   constructor() {
     super();
-    // Initial state is set to null
     this.state = {
       movies: [],
       selectedMovie: null,
       user: null
-    };
+    }
   }
 
   componentDidMount() {
@@ -45,20 +47,23 @@ export class MainView extends React.Component {
 
   // simplified with ternary operator
   render() {
-    const { movies, selectedMovie } = this.state;
+    const { movies, selectedMovie, user } = this.state;
 
-
+    // if there is no user, the LoginView is rendered
+    // if user is loggin in, user details are passed as a prop to the LoginView
     if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
+
+    if (this.state.user === null)
+      return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />;
 
     // Before the movies have been loaded
-    if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
-
     if (movies.length === 0) return <div className="main-view" />;
 
     return (
       <div className="main-view">
-        {/* If the state of `selectedMovie` is not null, that selected movie will be returned
-        otherwise, all *movies will be returned*/}
+        {/* If the state of `selectedMovie` is not null,
+        that selected movie will be returned
+        otherwise, all movies will be returned */}
         {selectedMovie
           ? <MovieView movie={selectedMovie} onBackClick={newSelectedMovie => { this.setSelectedMovie(newSelectedMovie); }} />
           : movies.map(movie => (
