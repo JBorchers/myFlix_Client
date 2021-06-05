@@ -1,0 +1,77 @@
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "LoginView", ()=>LoginView
+);
+class LoginView extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            username: '',
+            password: ''
+        };
+        this.onUsernameChange = this.onUsernameChange.bind(this);
+        this.onPasswordChange = this.onPasswordChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    onUsernameChange(event) {
+        this.setState({
+            username: event.target.value
+        });
+    }
+    onPasswordChange(event) {
+        this.setState({
+            password: event.target.value
+        });
+    }
+    handleSubmit() {
+        const { username , password  } = this.state;
+        console.log(username, password);
+    /* Send a request to the server for authentication */ /* then call this.props.onLoggedIn(username) */ }
+    render() {
+        return(/*#__PURE__*/ React.createElement("form", {
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\login-view\\login-view.jsx",
+                lineNumber: 36
+            },
+            __self: this
+        }, /*#__PURE__*/ React.createElement("label", {
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\login-view\\login-view.jsx",
+                lineNumber: 37
+            },
+            __self: this
+        }, "Username:", /*#__PURE__*/ React.createElement("input", {
+            type: "text",
+            value: this.state.username,
+            onChange: this.onUsernameChange,
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\login-view\\login-view.jsx",
+                lineNumber: 39
+            },
+            __self: this
+        })), /*#__PURE__*/ React.createElement("label", {
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\login-view\\login-view.jsx",
+                lineNumber: 41
+            },
+            __self: this
+        }, "Password:", /*#__PURE__*/ React.createElement("input", {
+            type: "password",
+            value: this.state.password,
+            onChange: this.onPasswordChange,
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\login-view\\login-view.jsx",
+                lineNumber: 43
+            },
+            __self: this
+        })), /*#__PURE__*/ React.createElement("button", {
+            type: "button",
+            onClick: this.handleSubmit,
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\login-view\\login-view.jsx",
+                lineNumber: 45
+            },
+            __self: this
+        }, "Submit")));
+    }
+}
