@@ -81,13 +81,13 @@ export class MainView extends React.Component {
         {selectedMovie
           ? (
             <Container>
-              <CardDeck class="shadow-lg p-3 mb-5 bg-white rounded">
+              <Card class="shadow-lg p-3 mb-5 bg-white rounded">
                 <Row md={{ cols: 2 }} className="justify-content-md-center cols: 2">
                   <Col md={3} className="container-fluid cols: 2">
                     <MovieView class="shadow p-3 mb-5 bg-white rounded" movie={selectedMovie} onBackClick={newSelectedMovie => { this.setSelectedMovie(newSelectedMovie); }} />
                   </Col>
                 </Row>
-              </CardDeck>
+              </Card>
             </Container>
 
           )
