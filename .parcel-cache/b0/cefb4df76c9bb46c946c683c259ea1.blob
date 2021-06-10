@@ -1,0 +1,202 @@
+var helpers = require("../../../../../AppData/Roaming/nvm/v14.16.1/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+helpers.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "MainView", ()=>MainView
+);
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _axios = require("axios");
+var _axiosDefault = parcelHelpers.interopDefault(_axios);
+var _loginView = require("../login-view/login-view");
+var _registrationView = require("../registration-view/registration-view");
+var _movieCard = require("../movie-card/movie-card");
+var _movieView = require("../movie-view/movie-view");
+// import './main-view.scss'
+var _container = require("react-bootstrap/Container");
+var _containerDefault = parcelHelpers.interopDefault(_container);
+var _row = require("react-bootstrap/Row");
+var _rowDefault = parcelHelpers.interopDefault(_row);
+var _col = require("react-bootstrap/Col");
+var _colDefault = parcelHelpers.interopDefault(_col);
+var _card = require("react-bootstrap/Card");
+var _cardDefault = parcelHelpers.interopDefault(_card);
+var _cardDeck = require("react-bootstrap/CardDeck");
+var _cardDeckDefault = parcelHelpers.interopDefault(_cardDeck);
+class MainView extends _reactDefault.default.Component {
+    // Initial state is set to null
+    constructor(){
+        super();
+        this.state = {
+            movies: [],
+            selectedMovie: null,
+            user: null
+        };
+    }
+    componentDidMount() {
+        _axiosDefault.default.get('https://borchers-movie-api.herokuapp.com/movies').then((response)=>{
+            this.setState({
+                movies: response.data
+            });
+        }).catch((error)=>{
+            console.log(error);
+        });
+    }
+    // When a movie is clicked, this function is invoked and updates the state of the `selectedMovie` property to that movie
+    setSelectedMovie(movie) {
+        this.setState({
+            selectedMovie: movie
+        });
+    }
+    // a method passed as a prop
+    // when a user successfully logs in, this function updates the `user` property in state to that particular user
+    onLoggedIn(user) {
+        this.setState({
+            user
+        });
+    }
+    onRegister(register) {
+        this.setState({
+            register
+        });
+    }
+    // simplified with ternary operator
+    render() {
+        const { movies , selectedMovie , user , register  } = this.state;
+        // if there is no user, the LoginView is rendered
+        // if user is loggin in, user details are passed as a prop to the LoginView
+        if (!user) return(/*#__PURE__*/ _reactDefault.default.createElement(_loginView.LoginView, {
+            onLoggedIn: (user1)=>this.onLoggedIn(user1)
+            ,
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
+                lineNumber: 67
+            },
+            __self: this
+        }));
+        // if (this.state.user === null)
+        //   return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />;
+        if (!register) return(/*#__PURE__*/ _reactDefault.default.createElement(_registrationView.RegistrationView, {
+            onRegister: (register1)=>this.onRegister(register1)
+            ,
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
+                lineNumber: 71
+            },
+            __self: this
+        }));
+        // Before the movies have been loaded
+        if (movies.length === 0) return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
+            className: "main-view",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
+                lineNumber: 74
+            },
+            __self: this
+        }));
+        return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
+            className: "main-view",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
+                lineNumber: 77
+            },
+            __self: this
+        }, selectedMovie ? /*#__PURE__*/ _reactDefault.default.createElement(_containerDefault.default, {
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
+                lineNumber: 83
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement(_cardDefault.default, {
+            class: "shadow-lg p-3 mb-5 bg-white rounded",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
+                lineNumber: 84
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement(_rowDefault.default, {
+            md: {
+                cols: 2
+            },
+            className: "justify-content-md-center cols: 2",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
+                lineNumber: 85
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, {
+            md: 3,
+            className: "container-fluid cols: 2",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
+                lineNumber: 86
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement(_movieView.MovieView, {
+            class: "shadow p-3 mb-5 bg-white rounded",
+            movie: selectedMovie,
+            onBackClick: (newSelectedMovie)=>{
+                this.setSelectedMovie(newSelectedMovie);
+            },
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
+                lineNumber: 87
+            },
+            __self: this
+        }))))) : /*#__PURE__*/ _reactDefault.default.createElement(_containerDefault.default, {
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
+                lineNumber: 95
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement(_cardDeckDefault.default, {
+            class: "shadow-lg p-3 mb-5 bg-white rounded",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
+                lineNumber: 96
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement(_rowDefault.default, {
+            md: {
+                cols: 2
+            },
+            className: "justify-content-md-center cols: 2",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
+                lineNumber: 97
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, {
+            md: 5,
+            className: "cols: 2",
+            class: "shadow-lg p-3 mb-5 bg-white rounded",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
+                lineNumber: 98
+            },
+            __self: this
+        }, movies.map((movie)=>/*#__PURE__*/ _reactDefault.default.createElement(_movieCard.MovieCard, {
+                key: movie._id,
+                movie: movie,
+                onMovieClick: (newSelectedMovie)=>{
+                    this.setSelectedMovie(newSelectedMovie);
+                },
+                __source: {
+                    fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
+                    lineNumber: 100
+                },
+                __self: this
+            })
+        )))))));
+    }
+}
+
+  helpers.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}

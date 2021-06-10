@@ -15,15 +15,30 @@ export function LoginView(props) {
 
   return (
     <form>
-      <label>
-        Username:
-        <input type="text" value={username} onChange={e => setUsername(e.target.value)} />
-      </label>
-      <label>
-        Password:
-        <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
-      </label>
-      <button type="submit" onClick={e => handleSubmit(e)}>Submit</button>
+      <div class="form-group">
+        <label>
+          <p>Username:</p>
+          <input type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="Username" />
+          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </label>
+      </div>
+      <div class="form-group">
+        <label>
+          <p>Password:</p>
+          <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" />
+        </label>
+      </div>
+      <div class="form-check">
+        <input type="checkbox"></input>
+        <label class="form-check-label">
+          Remember me
+    </label>
+      </div>
+      <div>
+        {/* placeholder link to RegistrationView */}
+        {/* <p>Not a member? <a href="#!">Register</a></p> */}
+      </div>
+      <button type="submit" class="btn btn-primary mb-2" onClick={e => handleSubmit(e)}>Submit</button>
     </form>
   );
 }

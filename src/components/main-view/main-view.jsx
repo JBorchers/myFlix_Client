@@ -5,6 +5,13 @@ import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
+// import './main-view.scss'
+
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Card from 'react-bootstrap/Card';
+import CardDeck from 'react-bootstrap/CardDeck';
 
 export class MainView extends React.Component {
 
@@ -45,16 +52,23 @@ export class MainView extends React.Component {
     });
   }
 
+  onRegister(register) {
+    this.setState({
+      register
+    });
+  }
+
   // simplified with ternary operator
   render() {
-    const { movies, selectedMovie, user } = this.state;
+    const { movies, selectedMovie, user, register } = this.state;
 
     // if there is no user, the LoginView is rendered
     // if user is loggin in, user details are passed as a prop to the LoginView
-    if (!user) return <LoginView onLoggedIn={function (user) { this.onLoggedIn(user) }} />;
+    if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
 
     // if (this.state.user === null)
     //   return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />;
+    if (!register) return <RegistrationView onRegister={register => this.onRegister(register)} />;
 
     // Before the movies have been loaded
     if (movies.length === 0) return <div className="main-view" />;
@@ -65,10 +79,31 @@ export class MainView extends React.Component {
         that selected movie will be returned
         otherwise, all movies will be returned */}
         {selectedMovie
-          ? <MovieView movie={selectedMovie} onBackClick={newSelectedMovie => { this.setSelectedMovie(newSelectedMovie); }} />
-          : movies.map(movie => (
-            <MovieCard key={movie._id} movie={movie} onMovieClick={(newSelectedMovie) => { this.setSelectedMovie(newSelectedMovie) }} />
-          ))
+          ? (
+            <Container>
+              <Card class="shadow-lg p-3 mb-5 bg-white rounded">
+                <Row md={{ cols: 2 }} className="justify-content-md-center cols: 2">
+                  <Col md={3} className="container-fluid cols: 2">
+                    <MovieView class="shadow p-3 mb-5 bg-white rounded" movie={selectedMovie} onBackClick={newSelectedMovie => { this.setSelectedMovie(newSelectedMovie); }} />
+                  </Col>
+                </Row>
+              </Card>
+            </Container>
+
+          )
+          : (
+            <Container>
+              <CardDeck class="shadow-lg p-3 mb-5 bg-white rounded">
+                <Row md={{ cols: 2 }} className="justify-content-md-center cols: 2">
+                  <Col md={5} className="cols: 2" class="shadow-lg p-3 mb-5 bg-white rounded">
+                    {movies.map(movie => (
+                      <MovieCard key={movie._id} movie={movie} onMovieClick={newSelectedMovie => { this.setSelectedMovie(newSelectedMovie); }} />
+                    ))}
+                  </Col>
+                </Row>
+              </CardDeck>
+            </Container>
+          )
         }
       </div>
     );

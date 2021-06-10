@@ -1,0 +1,8 @@
+.card:hover {
+  transform: scale(1.03);
+  transition: 0.1s ease-in-out;
+}
+.my-flix {
+  color: steelblue;
+}
+/*# sourceMappingURL=index.74e7829d.css.map */
