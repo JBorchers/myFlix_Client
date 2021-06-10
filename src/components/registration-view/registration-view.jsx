@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 export function RegistrationView(props) {
   const [username, setUsername] = useState('');
@@ -14,7 +16,7 @@ export function RegistrationView(props) {
   }
 
   return (
-    <form>
+    <Form>
       <div class="form-group">
         <label>
           <p>Username:</p>
@@ -39,8 +41,8 @@ export function RegistrationView(props) {
           <input type="text" value={birthdate} onChange={e => setBirthdate(e.target.value)} />
         </label>
       </div>
-      <button type="submit" class="btn btn-primary mb-2" onClick={handleSubmit}>Submit</button>
-    </form>
+      <Button type="submit" class="btn btn-primary mb-2" onClick={handleSubmit}>Submit</Button>
+    </Form>
   );
 }
 
