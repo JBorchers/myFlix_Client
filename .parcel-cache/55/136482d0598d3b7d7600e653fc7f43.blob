@@ -25022,7 +25022,7 @@ function LoginView(props) {
     // };
     const handleSubmit = (e)=>{
         e.preventDefault();
-        /* Send a request to the server for authentication */ _axiosDefault.default.post('https://borchers-movie-api.herokuapp.com/login', {
+        /* Send a request to the server for authentication */ _axiosDefault.default.post('https://borchers-movie-api.herokuapp.com/users/login', {
             Username: username,
             Password: password
         }).then((response)=>{
@@ -26531,4 +26531,4 @@ module.exports = exports["default"];
 
 },{"@babel/runtime/helpers/interopRequireDefault":"4ttVj","./createWithBsPrefix":"2oVVc"}],"5onr6":[function() {},{}]},["1j6wU","4P6lB","63CEf"], "63CEf", "parcelRequire31da")
 
-//# sourceMappingURL=index.e3b7111a.js.map
+//# sourceMappingURL=index.HASH_REF_089dcf3edcdb77dc17235d32e3b7111a.js.map
