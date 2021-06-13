@@ -46,16 +46,37 @@ export class MainView extends React.Component {
 
   // a method passed as a prop
   // when a user successfully logs in, this function updates the `user` property in state to that particular user
-  onLoggedIn(user) {
+  onLoggedIn(authData) {
+    console.log(authData);
     this.setState({
-      user
+      user: authData.user
     });
+
+    // saved in user state
+    localStorage.setItem('token', authData.token);
+    localStorage.setItem('user', authData.user.Username);
+    this.getMovies(authData.token);
   }
 
   onRegister(register) {
     this.setState({
       register
     });
+  }
+
+  getMovies(token) {
+    axios.get('https://borchers-movie-api.herokuapp.com/movies', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(response => {
+        // Assign the result to the state
+        this.setState({
+          movies: response.data
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   // simplified with ternary operator
