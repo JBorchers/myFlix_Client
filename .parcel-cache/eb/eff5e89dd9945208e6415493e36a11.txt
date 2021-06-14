@@ -56,7 +56,7 @@
 63C:\Users\Jordan\Desktop\myFlix_Client\node_modules\regexpu-core132673725995988191 1
 65C:\Users\Jordan\Desktop\myFlix_Client\node_modules\balanced-match132673726012314546 1
 110C:\Users\Jordan\Desktop\myFlix_Client\node_modules\regenerate-unicode-properties\Script_Extensions\Javanese.js121436361000000000 0
-42C:\Users\Jordan\Desktop\myFlix_Client\dist132681807508009841 1
+42C:\Users\Jordan\Desktop\myFlix_Client\dist132681854842424730 1
 74C:\Users\Jordan\Desktop\myFlix_Client\node_modules\extend-shallow\index.js131581985450000000 0
 77C:\Users\Jordan\Desktop\myFlix_Client\node_modules\prop-types-extra\lib\utils132677303514184873 1
 108C:\Users\Jordan\Desktop\myFlix_Client\node_modules\regenerate-unicode-properties\Script_Extensions\Rejang.js121436361000000000 0
@@ -8638,10 +8638,10 @@
 60C:\Users\Jordan\Desktop\myFlix_Client\node_modules\.bin\sass132673726019624997 0
 64C:\Users\Jordan\Desktop\myFlix_Client\node_modules\.bin\sass.cmd132673726019624997 0
 64C:\Users\Jordan\Desktop\myFlix_Client\node_modules\.bin\sass.ps1132673726019624997 0
-61C:\Users\Jordan\Desktop\myFlix_Client\dist\index.74e7829d.css132681807507351612 0
-65C:\Users\Jordan\Desktop\myFlix_Client\dist\index.74e7829d.css.map132681807507511182 0
+61C:\Users\Jordan\Desktop\myFlix_Client\dist\index.74e7829d.css132681854841716631 0
+65C:\Users\Jordan\Desktop\myFlix_Client\dist\index.74e7829d.css.map132681854841886156 0
 61C:\Users\Jordan\Desktop\myFlix_Client\dist\index.a576dbb6.css132677372374999681 0
 65C:\Users\Jordan\Desktop\myFlix_Client\dist\index.a576dbb6.css.map132677372375119350 0
-60C:\Users\Jordan\Desktop\myFlix_Client\dist\index.e3b7111a.js132681807507690726 0
-64C:\Users\Jordan\Desktop\myFlix_Client\dist\index.e3b7111a.js.map132681807507989893 0
-53C:\Users\Jordan\Desktop\myFlix_Client\dist\index.html132681807507331650 0
+60C:\Users\Jordan\Desktop\myFlix_Client\dist\index.e3b7111a.js132681854842025785 0
+64C:\Users\Jordan\Desktop\myFlix_Client\dist\index.e3b7111a.js.map132681854842404760 0
+53C:\Users\Jordan\Desktop\myFlix_Client\dist\index.html132681854841686687 0
