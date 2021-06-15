@@ -26,15 +26,13 @@ export class MainView extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('https://borchers-movie-api.herokuapp.com/movies')
-      .then(response => {
-        this.setState({
-          movies: response.data
-        });
-      })
-      .catch(error => {
-        console.log(error);
+    let accessToken = localStorage.getItem('token');
+    if (accessToken !== null) {
+      this.setState({
+        user: localStorage.getItem('user')
       });
+      this.getMovies(accessToken);
+    }
   }
 
   // When a movie is clicked, this function is invoked and updates the state of the `selectedMovie` property to that movie
@@ -46,14 +44,13 @@ export class MainView extends React.Component {
 
   // a method passed as a prop
   // when a user successfully logs in, this function updates the `user` property in state to that particular user
-
   onLoggedIn(authData) {
     console.log(authData);
     this.setState({
       user: authData.user.Username
     });
 
-    // saved in user state
+    // stores logged in user and token - saved in user state
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', authData.user.Username);
     this.getMovies(authData.token);
