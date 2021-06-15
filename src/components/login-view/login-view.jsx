@@ -5,6 +5,8 @@ import Button from 'react-bootstrap/Button';
 
 import axios from 'axios';
 
+import './login-view.scss';
+
 export function LoginView(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -30,7 +32,7 @@ export function LoginView(props) {
         props.onLoggedIn(data);
       })
       .catch(e => {
-        console.log('no such user')
+        console.log('no such user');
       });
   };
 
