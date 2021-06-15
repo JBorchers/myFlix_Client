@@ -46,6 +46,7 @@ export class MainView extends React.Component {
 
   // a method passed as a prop
   // when a user successfully logs in, this function updates the `user` property in state to that particular user
+
   onLoggedIn(authData) {
     console.log(authData);
     this.setState({
@@ -61,6 +62,14 @@ export class MainView extends React.Component {
   onRegister(register) {
     this.setState({
       register
+    });
+  }
+
+  onLoggedOut() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.setState({
+      user: null
     });
   }
 
