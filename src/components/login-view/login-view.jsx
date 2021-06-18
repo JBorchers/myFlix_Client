@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Config from '../../config.js';
 
 import './login-view.scss';
 
@@ -22,7 +23,7 @@ export function LoginView(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     /* Send a request to the server for authentication */
-    axios.post('https://borchers-movie-api.herokuapp.com/login', {
+    axios.post(`${Config.API_URL}/login`, {
       Username: username,
       Password: password
     })
