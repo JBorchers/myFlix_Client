@@ -21882,8 +21882,6 @@ var _rowDefault = parcelHelpers.interopDefault(_row);
 var _col = require("react-bootstrap/Col");
 var _colDefault = parcelHelpers.interopDefault(_col);
 var _reactBootstrap = require("react-bootstrap");
-var _button = require("react-bootstrap/Button");
-var _buttonDefault = parcelHelpers.interopDefault(_button);
 var _card = require("react-bootstrap/Card");
 var _cardDefault = parcelHelpers.interopDefault(_card);
 var _cardDeck = require("react-bootstrap/CardDeck");
@@ -21956,20 +21954,20 @@ class MainView extends _reactDefault.default.Component {
         return(/*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.BrowserRouter, {
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 102
+                lineNumber: 100
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_rowDefault.default, {
             className: "main-view justify-content-md-center",
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 103
+                lineNumber: 101
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_containerDefault.default, {
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 104
+                lineNumber: 102
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Navbar, {
@@ -21978,33 +21976,16 @@ class MainView extends _reactDefault.default.Component {
             fixed: "top",
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 105
+                lineNumber: 103
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Navbar.Brand, {
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 106
+                lineNumber: 104
             },
             __self: this
-        }, "Welcome to MyFlix!"), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Link, {
-            to: `/`,
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 107
-            },
-            __self: this
-        }, /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
-            variant: "link",
-            className: "navbar-link text-light",
-            onClick: ()=>this.onLoggedOut()
-            ,
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 108
-            },
-            __self: this
-        }, "Logout")))), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
+        }, "Welcome to MyFlix!"))), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
             exact: true,
             path: "/",
             render: ()=>{
@@ -22021,7 +22002,7 @@ class MainView extends _reactDefault.default.Component {
             },
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 115
+                lineNumber: 108
             },
             __self: this
         }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
@@ -22031,7 +22012,7 @@ class MainView extends _reactDefault.default.Component {
             },
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 125
+                lineNumber: 118
             },
             __self: this
         }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
@@ -22051,7 +22032,7 @@ class MainView extends _reactDefault.default.Component {
             },
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 131
+                lineNumber: 124
             },
             __self: this
         }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
@@ -22071,7 +22052,7 @@ class MainView extends _reactDefault.default.Component {
             },
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 139
+                lineNumber: 132
             },
             __self: this
         }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
@@ -22091,7 +22072,7 @@ class MainView extends _reactDefault.default.Component {
             },
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 147
+                lineNumber: 140
             },
             __self: this
         }))));
@@ -22104,7 +22085,7 @@ exports.default = MainView;
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"3b2NM","../movie-card/movie-card":"9069x","../movie-view/movie-view":"1rdX8","@parcel/transformer-js/src/esmodule-helpers.js":"77zDO","../../../../../AppData/Roaming/nvm/v14.16.1/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"3Oiqr","axios":"7rA65","../login-view/login-view":"45yj8","../registration-view/registration-view":"2iR0F","react-bootstrap/Container":"3Mt3t","react-bootstrap/Row":"3fzwD","react-bootstrap/Col":"2D0r8","react-bootstrap/Card":"1CZWQ","react-bootstrap/CardDeck":"4fiZs","../../config.js":"5yJJr","react-router-dom":"1PMSK","react-bootstrap":"4n7hB","react-bootstrap/Button":"1ru0l"}],"9069x":[function(require,module,exports) {
+},{"react":"3b2NM","../movie-card/movie-card":"9069x","../movie-view/movie-view":"1rdX8","@parcel/transformer-js/src/esmodule-helpers.js":"77zDO","../../../../../AppData/Roaming/nvm/v14.16.1/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"3Oiqr","axios":"7rA65","../login-view/login-view":"45yj8","../registration-view/registration-view":"2iR0F","react-bootstrap/Container":"3Mt3t","react-bootstrap/Row":"3fzwD","react-bootstrap/Col":"2D0r8","react-bootstrap/Card":"1CZWQ","react-bootstrap/CardDeck":"4fiZs","../../config.js":"5yJJr","react-router-dom":"1PMSK","react-bootstrap":"4n7hB"}],"9069x":[function(require,module,exports) {
 var helpers = require("../../../../../AppData/Roaming/nvm/v14.16.1/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -39555,4 +39536,4 @@ module.exports = exports["default"];
 
 },{"@babel/runtime/helpers/interopRequireDefault":"4ttVj","@babel/runtime/helpers/extends":"3krLJ","@babel/runtime/helpers/objectWithoutPropertiesLoose":"3Yx9V","classnames":"5aJRc","react":"3b2NM","prop-types-extra/lib/isRequiredForA11y":"4XrEc","./ThemeProvider":"4rz1S"}],"5onr6":[function() {},{}]},["1j6wU","4P6lB","63CEf"], "63CEf", "parcelRequire31da")
 
-//# sourceMappingURL=index.e3b7111a.js.map
+//# sourceMappingURL=index.HASH_REF_089dcf3edcdb77dc17235d32e3b7111a.js.map

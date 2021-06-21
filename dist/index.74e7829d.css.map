@@ -1,1 +1,1 @@
-{"mappings":"AAAA;EACI;EACA;;;ACAJ;EACE,OAHM","sources":["src/components/movie-card/movie-card.scss","src/index.scss"],"sourcesContent":[null,null],"names":[],"version":3,"file":"index.74e7829d.css.map","sourceRoot":"/__parcel_source_root/"}
+{"mappings":"AAAA;EACI;EACA;;;;ACAJ;EACE,OAHM","sources":["src/components/movie-card/movie-card.scss","src/index.scss"],"sourcesContent":[null,null],"names":[],"version":3,"file":"index.74e7829d.css.map","sourceRoot":"/__parcel_source_root/"}
