@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
@@ -14,6 +15,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Navbar } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import CardDeck from 'react-bootstrap/CardDeck';
 
@@ -102,6 +104,11 @@ export class MainView extends React.Component {
           <Container>
             <Navbar bg="dark" variant="dark" fixed="top">
               <Navbar.Brand>Welcome to MyFlix!</Navbar.Brand>
+              <Link to={`/`}>
+                <Button variant="link" className="navbar-link text-light"
+                  onClick={() => this.onLoggedOut()}
+                >Logout</Button>
+              </Link >
             </Navbar>
           </Container>
 
@@ -109,16 +116,13 @@ export class MainView extends React.Component {
             if (!user) return <Col>
               <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
             </Col>
-            if (movies.length === 0) return <div className="main-view" />;
             return movies.map(m => (
               <Col md={3} key={m._id}>
                 <MovieCard movie={m} />
               </Col>
             ))
           }} />
-
           <Route path="/register" render={() => {
-            if (user) return <Redirect to="/" />
             return <Col>
               <RegistrationView />
             </Col>
