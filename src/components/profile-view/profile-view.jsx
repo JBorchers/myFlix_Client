@@ -5,6 +5,7 @@ import axios from "axios";
 import Container from "react-bootstrap/Container";
 import { Button, Form, Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import Config from '../../config.js';
 
 export class ProfileView extends React.Component {
   constructor(props) {
@@ -19,23 +20,59 @@ export class ProfileView extends React.Component {
   }
 
   componentDidMount() {
-    let accessToken = localStorage.getItem("token");
+    let accessToken = localStorage.getItem('token');
     this.getUsers(accessToken);
   }
 
-  getMovies(token) {
-    axios.get(`${Config.API_URL}/users`, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-      .then(response => {
-        // Assign the result to the state
+  getUsers(token) {
+    let url = `${Config.API_URL}/users/` +
+      localStorage.getItem('user');
+    axios
+      .get(url, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
         this.setState({
-          users: response.data
+          users: response.data.username,
+          password: response.data.password,
+          Email: response.data.Email,
+          Birthday: response.data.Birthday,
+          Favorites: response.data.Favorites,
         });
+        console.log(response)
       })
       .catch(function (error) {
         console.log(error);
       });
+  }
+
+  handleUpdate(e) {
+    let token = localStorage.getItem("token");
+    // console.log({ token });
+    let user = localStorage.getItem("user");
+    console.log(this.state);
+    let setisValid = this.formValidation();
+    if (setisValid) {
+      axios.put(`${Config.API_URL}/users/`,
+        {
+          Username: this.state.Username,
+          Password: this.state.Password,
+          Email: this.state.Email,
+          Birthdate: this.state.Birthdate,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+        .then((response) => {
+          const data = response.data;
+          localStorage.setItem('user', data.Username);
+          console.log(data);
+          alert(user + " has been updated.");
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error.response.data);
+        });
+    }
   }
 
 
@@ -79,14 +116,37 @@ export class ProfileView extends React.Component {
     });
     return (
       <div className="userProfile">
+        <Container>
+          <h1 className="justify-content-md-center mb-30" md={9}><span class="glyphicon glyphicon-user"></span>Edit Profile</h1>
+          <Row>
+            <Col md={3}>
+              <p>Username: {`${this.props.user}`}</p>
+              <p>Email: {`${this.state.Email}`}</p>
+              <p>Birthday: {`${this.state.Birthday}`}</p>
+            </Col>
+          </Row>
+
+          <Col md={9}>
+            <Form className="justify-content-md-center mb-30">
+              <h6 style={{ textAlign: "center" }}>Update Profile Details</h6>
 
 
-      </div>
 
-
-
-
+            </Form>
+          </Col>
+        </Container>
+      </div >
     )
   };
 
+};
+
+ProfileView.propTypes = {
+  users: PropTypes.shape({
+    Username: PropTypes.string.isRequired,
+    Email: PropTypes.string.isRequired,
+    Birthdate: PropTypes.string,
+    Favorites: PropTypes.array,
+  }),
+  movies: PropTypes.array.isRequired,
 };
