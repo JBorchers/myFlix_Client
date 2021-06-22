@@ -131,7 +131,6 @@ export class ProfileView extends React.Component {
               <h6 style={{ textAlign: "center" }}>Update Profile Details</h6>
 
 
-
             </Form>
           </Col>
         </Container>
