@@ -10,6 +10,7 @@ import Config from '../../config.js';
 
 import './profile-view.scss';
 
+
 export class ProfileView extends React.Component {
   constructor(props) {
     super(props);
@@ -40,8 +41,8 @@ export class ProfileView extends React.Component {
       })
       .then((response) => {
         this.setState({
-          users: response.data.username,
-          password: response.data.password,
+          Username: response.data.Username,
+          Password: response.data.Password,
           Email: response.data.Email,
           Birthday: response.data.Birthday,
           FavoriteMovies: response.data.FavoriteMovies,
@@ -52,7 +53,6 @@ export class ProfileView extends React.Component {
         console.log(error);
       });
   }
-
 
   // update user info
   handleUpdate(e) {
@@ -83,6 +83,8 @@ export class ProfileView extends React.Component {
         });
     }
   }
+
+
 
   // remove favorite movie
   removeFavorite(movie) {
@@ -163,7 +165,7 @@ export class ProfileView extends React.Component {
           <h1 className="justify-content-md-center mb-30" md={9}><span class="glyphicon glyphicon-user"></span>Your Profile</h1>
           <Row>
             <Col md={3}>
-              <p>Username: {`${this.props.user}`}</p>
+              <p>Username: {`${this.state.Username}`}</p>
               <p>Email: {`${this.state.Email}`}</p>
               <p>Birthday: {`${this.state.Birthday}`}</p>
               <p>Favorite Movies: {`${this.state.FavoriteMovies}`}</p>
@@ -201,7 +203,7 @@ export class ProfileView extends React.Component {
                 </div>
 
               </div>
-              <Button type="submit" class="btn btn-primary mb-2">Submit</Button>
+              <Button type="submit" class="btn btn-primary mb-2" onClick={this.handleUpdate}>Submit</Button>
             </Form>
           </Col>
         </Container>
@@ -210,6 +212,7 @@ export class ProfileView extends React.Component {
   };
 
 };
+
 
 ProfileView.propTypes = {
   movies: PropTypes.array.isRequired
