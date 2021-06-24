@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import Form from 'react-bootstrap/Form';
 import { Card, FormControl } from 'react-bootstrap';
 import axios from "axios";
 import Container from "react-bootstrap/Container";
 import { Button, Form, Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Config from '../../config.js';
+
+import './profile-view.scss';
 
 export class ProfileView extends React.Component {
   constructor(props) {
@@ -16,6 +19,10 @@ export class ProfileView extends React.Component {
       Email: "",
       Birthdate: "",
       FavoriteMovies: [],
+      UsernameError: "",
+      EmailError: "",
+      PasswordError: "",
+      BirthdateError: "",
     };
   }
 
@@ -46,6 +53,8 @@ export class ProfileView extends React.Component {
       });
   }
 
+
+  // update user info
   handleUpdate(e) {
     let token = localStorage.getItem("token");
     // console.log({ token });
@@ -75,35 +84,69 @@ export class ProfileView extends React.Component {
     }
   }
 
+  // remove favorite movie
+  removeFavorite(movie) {
+    const token = localStorage.getItem("token");
+    const url =
+      `${Config.API_URL}/users/` +
+      localStorage.getItem("user") +
+      "/movies/" +
+      movie._id;
+    axios
+      .delete(url, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        console.log(response);
+        this.componentDidMount();
+        // location.reload();
+        alert(movie.Title + " has been removed from your Favorites.");
+      });
+  }
 
-  formValidation() {
-    let UsernameError = {};
-    let EmailError = {};
-    let PasswordError = {};
-    let BirthdateError = {};
+
+  // delete account
+  handleDelete() {
+    const token = localStorage.getItem("token");
+    const user = localStorage.getItem("user");
+    axios.delete(`https://movieapi-yayacdm.herokuapp.com/users/${user}`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    )
+      .then(() => {
+        alert(user + " has been deleted.");
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+        window.location.pathname = "/";
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+
+
+  formValidation = () => {
+    const usernameError = {};
+    const emailError = {};
+    const passwordError = {};
+    const birhdateError = {};
     let isValid = true;
-    if (this.state.Username.trim().length < 5) {
-      UsernameError.usernameShort = "Must be alphanumeric and contains at least 5 characters";
+    if (username.trim().length < 5) {
+      usernameError.usernameShort = "Must be alphanumeric and contains at least 5 characters";
       isValid = false;
     }
-    if (this.state.Password.trim().length < 3) {
-      PasswordError.passwordMissing = "You must enter a current or new password.(minimum 4 characters) ";
+    else if (password.trim().length < 4) {
+      passwordError.passwordMissing = "You must enter a password.(minimum 4 characters) ";
       isValid = false;
     }
-    if (!(this.state.Email && this.state.Email.includes(".") && this.state.Email.includes("@"))) {
-      EmailError.emailNotEmail = "A valid email address is required.";
+    else if (!email.includes(".") || !email.includes("@")) {
+      emailError.emailNotEmail = "A valid email address is required.";
       isValid = false;
     }
-    if (this.state.birthdate === '') {
-      BirthdateError.birthdateEmpty = "Please enter your birthdate.";
+    else if (birthdate === '') {
+      birhdateError.noBirthdate = "Please enter a birthdate";
       isValid = false;
     }
-    this.setState({
-      UsernameError: UsernameError,
-      PasswordError: PasswordError,
-      EmailError: EmailError,
-      BirthdateError: BirthdateError,
-    })
     return isValid;
   };
 
@@ -117,20 +160,48 @@ export class ProfileView extends React.Component {
     return (
       <div className="userProfile">
         <Container>
-          <h1 className="justify-content-md-center mb-30" md={9}><span class="glyphicon glyphicon-user"></span>Edit Profile</h1>
+          <h1 className="justify-content-md-center mb-30" md={9}><span class="glyphicon glyphicon-user"></span>Your Profile</h1>
           <Row>
             <Col md={3}>
               <p>Username: {`${this.props.user}`}</p>
               <p>Email: {`${this.state.Email}`}</p>
               <p>Birthday: {`${this.state.Birthday}`}</p>
+              <p>Favorite Movies: {`${this.state.FavoriteMovies}`}</p>
             </Col>
           </Row>
 
           <Col md={9}>
-            <Form className="justify-content-md-center mb-30">
-              <h6 style={{ textAlign: "center" }}>Update Profile Details</h6>
+            <h5 className="justify-content-md-center mb-30" md={9}><span class="glyphicon glyphicon-user"></span>Update Profile</h5>
+            <Form>
+              <div className="form-group">
+                <label>
+                  <p>Username:</p>
+                  <input type="text" onChange={e => setUsername(e.target.value)} />
+                </label>
 
+                <div class="form-group">
+                  <label>
+                    <p>Password:</p>
+                    <input type="password" onChange={e => setPassword(e.target.value)} />
+                  </label>
+                </div>
 
+                <div class="form-group">
+                  <label>
+                    <p>Email:</p>
+                    <input type="text" onChange={e => setEmail(e.target.value)} />
+                  </label>
+                </div>
+
+                <div class="form-group">
+                  <label>
+                    <p>Birthdate:</p>
+                    <input type="text" onChange={e => setBirthdate(e.target.value)} />
+                  </label>
+                </div>
+
+              </div>
+              <Button type="submit" class="btn btn-primary mb-2">Submit</Button>
             </Form>
           </Col>
         </Container>
@@ -141,11 +212,15 @@ export class ProfileView extends React.Component {
 };
 
 ProfileView.propTypes = {
-  users: PropTypes.shape({
-    Username: PropTypes.string.isRequired,
-    Email: PropTypes.string.isRequired,
-    Birthdate: PropTypes.string,
-    Favorites: PropTypes.array,
-  }),
-  movies: PropTypes.array.isRequired,
+  movies: PropTypes.array.isRequired
 };
+
+// ProfileView.propTypes = {
+//   users: PropTypes.shape({
+//     Username: PropTypes.string.isRequired,
+//     Email: PropTypes.string.isRequired,
+//     Birthdate: PropTypes.string,
+//     Favorites: PropTypes.array,
+//   }),
+//   movies: PropTypes.array.isRequired,
+// };

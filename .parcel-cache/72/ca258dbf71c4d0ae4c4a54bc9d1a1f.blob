@@ -1,0 +1,273 @@
+var helpers = require("../../../../../AppData/Roaming/nvm/v14.16.1/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+helpers.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "ProfileView", ()=>ProfileView
+);
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _propTypes = require("prop-types");
+var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
+var _form = require("react-bootstrap/Form");
+var _formDefault = parcelHelpers.interopDefault(_form);
+var _reactBootstrap = require("react-bootstrap");
+var _axios = require("axios");
+var _axiosDefault = parcelHelpers.interopDefault(_axios);
+var _container = require("react-bootstrap/Container");
+var _containerDefault = parcelHelpers.interopDefault(_container);
+var _reactRouterDom = require("react-router-dom");
+var _configJs = require("../../config.js");
+var _configJsDefault = parcelHelpers.interopDefault(_configJs);
+class ProfileView extends _reactDefault.default.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            Username: "",
+            Password: "",
+            Email: "",
+            Birthdate: "",
+            FavoriteMovies: []
+        };
+    }
+    componentDidMount() {
+        let accessToken = localStorage.getItem('token');
+        this.getUsers(accessToken);
+    }
+    getUsers(token) {
+        let url = `${_configJsDefault.default.API_URL}/users/` + localStorage.getItem('user');
+        _axiosDefault.default.get(url, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>{
+            this.setState({
+                users: response.data.username,
+                password: response.data.password,
+                Email: response.data.Email,
+                Birthday: response.data.Birthday,
+                Favorites: response.data.Favorites
+            });
+            console.log(response);
+        }).catch(function(error) {
+            console.log(error);
+        });
+    }
+    handleUpdate(e) {
+        let token = localStorage.getItem("token");
+        // console.log({ token });
+        let user = localStorage.getItem("user");
+        console.log(this.state);
+        let setisValid = this.formValidation();
+        if (setisValid) _axiosDefault.default.put(`${_configJsDefault.default.API_URL}/users/`, {
+            Username: this.state.Username,
+            Password: this.state.Password,
+            Email: this.state.Email,
+            Birthdate: this.state.Birthdate
+        }, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>{
+            const data = response.data;
+            localStorage.setItem('user', data.Username);
+            console.log(data);
+            alert(user + " has been updated.");
+            console.log(response);
+        }).catch(function(error) {
+            console.log(error.response.data);
+        });
+    }
+    formValidation = ()=>{
+        const usernameError = {
+        };
+        const emailError = {
+        };
+        const passwordError = {
+        };
+        const birhdateError = {
+        };
+        let isValid = true;
+        if (username.trim().length < 5) {
+            usernameError.usernameShort = "Must be alphanumeric and contains at least 5 characters";
+            isValid = false;
+        } else if (password.trim().length < 4) {
+            passwordError.passwordMissing = "You must enter a password.(minimum 4 characters) ";
+            isValid = false;
+        } else if (!email.includes(".") || !email.includes("@")) {
+            emailError.emailNotEmail = "A valid email address is required.";
+            isValid = false;
+        } else if (birthdate === '') {
+            birhdateError.noBirthdate = "Please enter a birthdate";
+            isValid = false;
+        }
+        return isValid;
+    };
+    render() {
+        const { user , movies  } = this.props;
+        const { UsernameError , EmailError , PasswordError , BirthdateError  } = this.state;
+        const FavoriteMovieList = movies.filter((movie)=>{
+            return this.state.FavoriteMovies.includes(movie._id);
+        });
+        return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
+            className: "userProfile",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+                lineNumber: 113
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement(_containerDefault.default, {
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+                lineNumber: 114
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement("h1", {
+            className: "justify-content-md-center mb-30",
+            md: 9,
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+                lineNumber: 115
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement("span", {
+            class: "glyphicon glyphicon-user",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+                lineNumber: 115
+            },
+            __self: this
+        }), "Your Profile"), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Row, {
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+                lineNumber: 116
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Col, {
+            md: 3,
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+                lineNumber: 117
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement("p", {
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+                lineNumber: 118
+            },
+            __self: this
+        }, "Username: ", `${this.props.user}`), /*#__PURE__*/ _reactDefault.default.createElement("p", {
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+                lineNumber: 119
+            },
+            __self: this
+        }, "Email: ", `${this.state.Email}`), /*#__PURE__*/ _reactDefault.default.createElement("p", {
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+                lineNumber: 120
+            },
+            __self: this
+        }, "Birthday: ", `${this.state.Birthday}`))), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Col, {
+            md: 9,
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+                lineNumber: 124
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Form, {
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+                lineNumber: 125
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement("div", {
+            className: "form-group",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+                lineNumber: 126
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement("label", {
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+                lineNumber: 127
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement("p", {
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+                lineNumber: 128
+            },
+            __self: this
+        }, "Username:"), /*#__PURE__*/ _reactDefault.default.createElement("input", {
+            type: "text",
+            value: username,
+            onChange: (e)=>setUsername(e.target.value)
+            ,
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+                lineNumber: 129
+            },
+            __self: this
+        })), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Form.Group, {
+            controlId: "formBasicEmail",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+                lineNumber: 132
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement("h4", {
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+                lineNumber: 133
+            },
+            __self: this
+        }, "Email:"), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Form.Label, {
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+                lineNumber: 134
+            },
+            __self: this
+        }, this.state.email)), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Form.Group, {
+            controlId: "formBasicDate",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+                lineNumber: 137
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement("h4", {
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+                lineNumber: 138
+            },
+            __self: this
+        }, "Date of Birth:"), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Form.Label, {
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+                lineNumber: 139
+            },
+            __self: this
+        }, this.state.birthDate))))))));
+    }
+}
+ProfileView.propTypes = {
+    movies: _propTypesDefault.default.array.isRequired
+}; // ProfileView.propTypes = {
+ //   users: PropTypes.shape({
+ //     Username: PropTypes.string.isRequired,
+ //     Email: PropTypes.string.isRequired,
+ //     Birthdate: PropTypes.string,
+ //     Favorites: PropTypes.array,
+ //   }),
+ //   movies: PropTypes.array.isRequired,
+ // };
+
+  helpers.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}

@@ -6,6 +6,9 @@
 
 
 
+body {
+  margin-top: 20px;
+}
 .my-flix {
   color: steelblue;
 }
