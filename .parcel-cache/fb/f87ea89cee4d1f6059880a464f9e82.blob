@@ -40158,7 +40158,7 @@ class ProfileView extends _reactDefault.default.Component {
             __self: this
         }, "Username:"), /*#__PURE__*/ _reactDefault.default.createElement("input", {
             type: "text",
-            onChange: (e)=>this.state.set(e.target.value)
+            onChange: (e)=>this.setState.Username(e.target.value)
             ,
             placeholder: "Change username",
             __source: {
@@ -40281,4 +40281,4 @@ ProfileView.propTypes = {
 }
 },{"react":"3b2NM","prop-types":"4dfy5","react-bootstrap":"4n7hB","axios":"7rA65","react-bootstrap/Container":"3Mt3t","react-router-dom":"1PMSK","../../config.js":"5yJJr","@parcel/transformer-js/src/esmodule-helpers.js":"77zDO","../../../../../AppData/Roaming/nvm/v14.16.1/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"3Oiqr","react-bootstrap/Form":"6A5ko","./profile-view.scss":"2MikN"}],"2MikN":[function() {},{}],"5onr6":[function() {},{}]},["1j6wU","4P6lB","63CEf"], "63CEf", "parcelRequire31da")
 
-//# sourceMappingURL=index.e3b7111a.js.map
+//# sourceMappingURL=index.HASH_REF_089dcf3edcdb77dc17235d32e3b7111a.js.map

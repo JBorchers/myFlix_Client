@@ -12,6 +12,7 @@ import './profile-view.scss';
 
 
 export class ProfileView extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -27,10 +28,13 @@ export class ProfileView extends React.Component {
     };
   }
 
+
+
   componentDidMount() {
     let accessToken = localStorage.getItem('token');
     this.getUsers(accessToken);
   }
+
 
   getUsers(token) {
     let url = `${Config.API_URL}/users/` +
@@ -83,6 +87,15 @@ export class ProfileView extends React.Component {
         });
     }
   }
+
+
+  // handleChange(e) {
+  //   let { name, value } = e.target;
+  //   // console.log(name, value);
+  //   this.setState({
+  //     [name]: value
+  //   })
+  // }
 
 
 
@@ -178,8 +191,11 @@ export class ProfileView extends React.Component {
               <div className="form-group">
                 <label>
                   <p>Username:</p>
-                  <input type="text" onChange={e => setUsername(e.target.value)} />
+                  <input type="text" onChange={e => this.state.set(e.target.value)}
+                    placeholder="Change username" />
                 </label>
+
+
 
                 <div class="form-group">
                   <label>
@@ -203,13 +219,14 @@ export class ProfileView extends React.Component {
                 </div>
 
               </div>
-              <Button type="submit" class="btn btn-primary mb-2" onClick={this.handleUpdate}>Submit</Button>
+              <Button type="submit" class="btn btn-primary mb-2" onClick={this.handleUpdate}>Update</Button>
             </Form>
           </Col>
         </Container>
       </div >
     )
   };
+
 
 };
 
