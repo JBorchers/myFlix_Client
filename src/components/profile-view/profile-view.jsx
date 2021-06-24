@@ -58,6 +58,12 @@ export class ProfileView extends React.Component {
       });
   }
 
+  setUsername(input) {
+    this.setState({
+      username: input
+    });
+  }
+
   // update user info
   handleUpdate(e) {
     let token = localStorage.getItem("token");
@@ -124,7 +130,7 @@ export class ProfileView extends React.Component {
   handleDelete() {
     const token = localStorage.getItem("token");
     const user = localStorage.getItem("user");
-    axios.delete(`https://movieapi-yayacdm.herokuapp.com/users/${user}`,
+    axios.delete(`${Config.API_URL}/users/${user}`,
       { headers: { Authorization: `Bearer ${token}` } }
     )
       .then(() => {
@@ -191,7 +197,7 @@ export class ProfileView extends React.Component {
               <div className="form-group">
                 <label>
                   <p>Username:</p>
-                  <input type="text" onChange={e => this.state.set(e.target.value)}
+                  <input type="text" onChange={e => this.setUsername(e.target.value)}
                     placeholder="Change username" />
                 </label>
 
