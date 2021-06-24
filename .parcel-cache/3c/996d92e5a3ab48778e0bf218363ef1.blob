@@ -40195,7 +40195,6 @@ class ProfileView extends _reactDefault.default.Component {
             type: "password",
             onChange: (e)=>setPassword(e.target.value)
             ,
-            placeholder: "Change password",
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
                 lineNumber: 210
@@ -40224,7 +40223,6 @@ class ProfileView extends _reactDefault.default.Component {
             type: "text",
             onChange: (e)=>setEmail(e.target.value)
             ,
-            placeholder: "Change email",
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
                 lineNumber: 217
@@ -40253,7 +40251,6 @@ class ProfileView extends _reactDefault.default.Component {
             type: "text",
             onChange: (e)=>setBirthdate(e.target.value)
             ,
-            placeholder: "Change birthdate",
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
                 lineNumber: 224
@@ -40290,4 +40287,4 @@ ProfileView.propTypes = {
 }
 },{"react":"3b2NM","prop-types":"4dfy5","react-bootstrap":"4n7hB","axios":"7rA65","react-bootstrap/Container":"3Mt3t","react-router-dom":"1PMSK","../../config.js":"5yJJr","@parcel/transformer-js/src/esmodule-helpers.js":"77zDO","../../../../../AppData/Roaming/nvm/v14.16.1/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"3Oiqr","react-bootstrap/Form":"6A5ko","./profile-view.scss":"2MikN"}],"2MikN":[function() {},{}],"5onr6":[function() {},{}]},["1j6wU","4P6lB","63CEf"], "63CEf", "parcelRequire31da")
 
-//# sourceMappingURL=index.e3b7111a.js.map
+//# sourceMappingURL=index.HASH_REF_089dcf3edcdb77dc17235d32e3b7111a.js.map

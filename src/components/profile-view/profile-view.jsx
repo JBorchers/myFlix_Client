@@ -109,7 +109,8 @@ export class ProfileView extends React.Component {
   removeFavorite(movie) {
     const token = localStorage.getItem("token");
     const url =
-      `${Config.API_URL}/users/` +
+      // or movie.id?
+      `${Config.API_URL}/users/${movie}` +
       localStorage.getItem("user") +
       "/movies/" +
       movie._id;
@@ -206,21 +207,21 @@ export class ProfileView extends React.Component {
                 <div class="form-group">
                   <label>
                     <p>Password:</p>
-                    <input type="password" onChange={e => setPassword(e.target.value)} />
+                    <input type="password" onChange={e => setPassword(e.target.value)} placeholder="Change password" />
                   </label>
                 </div>
 
                 <div class="form-group">
                   <label>
                     <p>Email:</p>
-                    <input type="text" onChange={e => setEmail(e.target.value)} />
+                    <input type="text" onChange={e => setEmail(e.target.value)} placeholder="Change email" />
                   </label>
                 </div>
 
                 <div class="form-group">
                   <label>
                     <p>Birthdate:</p>
-                    <input type="text" onChange={e => setBirthdate(e.target.value)} />
+                    <input type="text" onChange={e => setBirthdate(e.target.value)} placeholder="Change birthdate" />
                   </label>
                 </div>
 
