@@ -11,32 +11,36 @@ import Config from '../../config.js';
 import './profile-view.scss';
 
 
-export class ProfileView extends React.Component {
+export function ProfileView(props) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [birthdate, setBirthdate] = useState('');
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      Username: "",
-      Password: "",
-      Email: "",
-      Birthdate: "",
-      FavoriteMovies: [],
-      UsernameError: "",
-      EmailError: "",
-      PasswordError: "",
-      BirthdateError: "",
-    };
-  }
-
-
-
-  componentDidMount() {
-    let accessToken = localStorage.getItem('token');
-    this.getUsers(accessToken);
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     Username: "",
+  //     Password: "",
+  //     Email: "",
+  //     Birthdate: "",
+  //     FavoriteMovies: [],
+  //     UsernameError: "",
+  //     EmailError: "",
+  //     PasswordError: "",
+  //     BirthdateError: "",
+  //   };
+  // }
 
 
-  getUsers(token) {
+
+  // componentDidMount() {
+  //   let accessToken = localStorage.getItem('token');
+  //   this.getUsers(accessToken);
+  // }
+
+
+  function getUsers(token) {
     let url = `${Config.API_URL}/users/` +
       localStorage.getItem('user');
     axios
@@ -44,13 +48,13 @@ export class ProfileView extends React.Component {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        this.setState({
-          Username: response.data.Username,
-          Password: response.data.Password,
-          Email: response.data.Email,
-          Birthday: response.data.Birthday,
-          FavoriteMovies: response.data.FavoriteMovies,
-        });
+        // this.setState({
+        //   Username: response.data.Username,
+        //   Password: response.data.Password,
+        //   Email: response.data.Email,
+        //   Birthday: response.data.Birthday,
+        //   FavoriteMovies: response.data.FavoriteMovies,
+        // });
         console.log(response)
       })
       .catch(function (error) {
@@ -58,40 +62,41 @@ export class ProfileView extends React.Component {
       });
   }
 
-  setUsername(input) {
-    this.setState({
-      username: input
-    });
-  }
+  // setUsername(input) {
+  //   this.setState({
+  //     username: input
+  //   });
+  // }
 
   // update user info
-  handleUpdate(e) {
+  function handleUpdate(e) {
+    e.preventDefault()
     let token = localStorage.getItem("token");
     // console.log({ token });
     let user = localStorage.getItem("user");
-    console.log(this.state);
-    let setisValid = this.formValidation();
-    if (setisValid) {
-      axios.put(`${Config.API_URL}/users/`,
-        {
-          Username: this.state.Username,
-          Password: this.state.Password,
-          Email: this.state.Email,
-          Birthdate: this.state.Birthdate,
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
-      )
-        .then((response) => {
-          const data = response.data;
-          localStorage.setItem('user', data.Username);
-          console.log(data);
-          alert(user + " has been updated.");
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error.response.data);
-        });
-    }
+    // console.log(this.state);
+    // let setisValid = this.formValidation();
+    // if (setisValid) {
+    axios.put(`${Config.API_URL}/users/${user}`,
+      {
+        Username: username,
+        Password: password,
+        Email: email,
+        Birthdate: birthdate,
+      },
+      { headers: { Authorization: `Bearer ${token}` } }
+    )
+      .then((response) => {
+        const data = response.data;
+        localStorage.setItem('user', data.Username);
+        console.log(data);
+        alert(user + " has been updated.");
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error.response.data);
+      });
+
   }
 
 
@@ -106,7 +111,7 @@ export class ProfileView extends React.Component {
 
 
   // remove favorite movie
-  removeFavorite(movie) {
+  function removeFavorite(movie) {
     const token = localStorage.getItem("token");
     const url =
       // or movie.id?
@@ -120,7 +125,7 @@ export class ProfileView extends React.Component {
       })
       .then((response) => {
         console.log(response);
-        this.componentDidMount();
+        // this.componentDidMount();
         // location.reload();
         alert(movie.Title + " has been removed from your Favorites.");
       });
@@ -128,7 +133,7 @@ export class ProfileView extends React.Component {
 
 
   // delete account
-  handleDelete() {
+  function handleDelete() {
     const token = localStorage.getItem("token");
     const user = localStorage.getItem("user");
     axios.delete(`${Config.API_URL}/users/${user}`,
@@ -147,7 +152,7 @@ export class ProfileView extends React.Component {
 
 
 
-  formValidation = () => {
+  const formValidation = () => {
     const usernameError = {};
     const emailError = {};
     const passwordError = {};
@@ -173,66 +178,66 @@ export class ProfileView extends React.Component {
   };
 
 
-  render() {
-    const { user, movies } = this.props;
-    const { UsernameError, EmailError, PasswordError, BirthdateError } = this.state;
-    const FavoriteMovieList = movies.filter((movie) => {
-      return this.state.FavoriteMovies.includes(movie._id);
-    });
-    return (
-      <div className="userProfile">
-        <Container>
-          <h1 className="justify-content-md-center mb-30" md={9}><span class="glyphicon glyphicon-user"></span>Your Profile</h1>
-          <Row>
-            <Col md={3}>
-              <p>Username: {`${this.state.Username}`}</p>
-              <p>Email: {`${this.state.Email}`}</p>
-              <p>Birthday: {`${this.state.Birthday}`}</p>
-              <p>Favorite Movies: {`${this.state.FavoriteMovies}`}</p>
-            </Col>
-          </Row>
+  // render() {
+  const { user, movies } = props;
+  // const { UsernameError, EmailError, PasswordError, BirthdateError } = this.state;
+  // const FavoriteMovieList = movies.filter((movie) => {
+  //   return this.state.FavoriteMovies.includes(movie._id);
+  // });
+  return (
+    <div className="userProfile">
+      <Container>
+        <h1 className="justify-content-md-center mb-30" md={9}><span className="glyphicon glyphicon-user"></span>Your Profile</h1>
+        <Row>
+          <Col md={3}>
+            <p>Username: {`${username}`}</p>
+            <p>Email: {`${email}`}</p>
+            <p>Birthday: {`${birthdate}`}</p>
+            {/* <p>Favorite Movies: {`${favoriteMovies}`}</p> */}
+          </Col>
+        </Row>
 
-          <Col md={9}>
-            <h5 className="justify-content-md-center mb-30" md={9}><span class="glyphicon glyphicon-user"></span>Update Profile</h5>
-            <Form>
+        <Col md={9}>
+          <h5 className="justify-content-md-center mb-30" md={9}><span className="glyphicon glyphicon-user"></span>Update Profile</h5>
+          <Form>
+            <div className="form-group">
+              <label>
+                <p>Username:</p>
+                <input defaultValue={user} type="text" onChange={e => setUsername(e.target.value)}
+                  placeholder="Change username" />
+              </label>
+
+
+
               <div className="form-group">
                 <label>
-                  <p>Username:</p>
-                  <input type="text" onChange={e => this.setUsername(e.target.value)}
-                    placeholder="Change username" />
+                  <p>Password:</p>
+                  <input type="password" onChange={e => setPassword(e.target.value)} placeholder="Change password" />
                 </label>
-
-
-
-                <div class="form-group">
-                  <label>
-                    <p>Password:</p>
-                    <input type="password" onChange={e => setPassword(e.target.value)} placeholder="Change password" />
-                  </label>
-                </div>
-
-                <div class="form-group">
-                  <label>
-                    <p>Email:</p>
-                    <input type="text" onChange={e => setEmail(e.target.value)} placeholder="Change email" />
-                  </label>
-                </div>
-
-                <div class="form-group">
-                  <label>
-                    <p>Birthdate:</p>
-                    <input type="text" onChange={e => setBirthdate(e.target.value)} placeholder="Change birthdate" />
-                  </label>
-                </div>
-
               </div>
-              <Button type="submit" class="btn btn-primary mb-2" onClick={this.handleUpdate}>Update</Button>
-            </Form>
-          </Col>
-        </Container>
-      </div >
-    )
-  };
+
+              <div className="form-group">
+                <label>
+                  <p>Email:</p>
+                  <input type="text" onChange={e => setEmail(e.target.value)} placeholder="Change email" />
+                </label>
+              </div>
+
+              <div className="form-group">
+                <label>
+                  <p>Birthdate:</p>
+                  <input type="text" onChange={e => setBirthdate(e.target.value)} placeholder="Change birthdate" />
+                </label>
+              </div>
+
+            </div>
+            <Button type="submit" className="btn btn-primary mb-2" onClick={handleUpdate}>Update</Button>
+          </Form>
+        </Col>
+      </Container>
+    </div >
+  )
+    ;
 
 
 };
