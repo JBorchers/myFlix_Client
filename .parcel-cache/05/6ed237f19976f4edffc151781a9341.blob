@@ -21897,9 +21897,7 @@ class MainView extends _reactDefault.default.Component {
         super();
         this.state = {
             movies: [],
-            user: null,
-            userData: {
-            }
+            user: null
         };
     }
     getMovies(token) {
@@ -21916,15 +21914,15 @@ class MainView extends _reactDefault.default.Component {
             console.log(error);
         });
     }
-    getUsers(token, user) {
-        _axiosDefault.default.get(`${_configJsDefault.default.API_URL}/users/${user}`, {
+    getUsers(token) {
+        _axiosDefault.default.get(`${_configJsDefault.default.API_URL}/users`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         }).then((response)=>{
             // Assign the result to the state
             this.setState({
-                userData: response.data
+                users: response.data
             });
             console.log(response);
         }).catch(function(error) {
@@ -21933,13 +21931,11 @@ class MainView extends _reactDefault.default.Component {
     }
     componentDidMount() {
         let accessToken = localStorage.getItem('token');
-        let user = localStorage.getItem('user');
         if (accessToken !== null) {
             this.setState({
-                user: user
+                user: localStorage.getItem('user')
             });
             this.getMovies(accessToken);
-            this.getUsers(accessToken, user);
         }
     }
     // // When a movie is clicked, this function is invoked and updates the state of the `selectedMovie` property to that movie
@@ -21953,14 +21949,13 @@ class MainView extends _reactDefault.default.Component {
     onLoggedIn(authData) {
         console.log(authData);
         this.setState({
-            user: authData.user.Username,
-            userData: authData.user
+            user: authData.user.Username
         });
         // stores logged in user and token - saved in user state
         localStorage.setItem('token', authData.token);
         localStorage.setItem('user', authData.user.Username);
         this.getMovies(authData.token);
-    // this.getUsers(authData.token, authData.user.Username);
+        this.getUsers(authData.token);
     }
     onRegister(register) {
         console.log(register);
@@ -21976,24 +21971,24 @@ class MainView extends _reactDefault.default.Component {
         });
     }
     render() {
-        const { movies , user , history , userData  } = this.state;
+        const { movies , user , history  } = this.state;
         return(/*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.BrowserRouter, {
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 126
+                lineNumber: 122
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_rowDefault.default, {
             className: "main-view justify-content-md-center",
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 127
+                lineNumber: 123
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_containerDefault.default, {
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 128
+                lineNumber: 124
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Navbar, {
@@ -22002,20 +21997,20 @@ class MainView extends _reactDefault.default.Component {
             fixed: "top",
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 129
+                lineNumber: 125
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Navbar.Brand, {
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 130
+                lineNumber: 126
             },
             __self: this
         }, "Welcome to MyFlix!"), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Link, {
             to: `/users/${user}`,
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 131
+                lineNumber: 127
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
@@ -22023,14 +22018,14 @@ class MainView extends _reactDefault.default.Component {
             className: "navbar-link text-light",
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 132
+                lineNumber: 128
             },
             __self: this
         }, "Profile")), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Link, {
             to: `/`,
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 134
+                lineNumber: 130
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
@@ -22040,7 +22035,7 @@ class MainView extends _reactDefault.default.Component {
             ,
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 135
+                lineNumber: 131
             },
             __self: this
         }, "Logout")))), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
@@ -22060,7 +22055,7 @@ class MainView extends _reactDefault.default.Component {
             },
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 143
+                lineNumber: 139
             },
             __self: this
         }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
@@ -22073,7 +22068,7 @@ class MainView extends _reactDefault.default.Component {
             },
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 155
+                lineNumber: 151
             },
             __self: this
         }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
@@ -22093,7 +22088,7 @@ class MainView extends _reactDefault.default.Component {
             },
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 163
+                lineNumber: 159
             },
             __self: this
         }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
@@ -22113,7 +22108,7 @@ class MainView extends _reactDefault.default.Component {
             },
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 172
+                lineNumber: 168
             },
             __self: this
         }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
@@ -22133,7 +22128,7 @@ class MainView extends _reactDefault.default.Component {
             },
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 181
+                lineNumber: 177
             },
             __self: this
         }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
@@ -22145,13 +22140,12 @@ class MainView extends _reactDefault.default.Component {
                     ,
                     movies: movies,
                     user: user,
-                    // favoriteMovies={movies.filter(m => userData.FavoriteMovies.includes(m._id))}
                     onBackClick: ()=>history.goBack()
                 })));
             },
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 190
+                lineNumber: 186
             },
             __self: this
         }))));
@@ -39972,9 +39966,8 @@ function ProfileView(props) {
         // console.log({ token });
         let user = localStorage.getItem("user");
         // console.log(this.state);
-        // let setisValid = this.formValidation();
-        // if (setisValid) {
-        _axiosDefault.default.put(`${_configJsDefault.default.API_URL}/users/${user}`, {
+        let setisValid = this.formValidation();
+        if (setisValid) _axiosDefault.default.put(`${_configJsDefault.default.API_URL}/users/${user}`, {
             Username: username,
             Password: password,
             Email: email,
@@ -40302,4 +40295,4 @@ $RefreshReg$(_c, "ProfileView");
 }
 },{"react":"3b2NM","prop-types":"4dfy5","react-bootstrap":"4n7hB","axios":"7rA65","react-bootstrap/Container":"3Mt3t","react-router-dom":"1PMSK","../../config.js":"5yJJr","@parcel/transformer-js/src/esmodule-helpers.js":"77zDO","../../../../../AppData/Roaming/nvm/v14.16.1/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"3Oiqr","react-bootstrap/Form":"6A5ko","./profile-view.scss":"2MikN"}],"2MikN":[function() {},{}],"5onr6":[function() {},{}]},["1j6wU","4P6lB","63CEf"], "63CEf", "parcelRequire31da")
 
-//# sourceMappingURL=index.e3b7111a.js.map
+//# sourceMappingURL=index.HASH_REF_089dcf3edcdb77dc17235d32e3b7111a.js.map

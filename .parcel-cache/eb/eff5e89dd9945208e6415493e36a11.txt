@@ -52,7 +52,7 @@
 65C:\Users\Jordan\Desktop\myFlix_Client\node_modules\balanced-match132688564290324355 1
 98C:\Users\Jordan\Desktop\myFlix_Client\node_modules\react-router\es\warnAboutDeprecatedESMImport.js121436361000000000 0
 110C:\Users\Jordan\Desktop\myFlix_Client\node_modules\regenerate-unicode-properties\Script_Extensions\Javanese.js121436361000000000 0
-42C:\Users\Jordan\Desktop\myFlix_Client\dist132690339299122300 1
+42C:\Users\Jordan\Desktop\myFlix_Client\dist132690372249821804 1
 74C:\Users\Jordan\Desktop\myFlix_Client\node_modules\extend-shallow\index.js131581985450000000 0
 77C:\Users\Jordan\Desktop\myFlix_Client\node_modules\prop-types-extra\lib\utils132688568546584487 1
 52C:\Users\Jordan\Desktop\myFlix_Client\src\components132688564913224696 1
@@ -215,7 +215,7 @@
 61C:\Users\Jordan\Desktop\myFlix_Client\node_modules\snapdragon132688564848298104 1
 75C:\Users\Jordan\Desktop\myFlix_Client\node_modules\snapdragon-node\index.js131428656890000000 0
 70C:\Users\Jordan\Desktop\myFlix_Client\node_modules\lodash-es\isDate.js121436361000000000 0
-82C:\Users\Jordan\Desktop\myFlix_Client\src\components\profile-view\profile-view.jsx132690339283485294 0
+82C:\Users\Jordan\Desktop\myFlix_Client\src\components\profile-view\profile-view.jsx132690372211366467 0
 74C:\Users\Jordan\Desktop\myFlix_Client\node_modules\to-object-path\index.js130987330830000000 0
 114C:\Users\Jordan\Desktop\myFlix_Client\node_modules\regenerate-unicode-properties\Binary_Property\Emoji_Modifier.js121436361000000000 0
 67C:\Users\Jordan\Desktop\myFlix_Client\node_modules\lodash-es\add.js121436361000000000 0
@@ -8875,10 +8875,10 @@
 60C:\Users\Jordan\Desktop\myFlix_Client\node_modules\.bin\sass132673726019624997 0
 64C:\Users\Jordan\Desktop\myFlix_Client\node_modules\.bin\sass.cmd132673726019624997 0
 64C:\Users\Jordan\Desktop\myFlix_Client\node_modules\.bin\sass.ps1132673726019624997 0
-61C:\Users\Jordan\Desktop\myFlix_Client\dist\index.74e7829d.css132690339298450600 0
-65C:\Users\Jordan\Desktop\myFlix_Client\dist\index.74e7829d.css.map132690339298614212 0
+61C:\Users\Jordan\Desktop\myFlix_Client\dist\index.74e7829d.css132690372241177411 0
+65C:\Users\Jordan\Desktop\myFlix_Client\dist\index.74e7829d.css.map132690372243327058 0
 61C:\Users\Jordan\Desktop\myFlix_Client\dist\index.a576dbb6.css132677372374999681 0
 65C:\Users\Jordan\Desktop\myFlix_Client\dist\index.a576dbb6.css.map132677372375119350 0
-60C:\Users\Jordan\Desktop\myFlix_Client\dist\index.e3b7111a.js132690339299080326 0
-64C:\Users\Jordan\Desktop\myFlix_Client\dist\index.e3b7111a.js.map132690337510569054 0
-53C:\Users\Jordan\Desktop\myFlix_Client\dist\index.html132690339298430319 0
+60C:\Users\Jordan\Desktop\myFlix_Client\dist\index.e3b7111a.js132690372248377088 0
+64C:\Users\Jordan\Desktop\myFlix_Client\dist\index.e3b7111a.js.map132690372249746795 0
+53C:\Users\Jordan\Desktop\myFlix_Client\dist\index.html132690372241177411 0

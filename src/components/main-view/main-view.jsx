@@ -29,7 +29,8 @@ export class MainView extends React.Component {
     super();
     this.state = {
       movies: [],
-      user: null
+      user: null,
+      userData: {}
     }
   }
 
@@ -48,14 +49,14 @@ export class MainView extends React.Component {
       });
   }
 
-  getUsers(token) {
-    axios.get(`${Config.API_URL}/users`, {
+  getUsers(token, user) {
+    axios.get(`${Config.API_URL}/users/${user}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(response => {
         // Assign the result to the state
         this.setState({
-          users: response.data
+          userData: response.data
         });
         console.log(response)
       })
@@ -66,11 +67,13 @@ export class MainView extends React.Component {
 
   componentDidMount() {
     let accessToken = localStorage.getItem('token');
+    let user = localStorage.getItem('user');
     if (accessToken !== null) {
       this.setState({
-        user: localStorage.getItem('user')
+        user: user
       });
       this.getMovies(accessToken);
+      this.getUsers(accessToken, user)
     }
   }
 
@@ -87,14 +90,15 @@ export class MainView extends React.Component {
   onLoggedIn(authData) {
     console.log(authData);
     this.setState({
-      user: authData.user.Username
+      user: authData.user.Username,
+      userData: authData.user
     });
 
     // stores logged in user and token - saved in user state
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', authData.user.Username);
     this.getMovies(authData.token);
-    this.getUsers(authData.token);
+    // this.getUsers(authData.token, authData.user.Username);
   }
 
 
@@ -116,7 +120,7 @@ export class MainView extends React.Component {
 
 
   render() {
-    const { movies, user, history } = this.state;
+    const { movies, user, history, userData } = this.state;
 
     return (
       <Router>
@@ -188,6 +192,7 @@ export class MainView extends React.Component {
             return <Col>
               <ProfileView onLoggedIn={user => this.onLoggedIn(user)}
                 movies={movies} user={user}
+                // favoriteMovies={movies.filter(m => userData.FavoriteMovies.includes(m._id))}
                 onBackClick={() => history.goBack()} />
             </Col>
           }} />
