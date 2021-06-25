@@ -192,6 +192,7 @@ export class MainView extends React.Component {
             return <Col>
               <ProfileView onLoggedIn={user => this.onLoggedIn(user)}
                 movies={movies} user={user}
+                // // displays movies
                 // favoriteMovies={movies.filter(m => userData.FavoriteMovies.includes(m._id))}
                 onBackClick={() => history.goBack()} />
             </Col>
