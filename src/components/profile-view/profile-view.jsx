@@ -16,6 +16,7 @@ export function ProfileView(props) {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [birthdate, setBirthdate] = useState('');
+  const [favoriteMovies, setFavoriteMovies] = useState('');
 
   // constructor(props) {
   //   super(props);
@@ -100,16 +101,6 @@ export function ProfileView(props) {
   }
 
 
-  // handleChange(e) {
-  //   let { name, value } = e.target;
-  //   // console.log(name, value);
-  //   this.setState({
-  //     [name]: value
-  //   })
-  // }
-
-
-
   // remove favorite movie
   function removeFavorite(movie) {
     const token = localStorage.getItem("token");
@@ -133,7 +124,7 @@ export function ProfileView(props) {
 
 
   // delete account
-  function handleDelete() {
+  function handleDeregister() {
     const token = localStorage.getItem("token");
     const user = localStorage.getItem("user");
     axios.delete(`${Config.API_URL}/users/${user}`,
@@ -232,8 +223,39 @@ export function ProfileView(props) {
 
             </div>
             <Button type="submit" className="btn btn-primary mb-2" onClick={handleUpdate}>Update</Button>
+            <Button className='button' variant='danger' onClick={handleDeregister}>
+              Click Here to Deregister
+            </Button>
           </Form>
+
+          {/* <Col md={6}>
+            <div id="favoriteMovies">
+
+              <h5>Your Favorite Movies:</h5>
+              {FavoriteMovies.map((movie) => {
+                return (
+                  <Card id="card" className="movie-card mb-2" text="white">
+                    <Card.Img variant="top" src={movie.ImagePath} />
+                    <Card.Body>
+                      <Link to={`/movies/${movie._id}`} id="link">
+                        {movie.Title}
+                      </Link>
+                      <Button type="button" className="btn btn-white btn-rounded mr-md-3 z-depth-1a"
+                        onClick={removeFavorite(movie)}>
+                      </Button>
+
+                    </Card.Body>
+                  </Card>
+                );
+
+              })}
+
+            </div>
+          </Col> */}
+
+
         </Col>
+
       </Container>
     </div >
   )
@@ -252,7 +274,7 @@ ProfileView.propTypes = {
 //     Username: PropTypes.string.isRequired,
 //     Email: PropTypes.string.isRequired,
 //     Birthdate: PropTypes.string,
-//     Favorites: PropTypes.array,
+//     FavoriteMovies: PropTypes.array,
 //   }),
 //   movies: PropTypes.array.isRequired,
 // };
