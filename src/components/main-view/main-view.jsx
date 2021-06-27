@@ -169,7 +169,7 @@ export class MainView extends React.Component {
           }} />
 
           {/* genre view */}
-          <Route path="/movies/genre/:name" render={({ match, history }) => {
+          <Route path="/genre/:name" render={({ match, history }) => {
             if (!user) return
             if (movies.length === 0) return <div className="main-view" />;
             return <Col md={8}>
@@ -193,7 +193,7 @@ export class MainView extends React.Component {
               <ProfileView onLoggedIn={user => this.onLoggedIn(user)}
                 movies={movies} user={user}
                 // // displays movies
-                // favoriteMovies={movies.filter(m => userData.FavoriteMovies.includes(m._id))}
+                favoriteMovies={movies.filter(m => userData.FavoriteMovies.includes(m._id))}
                 onBackClick={() => history.goBack()} />
             </Col>
           }} />
