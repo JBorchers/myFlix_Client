@@ -1,10 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Button from 'react-bootstrap/Button';
+import axios from "axios";
+import Config from '../../config.js';
+import { Link } from "react-router-dom";
 
 export class MovieView extends React.Component {
 
   keypressCallback(event) {
     console.log(event.key);
+  }
+
+  addFavorite(movie) {
+    let token = localStorage.getItem('token');
+    let user = localStorage.getItem('user');
+    axios.post(`${Config.API_URL}/users/${user}/movies/${movie._id}`, null, {
+      headers: { Authorization: `Bearer ${token}` }
+    }).then(
+      (response) => {
+        console.log(response);
+        alert('This movie has been added to your favorites list!');
+      }).catch(
+        function (error) {
+          console.log(error)
+          alert('There was an error.');
+        }
+      );
   }
 
   componentDidMount() {
@@ -35,11 +56,18 @@ export class MovieView extends React.Component {
         </div>
         <div className="movie-description">
           <span className="label">Director: </span>
-          <span className="value">{movie.Director.Name}</span>
+          <Link className="link" to={`/directors/${movie.Director.Name}`}>
+            <span className="value">{movie.Director.Name}</span>
+          </Link>
         </div>
         <div className="movie-description">
           <span className="label">Genre: </span>
-          <span className="value">{movie.Genre}</span>
+          <Link className="link" to={`movies/genre/${movie.Genre.Name}`}>
+            <span className="value">{movie.Genre}</span>
+          </Link>
+        </div>
+        <div className="">
+          <Button className="btn btn-primary mb-2" variant='' onClick={() => this.addFavorite(movie)}>Add to Favorites</Button>
         </div>
         <button onClick={onBackClick}>Back</button>
 
