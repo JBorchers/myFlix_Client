@@ -101,14 +101,13 @@ export function ProfileView(props) {
 
   }
 
-
   // remove favorite movie
   function removeFavorite(movie) {
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
     const url =
       // or movie.id?
-      `${Config.API_URL}/users/${movie}` +
+      `${Config.API_URL}/users/${username}/movies/${movie._id}` +
       localStorage.getItem("user") +
       "/movies/" +
       movie._id;
@@ -251,7 +250,7 @@ export function ProfileView(props) {
               <h5>Your Favorite Movies:</h5>
               {favoriteMovies.map((movie) => {
                 return (
-                  <Card class="shadow p-3 mb-5 bg-white rounded">
+                  <Card className="shadow p-3 mb-5 bg-white rounded">
                     <Card.Img variant="top" src={movie.ImagePath} />
                     <Card.Body>
                       <Card.Title>{movie.Title}</Card.Title>
@@ -260,6 +259,7 @@ export function ProfileView(props) {
                       <Link to={`/movies/${movie._id}`}>
                         <Button variant="link">Open</Button>
                       </Link>
+                      <Button onClick={() => removeFavorite(movie)} >Remove</Button>
                     </Card.Body>
                   </Card>
                 );
@@ -293,4 +293,5 @@ ProfileView.propTypes = {
     FavoriteMovies: PropTypes.array,
   }),
   movies: PropTypes.array.isRequired,
+
 };
