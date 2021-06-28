@@ -281,16 +281,16 @@ export function ProfileView(props) {
 };
 
 
-ProfileView.propTypes = {
-  movies: PropTypes.array.isRequired
-};
-
 // ProfileView.propTypes = {
-//   users: PropTypes.shape({
-//     Username: PropTypes.string.isRequired,
-//     Email: PropTypes.string.isRequired,
-//     Birthdate: PropTypes.string,
-//     FavoriteMovies: PropTypes.array,
-//   }),
-//   movies: PropTypes.array.isRequired,
+//   movies: PropTypes.array.isRequired
 // };
+
+ProfileView.propTypes = {
+  users: PropTypes.shape({
+    Username: PropTypes.string.isRequired,
+    Email: PropTypes.string.isRequired,
+    Birthdate: PropTypes.string,
+    FavoriteMovies: PropTypes.array,
+  }),
+  movies: PropTypes.array.isRequired,
+};
