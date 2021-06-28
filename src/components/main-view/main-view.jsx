@@ -11,6 +11,7 @@ import { MovieView } from '../movie-view/movie-view';
 import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
 import { ProfileView } from '../profile-view/profile-view';
+import { FavoritesView } from '../favorites-view/favorites-view'
 import Config from '../../config.js';
 // import './main-view.scss'
 
@@ -193,9 +194,13 @@ export class MainView extends React.Component {
               <ProfileView onLoggedIn={user => this.onLoggedIn(user)}
                 movies={movies} user={user}
                 // // displays movies
-                favoriteMovies={movies.filter(m => userData.FavoriteMovies.includes(m._id))}
+                favoriteMovies={movies.filter(movie => userData.FavoriteMovies.includes(movie._id))}
                 onBackClick={() => history.goBack()} />
+              {/* <Row className="mt-5" md={8}>
+                <FavoritesView userData={userData} movies={movies} history={history} />
+              </Row> */}
             </Col>
+
           }} />
 
         </Row>
