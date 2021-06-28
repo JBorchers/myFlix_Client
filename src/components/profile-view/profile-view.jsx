@@ -191,7 +191,7 @@ export function ProfileView(props) {
             {/* <p>Username: {`${username}`}</p>
             <p>Email: {`${email}`}</p>
             <p>Birthday: {`${birthdate}`}</p> */}
-            <p>Favorite Movies: {`${favoriteMovies}`}</p>
+            {/* <p>Favorite Movies: {`${favoriteMovies}`}</p> */}
           </Col>
         </Row>
 
@@ -245,7 +245,7 @@ export function ProfileView(props) {
             </Button>
           </Form>
 
-          {/* <Col md={6}>
+          <Col md={6}>
             <div id="favoriteMovies">
 
               <h5>Your Favorite Movies:</h5>
@@ -267,7 +267,7 @@ export function ProfileView(props) {
               })}
 
             </div>
-          </Col> */}
+          </Col>
 
 
         </Col>
