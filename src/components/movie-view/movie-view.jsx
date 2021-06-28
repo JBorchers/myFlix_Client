@@ -62,7 +62,7 @@ export class MovieView extends React.Component {
         </div>
         <div className="movie-description">
           <span className="label">Genre: </span>
-          <Link className="link" to={`movies/genre/${movie.Genre.Name}`}>
+          <Link className="link" to={`/genre/${movie.Genre.Name}`}>
             <span className="value">{movie.Genre}</span>
           </Link>
         </div>
