@@ -22193,7 +22193,7 @@ class MovieCard extends _reactDefault.default.Component {
         // 'movie' is the name of the prop used in <MovieCard … />
         const { movie  } = this.props;
         return(/*#__PURE__*/ _reactDefault.default.createElement(_cardDefault.default, {
-            className: "shadow p-3 mb-5 bg-white rounded",
+            class: "shadow p-3 mb-5 bg-white rounded",
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-card\\movie-card.jsx",
                 lineNumber: 16
@@ -27695,7 +27695,7 @@ function LoginView(props) {
         __self: this
     }), /*#__PURE__*/ _reactDefault.default.createElement("small", {
         id: "emailHelp",
-        className: "form-text text-muted",
+        class: "form-text text-muted",
         __source: {
             fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\login-view\\login-view.jsx",
             lineNumber: 47
@@ -27732,7 +27732,7 @@ function LoginView(props) {
         },
         __self: this
     }), /*#__PURE__*/ _reactDefault.default.createElement("div", {
-        className: "form-check",
+        class: "form-check",
         __source: {
             fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\login-view\\login-view.jsx",
             lineNumber: 56
@@ -27746,7 +27746,7 @@ function LoginView(props) {
         },
         __self: this
     }), /*#__PURE__*/ _reactDefault.default.createElement("label", {
-        className: "form-check-label",
+        class: "form-check-label",
         __source: {
             fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\login-view\\login-view.jsx",
             lineNumber: 58
@@ -27760,7 +27760,7 @@ function LoginView(props) {
         __self: this
     }), /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
         type: "submit",
-        className: "btn btn-primary mb-2",
+        class: "btn btn-primary mb-2",
         onClick: (e)=>handleSubmit(e)
         ,
         __source: {
@@ -40504,4 +40504,4 @@ class FavoritesView extends _reactDefault.default.Component {
 }
 },{"react":"3b2NM","axios":"7rA65","react-bootstrap":"4n7hB","react-router-dom":"1PMSK","@parcel/transformer-js/src/esmodule-helpers.js":"77zDO","../../../../../AppData/Roaming/nvm/v14.16.1/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"3Oiqr"}],"5onr6":[function() {},{}]},["1j6wU","4P6lB","63CEf"], "63CEf", "parcelRequire31da")
 
-//# sourceMappingURL=index.e3b7111a.js.map
+//# sourceMappingURL=index.HASH_REF_089dcf3edcdb77dc17235d32e3b7111a.js.map

@@ -44,7 +44,7 @@ export function LoginView(props) {
           <p>Username:</p>
         </Form.Label>
         <Form.Control type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="Username" />
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
       </Form.Group>
 
       <Form.Group controlId="formPassword">
@@ -53,9 +53,9 @@ export function LoginView(props) {
         </Form.Label>
         <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" />
 
-        <div class="form-check">
+        <div className="form-check">
           <input type="checkbox"></input>
-          <label class="form-check-label">
+          <label className="form-check-label">
             Remember me
           </label>
         </div>
@@ -64,7 +64,7 @@ export function LoginView(props) {
         {/* placeholder link to RegistrationView */}
         {/* <p>Not a member? <a href="#!">Register</a></p> */}
       </div>
-      <Button type="submit" class="btn btn-primary mb-2" onClick={e => handleSubmit(e)}>Submit</Button>
+      <Button type="submit" className="btn btn-primary mb-2" onClick={e => handleSubmit(e)}>Submit</Button>
     </Form>
   )
 }
