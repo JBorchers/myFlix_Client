@@ -16,7 +16,7 @@ export function ProfileView(props) {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [birthdate, setBirthdate] = useState('');
-  const [favoriteMovies, setFavoriteMovies] = useState('');
+  // const [favoriteMovies] = useState('');
 
   // constructor(props) {
   //   super(props);
@@ -33,6 +33,7 @@ export function ProfileView(props) {
   //   };
   // }
 
+  // const { username, email, birthdate, movies, favoriteMovies } = userProfile;
 
 
   // componentDidMount() {
@@ -103,7 +104,8 @@ export function ProfileView(props) {
 
   // remove favorite movie
   function removeFavorite(movie) {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
     const url =
       // or movie.id?
       `${Config.API_URL}/users/${movie}` +
@@ -168,9 +170,14 @@ export function ProfileView(props) {
     return isValid;
   };
 
+  // Filters the movies based on the favorite_movies (array of only movie IDs)
+  // const filteredMovies = movies.filter(movie => {
+  //   return favoriteMovies.indexOf(movie._id) >= 0;
+  // });
+
 
   // render() {
-  const { user, movies } = props;
+  const { user, movies, favoriteMovies } = props;
   // const { UsernameError, EmailError, PasswordError, BirthdateError } = this.state;
   // const FavoriteMovieList = movies.filter((movie) => {
   //   return this.state.FavoriteMovies.includes(movie._id);
@@ -181,10 +188,10 @@ export function ProfileView(props) {
         <h1 className="justify-content-md-center mb-30" md={9}><span className="glyphicon glyphicon-user"></span>Your Profile</h1>
         <Row>
           <Col md={3}>
-            <p>Username: {`${username}`}</p>
+            {/* <p>Username: {`${username}`}</p>
             <p>Email: {`${email}`}</p>
-            <p>Birthday: {`${birthdate}`}</p>
-            {/* <p>Favorite Movies: {`${favoriteMovies}`}</p> */}
+            <p>Birthday: {`${birthdate}`}</p> */}
+            <p>Favorite Movies: {`${favoriteMovies}`}</p>
           </Col>
         </Row>
 
@@ -203,23 +210,33 @@ export function ProfileView(props) {
               <div className="form-group">
                 <label>
                   <p>Password:</p>
-                  <input type="password" onChange={e => setPassword(e.target.value)} placeholder="Change password" />
+                  <input defaultValue={user} type="password" onChange={e => setPassword(e.target.value)} />
                 </label>
               </div>
 
               <div className="form-group">
                 <label>
                   <p>Email:</p>
-                  <input type="text" onChange={e => setEmail(e.target.value)} placeholder="Change email" />
+                  <input defaultValue={user} type="text" onChange={e => setEmail(e.target.value)} />
                 </label>
               </div>
 
               <div className="form-group">
                 <label>
                   <p>Birthdate:</p>
-                  <input type="text" onChange={e => setBirthdate(e.target.value)} placeholder="Change birthdate" />
+                  <input defaultValue={user} type="text" onChange={e => setBirthdate(e.target.value)} />
                 </label>
               </div>
+              {/* <div className="user-info">
+                <div className="user-label">Favorite Movies:</div>
+                <ul className="user">
+                  {favoriteMovies.map((movie, index) =>
+                    <li key={index} className="fav-list">
+                      <Link to={`/movies/${movie._id}`}>{movie.title}</Link>
+                    <button className="close" onClick={() => deleteMovie(movie._id)} >&times;</button>
+                    </li>)}
+                </ul>
+              </div> */}
 
             </div>
             <Button type="submit" className="btn btn-primary mb-2" onClick={handleUpdate}>Update</Button>
@@ -232,18 +249,17 @@ export function ProfileView(props) {
             <div id="favoriteMovies">
 
               <h5>Your Favorite Movies:</h5>
-              {FavoriteMovies.map((movie) => {
+              {favoriteMovies.map((movie) => {
                 return (
-                  <Card id="card" className="movie-card mb-2" text="white">
+                  <Card class="shadow p-3 mb-5 bg-white rounded">
                     <Card.Img variant="top" src={movie.ImagePath} />
                     <Card.Body>
-                      <Link to={`/movies/${movie._id}`} id="link">
-                        {movie.Title}
+                      <Card.Title>{movie.Title}</Card.Title>
+                      <Card.Text>{movie.Description}</Card.Text>
+                      <Card.Text>{movie.ReleaseDate}</Card.Text>
+                      <Link to={`/movies/${movie._id}`}>
+                        <Button variant="link">Open</Button>
                       </Link>
-                      <Button type="button" className="btn btn-white btn-rounded mr-md-3 z-depth-1a"
-                        onClick={removeFavorite(movie)}>
-                      </Button>
-
                     </Card.Body>
                   </Card>
                 );
