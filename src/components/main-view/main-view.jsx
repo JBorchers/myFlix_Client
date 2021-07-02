@@ -119,6 +119,13 @@ export class MainView extends React.Component {
     });
   }
 
+  removeFavoriteMovie = (id) => {
+    let tempObj = { ... this.state.userData }
+    tempObj.FavoriteMovies = tempObj.FavoriteMovies.filter(movie => movie !== id)
+    this.setState({ userData: tempObj })
+
+  }
+
 
   render() {
     const { movies, user, history, userData } = this.state;
@@ -128,7 +135,9 @@ export class MainView extends React.Component {
         <Row className="main-view justify-content-md-center">
           <Container>
             <Navbar bg="dark" variant="dark" fixed="top">
-              <Navbar.Brand>Welcome to MyFlix!</Navbar.Brand>
+              <Link to={`/`}>
+                <Navbar.Brand>Welcome to MyFlix!</Navbar.Brand>
+              </Link>
               <Link to={`/users/${user}`}>
                 <Button variant="link" className="navbar-link text-light">Profile</Button>
               </Link>
@@ -183,7 +192,9 @@ export class MainView extends React.Component {
             if (!user) return
             if (movies.length === 0) return <div className="main-view" />;
             return <Col md={8}>
-              <DirectorView director={movies.find(m => m.Director.Name === match.params.name).Director} onBackClick={() => history.goBack()} />
+              <DirectorView director={movies.find(m => m.Director.Name === match.params.name).Director}
+                directorsMovies={movies.filter(m => m.Director.Name === match.params.name)}
+                onBackClick={() => history.goBack()} />
             </Col>
           }} />
 
@@ -193,6 +204,8 @@ export class MainView extends React.Component {
             return <Col>
               <ProfileView onLoggedIn={user => this.onLoggedIn(user)}
                 movies={movies} user={user}
+                userData={userData}
+                removeFavoriteMovie={this.removeFavoriteMovie}
                 // // displays movies
                 favoriteMovies={movies.filter(movie => userData.FavoriteMovies.includes(movie._id))}
                 onBackClick={() => history.goBack()} />
