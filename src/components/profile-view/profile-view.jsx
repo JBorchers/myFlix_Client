@@ -193,8 +193,8 @@ export function ProfileView(props) {
         <Row>
           <Col md={3}>
             {/* <p>Username: {`${username}`}</p>
-            <p>Email: {`${email}`}</p>
-            <p>Birthday: {`${birthdate}`}</p> */}
+            <p>Email: {`${email}`}</p>*/}
+            <p>Birthday: {`${birthdate}`}</p>
             {/* <p>Favorite Movies: {`${favoriteMovies}`}</p> */}
           </Col>
         </Row>
@@ -228,7 +228,7 @@ export function ProfileView(props) {
               <div className="form-group">
                 <label>
                   <p>Birthdate:</p>
-                  <input type="text" onChange={e => setBirthdate(e.target.value)} />
+                  <input defaultValue={props.userData.Birthdate} type="date" onChange={e => setBirthdate(e.target.value)} />
                 </label>
               </div>
               {/* <div className="user-info">
