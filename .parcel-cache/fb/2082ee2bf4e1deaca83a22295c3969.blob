@@ -39973,12 +39973,6 @@ class GenreView extends _reactDefault.default.Component {
                 lineNumber: 15
             },
             __self: this
-        }, /*#__PURE__*/ _reactDefault.default.createElement("h5", {
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\genre-view\\genre-view.jsx",
-                lineNumber: 16
-            },
-            __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement("span", {
             className: "label",
             __source: {
@@ -39986,7 +39980,14 @@ class GenreView extends _reactDefault.default.Component {
                 lineNumber: 16
             },
             __self: this
-        }, genre.Name, " Films "))), /*#__PURE__*/ _reactDefault.default.createElement("div", {
+        }, genre.Name, " Films "), /*#__PURE__*/ _reactDefault.default.createElement("span", {
+            className: "value",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\genre-view\\genre-view.jsx",
+                lineNumber: 17
+            },
+            __self: this
+        }, genre.Name)), /*#__PURE__*/ _reactDefault.default.createElement("div", {
             className: "genre-description",
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\genre-view\\genre-view.jsx",
@@ -40282,13 +40283,7 @@ function ProfileView(props) {
             lineNumber: 194
         },
         __self: this
-    }, /*#__PURE__*/ _reactDefault.default.createElement("p", {
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 197
-        },
-        __self: this
-    }, "Birthday: ", `${birthdate}`))), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Col, {
+    })), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Col, {
         md: 9,
         __source: {
             fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
@@ -40409,8 +40404,7 @@ function ProfileView(props) {
         },
         __self: this
     }, "Birthdate:"), /*#__PURE__*/ _reactDefault.default.createElement("input", {
-        defaultValue: props.userData.Birthdate,
-        type: "date",
+        type: "text",
         onChange: (e)=>setBirthdate(e.target.value)
         ,
         __source: {
@@ -40698,4 +40692,4 @@ class FavoritesView extends _reactDefault.default.Component {
 }
 },{"react":"3b2NM","axios":"7rA65","react-bootstrap":"4n7hB","react-router-dom":"1PMSK","@parcel/transformer-js/src/esmodule-helpers.js":"77zDO","../../../../../AppData/Roaming/nvm/v14.16.1/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"3Oiqr"}],"5onr6":[function() {},{}]},["1j6wU","4P6lB","63CEf"], "63CEf", "parcelRequire31da")
 
-//# sourceMappingURL=index.e3b7111a.js.map
+//# sourceMappingURL=index.HASH_REF_089dcf3edcdb77dc17235d32e3b7111a.js.map

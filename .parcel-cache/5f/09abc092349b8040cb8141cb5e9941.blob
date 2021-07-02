@@ -40282,13 +40282,7 @@ function ProfileView(props) {
             lineNumber: 194
         },
         __self: this
-    }, /*#__PURE__*/ _reactDefault.default.createElement("p", {
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 197
-        },
-        __self: this
-    }, "Birthday: ", `${birthdate}`))), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Col, {
+    })), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Col, {
         md: 9,
         __source: {
             fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
@@ -40698,4 +40692,4 @@ class FavoritesView extends _reactDefault.default.Component {
 }
 },{"react":"3b2NM","axios":"7rA65","react-bootstrap":"4n7hB","react-router-dom":"1PMSK","@parcel/transformer-js/src/esmodule-helpers.js":"77zDO","../../../../../AppData/Roaming/nvm/v14.16.1/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"3Oiqr"}],"5onr6":[function() {},{}]},["1j6wU","4P6lB","63CEf"], "63CEf", "parcelRequire31da")
 
-//# sourceMappingURL=index.e3b7111a.js.map
+//# sourceMappingURL=index.HASH_REF_089dcf3edcdb77dc17235d32e3b7111a.js.map
