@@ -37,32 +37,6 @@ export class DirectorView extends React.Component {
                 </Col>
               )
             })}
-            {/* {directorsMovies.map((movie) => {
-              // if (m.Director && m.Director.Name === director.Name) {
-              return (
-                <Card className="shadow p-3 mb-5 bg-white rounded">
-                  <Card.Img variant="top" src={movie.ImagePath} />
-                  <Card.Body>
-                    <Row className="director-movies mb-3">
-                      {movies.map(m => {
-                        if (m.Director && m.Director.Name === director.Name) {
-                          return (
-                            <Col className="director-card text-center mb-2" lg={3} md={6} key={m._id}>
-                              <Link to={`/movies/${m._id}`}>test
-
-                              </Link>
-                            </Col>
-                          );
-                        }
-                      })}
-                    </Row>
-                    <Button onClick={() => removeFavorite(movie)} >Remove</Button>
-                  </Card.Body>
-                </Card>
-              );
-
-            })} */}
-
           </div>
         </Col>
 
