@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Config from '../../config.js';
+import { Link } from "react-router-dom";
 
 import './login-view.scss';
 
@@ -65,6 +66,9 @@ export function LoginView(props) {
         {/* <p>Not a member? <a href="#!">Register</a></p> */}
       </div>
       <Button type="submit" className="btn btn-primary mb-2" onClick={e => handleSubmit(e)}>Submit</Button>
+      <div>
+        <Link to={`/register`} type="link" >New? Click here to sign up!</Link>
+      </div>
     </Form>
   )
 }
