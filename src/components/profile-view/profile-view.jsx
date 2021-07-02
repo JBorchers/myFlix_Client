@@ -107,7 +107,7 @@ export function ProfileView(props) {
     const user = localStorage.getItem('user');
     const url =
       // or movie.id?
-      `${Config.API_URL}/users/${username}/movies/${movie._id}` +
+      `${Config.API_URL}/users/${movie._id}` +
       localStorage.getItem("user") +
       "/movies/" +
       movie._id;
@@ -116,10 +116,13 @@ export function ProfileView(props) {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
+        alert(movie.Title + " has been removed from your Favorites.");
+        // localStorage.removeItem("");
+        props.removeFavoriteMovie(movie._id);
         console.log(response);
         // this.componentDidMount();
         // location.reload();
-        alert(movie.Title + " has been removed from your Favorites.");
+
       });
   }
 
@@ -132,7 +135,7 @@ export function ProfileView(props) {
       { headers: { Authorization: `Bearer ${token}` } }
     )
       .then(() => {
-        alert(user + " has been deleted.");
+        alert(user + ", you have deregistered.");
         localStorage.removeItem("user");
         localStorage.removeItem("token");
         window.location.pathname = "/";
@@ -181,6 +184,8 @@ export function ProfileView(props) {
   // const FavoriteMovieList = movies.filter((movie) => {
   //   return this.state.FavoriteMovies.includes(movie._id);
   // });
+  console.log(props.userData);
+
   return (
     <div className="userProfile">
       <Container>
@@ -195,7 +200,7 @@ export function ProfileView(props) {
         </Row>
 
         <Col md={9}>
-          <h5 className="justify-content-md-center mb-30" md={9}><span className="glyphicon glyphicon-user"></span>Update Profile</h5>
+          {/* <h5 className="justify-content-md-center mb-30" md={9}><span className="glyphicon glyphicon-user"></span>Update Profile</h5> */}
           <Form>
             <div className="form-group">
               <label>
@@ -216,14 +221,14 @@ export function ProfileView(props) {
               <div className="form-group">
                 <label>
                   <p>Email:</p>
-                  <input defaultValue={user} type="text" onChange={e => setEmail(e.target.value)} />
+                  <input defaultValue={props.userData.Email} type="email" onChange={e => setEmail(e.target.value)} />
                 </label>
               </div>
 
               <div className="form-group">
                 <label>
                   <p>Birthdate:</p>
-                  <input defaultValue={user} type="text" onChange={e => setBirthdate(e.target.value)} />
+                  <input type="text" onChange={e => setBirthdate(e.target.value)} />
                 </label>
               </div>
               {/* <div className="user-info">
@@ -239,18 +244,19 @@ export function ProfileView(props) {
 
             </div>
             <Button type="submit" className="btn btn-primary mb-2" onClick={handleUpdate}>Update</Button>
-            <Button className='button' variant='danger' onClick={handleDeregister}>
+            <div><Button className='button' variant='danger' onClick={handleDeregister}>
               Click Here to Deregister
             </Button>
+            </div>
           </Form>
 
           <Col md={6}>
             <div id="favoriteMovies">
 
               <h5>Your Favorite Movies:</h5>
-              {favoriteMovies.map((movie) => {
+              {favoriteMovies.map((movie, i) => {
                 return (
-                  <Card className="shadow p-3 mb-5 bg-white rounded">
+                  <Card className="shadow p-3 mb-5 bg-white rounded" key={i}>
                     <Card.Img variant="top" src={movie.ImagePath} />
                     <Card.Body>
                       <Card.Title>{movie.Title}</Card.Title>
