@@ -1,0 +1,208 @@
+var helpers = require("../../../../../AppData/Roaming/nvm/v14.16.1/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+helpers.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _reactRedux = require("react-redux");
+var _button = require("react-bootstrap/Button");
+var _buttonDefault = parcelHelpers.interopDefault(_button);
+var _propTypes = require("prop-types");
+var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
+// Router
+var _reactRouterDom = require("react-router-dom");
+// Style
+var _directorViewScss = require("./director-view.scss");
+// Getting the movie list from store as prop
+const mapStateToProps = (state)=>{
+    const { movies  } = state;
+    return {
+        movies
+    };
+};
+function DirectorView({ director , clickBack , movies  }) {
+    const directorsMovies = movies.filter((m)=>m.director.name === director.name
+    );
+    return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
+        className: "director-view",
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
+            lineNumber: 24
+        },
+        __self: this
+    }, /*#__PURE__*/ _reactDefault.default.createElement("h2", {
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
+            lineNumber: 25
+        },
+        __self: this
+    }, " ", director.name, " "), /*#__PURE__*/ _reactDefault.default.createElement("p", {
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
+            lineNumber: 26
+        },
+        __self: this
+    }, " ", director.bio, " "), /*#__PURE__*/ _reactDefault.default.createElement("div", {
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
+            lineNumber: 28
+        },
+        __self: this
+    }, /*#__PURE__*/ _reactDefault.default.createElement("small", {
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
+            lineNumber: 29
+        },
+        __self: this
+    }, "Birth: "), /*#__PURE__*/ _reactDefault.default.createElement("p", {
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
+            lineNumber: 30
+        },
+        __self: this
+    }, director.birth.slice(0, 10))), /*#__PURE__*/ _reactDefault.default.createElement("div", {
+        className: "director-movies",
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
+            lineNumber: 33
+        },
+        __self: this
+    }, /*#__PURE__*/ _reactDefault.default.createElement("small", {
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
+            lineNumber: 34
+        },
+        __self: this
+    }, "Movies belonging to this director:"), directorsMovies.map((m, i)=>/*#__PURE__*/ _reactDefault.default.createElement("p", {
+            key: m._id,
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
+                lineNumber: 35
+            },
+            __self: this
+        }, " ", /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Link, {
+            to: `/movies/${m._id}`,
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
+                lineNumber: 35
+            },
+            __self: this
+        }, m.title), " ")
+    )), " ", /*#__PURE__*/ _reactDefault.default.createElement("hr", {
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
+            lineNumber: 36
+        },
+        __self: this
+    }), /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
+        variant: "link",
+        onClick: ()=>{
+            clickBack();
+        },
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
+            lineNumber: 37
+        },
+        __self: this
+    }, "Back")));
+}
+_c = DirectorView;
+DirectorView.propTypes = {
+    director: _propTypesDefault.default.shape({
+        name: _propTypesDefault.default.string.isRequired,
+        bio: _propTypesDefault.default.string.isRequired,
+        death: _propTypesDefault.default.oneOfType([
+            _propTypesDefault.default.string,
+            _propTypesDefault.default.bool
+        ])
+    }).isRequired,
+    clickBack: _propTypesDefault.default.func.isRequired,
+    movies: _propTypesDefault.default.array.isRequired
+};
+exports.default = _reactRedux.connect(mapStateToProps)(DirectorView); // import React from 'react';
+ // import Button from 'react-bootstrap/Button';
+ // import PropTypes from 'prop-types';
+ // import { Button, Card, Container, Row, Col } from 'react-bootstrap';
+ // import './director-view.scss';
+ // export class DirectorView extends React.Component {
+ //   render() {
+ //     const { director, onBackClick, movie } = this.props;
+ //     // const directorsMovies = movie.filter(movies => movies.director.Name === director.Name);
+ //     return (
+ //       <div className="director-view">
+ //         <div className="director-name">
+ //           <span className="label">Director: </span>
+ //           <span className="value">{director.Name}</span>
+ //         </div>
+ //         <div className="director-bio">
+ //           <span className="label">Bio: </span>
+ //           <span className="value">{director.Bio}</span>
+ //         </div>
+ //         <div className="director-birth">
+ //           <span className="label">Born: </span>
+ //           <span className="value">{director.Birth}</span>
+ //         </div>
+ //         <Col md={6}>
+ //           <div id="directorsMovies">
+ //             <h5>Movies by this director:</h5>
+ //             {/* {directorsMovies.map((movie) => {
+ //               // if (m.Director && m.Director.Name === director.Name) {
+ //               return (
+ //                 <Card className="shadow p-3 mb-5 bg-white rounded">
+ //                   <Card.Img variant="top" src={movie.ImagePath} />
+ //                   <Card.Body>
+ //                     <Row className="director-movies mb-3">
+ //                       {movies.map(m => {
+ //                         if (m.Director && m.Director.Name === director.Name) {
+ //                           return (
+ //                             <Col className="director-card text-center mb-2" lg={3} md={6} key={m._id}>
+ //                               <Link to={`/movies/${m._id}`}>test
+ //                               </Link>
+ //                             </Col>
+ //                           );
+ //                         }
+ //                       })}
+ //                     </Row>
+ //                     <Button onClick={() => removeFavorite(movie)} >Remove</Button>
+ //                   </Card.Body>
+ //                 </Card>
+ //               );
+ //             })} */}
+ //           </div>
+ //         </Col>
+ //         {/* <div className="director-movies mb-3">
+ //           {directorsMovies.map(m => {
+ //             if (m.Director && m.Director.Name === director.Name) {
+ //               return (
+ //                 <div className="director-card text-center mb-2" lg={3} md={6} key={m._id}>
+ //                   <Link to={`/movies/${m._id}`}>Movies</Link>
+ //                 </div>
+ //               );
+ //             }
+ //           })}
+ //         </div> */}
+ //         <Button variant="secondary" size="sm" onClick={() => { onBackClick(null); }}>Back</Button>
+ //       </div>
+ //     );
+ //   }
+ // }
+ // DirectorView.propTypes = {
+ //   director: PropTypes.shape({
+ //     Name: PropTypes.string.isRequired,
+ //     Bio: PropTypes.string.isRequired,
+ //     Birth: PropTypes.string.isRequired
+ //   }),
+ //   onBackClick: PropTypes.func.isRequired
+ // };
+var _c;
+$RefreshReg$(_c, "DirectorView");
+
+  helpers.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}

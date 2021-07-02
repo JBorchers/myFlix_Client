@@ -1,18 +1,21 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
+import { Button, Card, Container, Row, Col } from 'react-bootstrap';
 import './director-view.scss';
+import { MovieCard } from "../movie-card/movie-card";
 
 export class DirectorView extends React.Component {
 
   render() {
-    const { director, onBackClick, movies } = this.props;
+    const { director, onBackClick, movie, directorsMovies } = this.props;
+    // const directorsMovies = movie.map(movies => movies.director.Name === director.Name);
 
     return (
       <div className="director-view">
         <div className="director-name">
-          <span className="label">Director: </span>
-          <span className="value">{director.Name}</span>
+          {/* <h5><span className="label">Director: </span> */}
+          <h5><span className="value">{director.Name}</span></h5>
         </div>
         <div className="director-bio">
           <span className="label">Bio: </span>
@@ -22,6 +25,58 @@ export class DirectorView extends React.Component {
           <span className="label">Born: </span>
           <span className="value">{director.Birth}</span>
         </div>
+
+        <Col md={6}>
+          <div id="directorsMovies">
+
+            <h5>Movies by this director:</h5>
+            {directorsMovies.map(m => {
+              return (
+                <Col md={12} key={m._id}>
+                  <MovieCard movie={m} />
+                </Col>
+              )
+            })}
+            {/* {directorsMovies.map((movie) => {
+              // if (m.Director && m.Director.Name === director.Name) {
+              return (
+                <Card className="shadow p-3 mb-5 bg-white rounded">
+                  <Card.Img variant="top" src={movie.ImagePath} />
+                  <Card.Body>
+                    <Row className="director-movies mb-3">
+                      {movies.map(m => {
+                        if (m.Director && m.Director.Name === director.Name) {
+                          return (
+                            <Col className="director-card text-center mb-2" lg={3} md={6} key={m._id}>
+                              <Link to={`/movies/${m._id}`}>test
+
+                              </Link>
+                            </Col>
+                          );
+                        }
+                      })}
+                    </Row>
+                    <Button onClick={() => removeFavorite(movie)} >Remove</Button>
+                  </Card.Body>
+                </Card>
+              );
+
+            })} */}
+
+          </div>
+        </Col>
+
+        {/* <div className="director-movies mb-3">
+          {directorsMovies.map(m => {
+            if (m.Director && m.Director.Name === director.Name) {
+              return (
+                <div className="director-card text-center mb-2" lg={3} md={6} key={m._id}>
+                  <Link to={`/movies/${m._id}`}>Movies</Link>
+                </div>
+              );
+            }
+          })}
+        </div> */}
         <Button variant="secondary" size="sm" onClick={() => { onBackClick(null); }}>Back</Button>
       </div>
     );
