@@ -28944,44 +28944,10 @@ function RegistrationView(props) {
     const [password, setPassword] = _react.useState('');
     const [email, setEmail] = _react.useState('');
     const [birthdate, setBirthdate] = _react.useState('');
-    const [usernameError, setUsernameError] = _react.useState({
-    });
-    const [emailError, setEmailError] = _react.useState({
-    });
-    const [passwordError, setPasswordError] = _react.useState({
-    });
-    // const [birthdateError, setBirthdateError] = useState({});
-    const formValidation = ()=>{
-        const usernameError1 = {
-        };
-        const emailError1 = {
-        };
-        const passwordError1 = {
-        };
-        // const birhdateError = {};
-        let isValid = true;
-        if (username.trim().length < 5) {
-            usernameError1.usernameShort = "Must be alphanumeric and contains at least 5 characters";
-            isValid = false;
-        } else if (password.trim().length < 4) {
-            passwordError1.passwordMissing = "You must enter a password with a minimum of 4 characters ";
-            isValid = false;
-        } else if (!email.includes(".") || !email.includes("@")) {
-            emailError1.emailNotEmail = "A valid email address is required.";
-            isValid = false;
-        } else if (birthdate === '') {
-            birhdateError.noBirthdate = "Please enter a birthdate";
-            isValid = false;
-        }
-        setUsernameError(usernameError1);
-        setPasswordError(passwordError1);
-        setEmailError(emailError1);
-        return isValid;
-    };
     const handleSubmit = (e)=>{
         e.preventDefault();
-        let isValid = formValidation();
-        if (isValid) {
+        let setisValid = formValidation();
+        if (setisValid) {
             _axiosDefault.default.post(`${_configJsDefault.default.API_URL}/users`, {
                 Username: username,
                 Password: password,
@@ -28993,20 +28959,74 @@ function RegistrationView(props) {
                 window.open('/', '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
                 alert('You have sucessfully registered.');
             }).catch((e1)=>{
-                console.log('error registering the user');
+                if (error.response && error.response.status === 400) alert('The value you entered is not valid.');
             });
             console.log(username, password, email, birthdate);
-        // props.onRegister(username, password, email, birthdate);
+            props.onRegister(username, password, email, birthdate);
         }
+    };
+    const formValidation = ()=>{
+        const usernameError = {
+        };
+        const emailError = {
+        };
+        const passwordError = {
+        };
+        const birhdateError = {
+        };
+        let isValid = true;
+        if (username.trim().length < 5) {
+            usernameError.usernameShort = "Must be alphanumeric and contains at least 5 characters";
+            isValid = false;
+        } else if (password.trim().length < 4) {
+            passwordError.passwordMissing = "You must enter a password.(minimum 4 characters) ";
+            isValid = false;
+        } else if (!email.includes(".") || !email.includes("@")) {
+            emailError.emailNotEmail = "A valid email address is required.";
+            isValid = false;
+        } else if (birthdate === '') {
+            birhdateError.noBirthdate = "Please enter a birthdate";
+            isValid = false;
+        }
+        return isValid;
     };
     return(/*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default, {
         handleSubmit: handleSubmit,
         __source: {
             fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 76
+            lineNumber: 70
         },
         __self: this
     }, /*#__PURE__*/ _reactDefault.default.createElement("div", {
+        className: "form-group",
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
+            lineNumber: 72
+        },
+        __self: this
+    }, /*#__PURE__*/ _reactDefault.default.createElement("label", {
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
+            lineNumber: 73
+        },
+        __self: this
+    }, /*#__PURE__*/ _reactDefault.default.createElement("p", {
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
+            lineNumber: 74
+        },
+        __self: this
+    }, "Username:"), /*#__PURE__*/ _reactDefault.default.createElement("input", {
+        type: "text",
+        value: username,
+        onChange: (e)=>setUsername(e.target.value)
+        ,
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
+            lineNumber: 75
+        },
+        __self: this
+    }))), /*#__PURE__*/ _reactDefault.default.createElement("div", {
         className: "form-group",
         __source: {
             fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
@@ -29019,148 +29039,92 @@ function RegistrationView(props) {
             lineNumber: 79
         },
         __self: this
-    }, "Username:"), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Control, {
-        type: "text",
-        value: username,
-        placeholder: "Enter a unique username",
-        onChange: (e)=>setUsername(e.target.value)
-        ,
+    }, /*#__PURE__*/ _reactDefault.default.createElement("p", {
         __source: {
             fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
             lineNumber: 80
         },
         __self: this
-    }), Object.keys(usernameError).map((key)=>{
-        return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
-            key: key,
-            style: {
-                color: "red"
-            },
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
-                lineNumber: 83
-            },
-            __self: this
-        }, usernameError[key]));
-    })), /*#__PURE__*/ _reactDefault.default.createElement("div", {
+    }, "Password:"), /*#__PURE__*/ _reactDefault.default.createElement("input", {
+        type: "password",
+        value: password,
+        onChange: (e)=>setPassword(e.target.value)
+        ,
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
+            lineNumber: 81
+        },
+        __self: this
+    }))), /*#__PURE__*/ _reactDefault.default.createElement("div", {
         className: "form-group",
         __source: {
             fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 89
+            lineNumber: 84
         },
         __self: this
     }, /*#__PURE__*/ _reactDefault.default.createElement("label", {
         __source: {
             fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 90
+            lineNumber: 85
         },
         __self: this
     }, /*#__PURE__*/ _reactDefault.default.createElement("p", {
         __source: {
             fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
+            lineNumber: 86
+        },
+        __self: this
+    }, "Email:"), /*#__PURE__*/ _reactDefault.default.createElement("input", {
+        type: "text",
+        value: email,
+        onChange: (e)=>setEmail(e.target.value)
+        ,
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
+            lineNumber: 87
+        },
+        __self: this
+    }))), /*#__PURE__*/ _reactDefault.default.createElement("div", {
+        className: "form-group",
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
             lineNumber: 90
         },
         __self: this
-    }, "Password:")), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Control, {
-        type: "password",
-        value: password,
-        placeholder: "Enter a Password",
-        onChange: (e)=>setPassword(e.target.value)
-        ,
+    }, /*#__PURE__*/ _reactDefault.default.createElement("label", {
         __source: {
             fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
             lineNumber: 91
         },
         __self: this
-    }), Object.keys(passwordError).map((key)=>{
-        return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
-            key: key,
-            style: {
-                color: "red"
-            },
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
-                lineNumber: 95
-            },
-            __self: this
-        }, passwordError[key]));
-    })), /*#__PURE__*/ _reactDefault.default.createElement("div", {
-        className: "form-group",
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 101
-        },
-        __self: this
-    }, /*#__PURE__*/ _reactDefault.default.createElement("label", {
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 102
-        },
-        __self: this
     }, /*#__PURE__*/ _reactDefault.default.createElement("p", {
         __source: {
             fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 102
+            lineNumber: 92
         },
         __self: this
-    }, "Email:")), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Control, {
-        type: "email",
-        value: email,
-        placeholder: "Enter a valid Email (ex. user@email.com)",
-        onChange: (e)=>setEmail(e.target.value)
-        ,
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 103
-        },
-        __self: this
-    }), Object.keys(emailError).map((key)=>{
-        return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
-            key: key,
-            style: {
-                color: "red"
-            },
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
-                lineNumber: 107
-            },
-            __self: this
-        }, emailError[key]));
-    })), /*#__PURE__*/ _reactDefault.default.createElement("div", {
-        className: "form-group",
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 113
-        },
-        __self: this
-    }, /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Label, {
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 114
-        },
-        __self: this
-    }, "Birthday:"), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Control, {
+    }, "Birthdate:"), /*#__PURE__*/ _reactDefault.default.createElement("input", {
         type: "date",
         value: birthdate,
         onChange: (e)=>setBirthdate(e.target.value)
         ,
         __source: {
             fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 115
+            lineNumber: 93
         },
         __self: this
-    })), /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
+    }))), /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
         type: "submit",
         className: "btn btn-primary mb-2",
         onClick: handleSubmit,
         __source: {
             fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 124
+            lineNumber: 96
         },
         __self: this
     }, "Submit")));
 }
-_s(RegistrationView, "YoKWQTTn2fkiq3jz1qv5D0+dQEg=");
+_s(RegistrationView, "TD2fkD1Ab4Kck2JJHVZv+3f7f/8=");
 _c = RegistrationView;
 RegistrationView.propTypes = {
     register: _propTypesDefault.default.shape({
@@ -29168,7 +29132,8 @@ RegistrationView.propTypes = {
         username: _propTypesDefault.default.string.isRequired,
         password: _propTypesDefault.default.string.isRequired,
         birthdate: _propTypesDefault.default.string
-    })
+    }),
+    onRegister: _propTypesDefault.default.func.isRequired
 };
 var _c;
 $RefreshReg$(_c, "RegistrationView");
@@ -40728,4 +40693,4 @@ class FavoritesView extends _reactDefault.default.Component {
 }
 },{"react":"3b2NM","axios":"7rA65","react-bootstrap":"4n7hB","react-router-dom":"1PMSK","@parcel/transformer-js/src/esmodule-helpers.js":"77zDO","../../../../../AppData/Roaming/nvm/v14.16.1/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"3Oiqr"}],"5onr6":[function() {},{}]},["1j6wU","4P6lB","63CEf"], "63CEf", "parcelRequire31da")
 
-//# sourceMappingURL=index.e3b7111a.js.map
+//# sourceMappingURL=index.HASH_REF_089dcf3edcdb77dc17235d32e3b7111a.js.map

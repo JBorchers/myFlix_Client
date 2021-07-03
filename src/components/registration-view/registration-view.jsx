@@ -13,10 +13,45 @@ export function RegistrationView(props) {
   const [email, setEmail] = useState('');
   const [birthdate, setBirthdate] = useState('');
 
+  const [usernameError, setUsernameError] = useState({});
+  const [emailError, setEmailError] = useState({});
+  const [passwordError, setPasswordError] = useState({});
+  // const [birthdateError, setBirthdateError] = useState({});
+
+  const formValidation = () => {
+    const usernameError = {};
+    const emailError = {};
+    const passwordError = {};
+    // const birhdateError = {};
+    let isValid = true;
+
+    if (username.trim().length < 5) {
+      usernameError.usernameShort = "Must be alphanumeric and contains at least 5 characters";
+      isValid = false;
+    }
+    else if (password.trim().length < 4) {
+      passwordError.passwordMissing = "You must enter a password with a minimum of 4 characters ";
+      isValid = false;
+    }
+    else if (!email.includes(".") || !email.includes("@")) {
+      emailError.emailNotEmail = "A valid email address is required.";
+      isValid = false;
+    }
+    else if (birthdate === '') {
+      birhdateError.noBirthdate = "Please enter a birthdate";
+      isValid = false;
+    }
+
+    setUsernameError(usernameError);
+    setPasswordError(passwordError);
+    setEmailError(emailError);
+    return isValid;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    let setisValid = formValidation();
-    if (setisValid) {
+    let isValid = formValidation();
+    if (isValid) {
       axios.post(`${Config.API_URL}/users`, {
         Username: username,
         Password: password,
@@ -30,68 +65,61 @@ export function RegistrationView(props) {
           alert('You have sucessfully registered.');
         })
         .catch(e => {
-          if (error.response && error.response.status === 400) {
-            alert('The value you entered is not valid.')
-          }
+          console.log('error registering the user')
         });
       console.log(username, password, email, birthdate);
-      props.onRegister(username, password, email, birthdate);
+      // props.onRegister(username, password, email, birthdate);
     };
   }
-
-  const formValidation = () => {
-    const usernameError = {};
-    const emailError = {};
-    const passwordError = {};
-    const birhdateError = {};
-    let isValid = true;
-    if (username.trim().length < 5) {
-      usernameError.usernameShort = "Must be alphanumeric and contains at least 5 characters";
-      isValid = false;
-    }
-    else if (password.trim().length < 4) {
-      passwordError.passwordMissing = "You must enter a password.(minimum 4 characters) ";
-      isValid = false;
-    }
-    else if (!email.includes(".") || !email.includes("@")) {
-      emailError.emailNotEmail = "A valid email address is required.";
-      isValid = false;
-    }
-    else if (birthdate === '') {
-      birhdateError.noBirthdate = "Please enter a birthdate";
-      isValid = false;
-    }
-    return isValid;
-  };
-
-
 
   return (
     <Form handleSubmit={handleSubmit}>
       {/* <Form onClick={handleSubmit}> */}
       <div className="form-group">
-        <label>
-          <p>Username:</p>
-          <input type="text" value={username} onChange={e => setUsername(e.target.value)} />
-        </label>
+        <label>Username:</label>
+        <Form.Control type="text" value={username} placeholder="Enter a unique username" onChange={e => setUsername(e.target.value)} />
+        {Object.keys(usernameError).map((key) => {
+          return (
+            <div key={key} style={{ color: "red" }}>
+              {usernameError[key]}
+            </div>
+          );
+        })}
       </div>
       <div className="form-group">
-        <label>
-          <p>Password:</p>
-          <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
-        </label>
+        <label><p>Password:</p></label>
+        <Form.Control type="password" value={password} placeholder="Enter a Password" onChange={e => setPassword(e.target.value)}
+        />
+        {Object.keys(passwordError).map((key) => {
+          return (
+            <div key={key} style={{ color: "red" }}>
+              {passwordError[key]}
+            </div>
+          );
+        })}
       </div>
       <div className="form-group">
-        <label>
-          <p>Email:</p>
-          <input type="text" value={email} onChange={e => setEmail(e.target.value)} />
-        </label>
+        <label><p>Email:</p></label>
+        <Form.Control type="email" value={email} placeholder="Enter a valid Email (ex. user@email.com)" onChange={e => setEmail(e.target.value)}
+        />
+        {Object.keys(emailError).map((key) => {
+          return (
+            <div key={key} style={{ color: "red" }}>
+              {emailError[key]}
+            </div>
+          );
+        })}
       </div>
       <div className="form-group">
-        <label>
-          <p>Birthdate:</p>
-          <input type="date" value={birthdate} onChange={e => setBirthdate(e.target.value)} />
-        </label>
+        <Form.Label>Birthday:</Form.Label>
+        <Form.Control type="date" value={birthdate} onChange={e => setBirthdate(e.target.value)} />
+        {/* {Object.keys(birthdateError).map((key) => { */}
+        {/* return (
+            <div key={key} style={{ color: "red" }}>
+              {birthdateError[key]}
+            </div>
+          );
+        })} */}
       </div>
       <Button type="submit" className="btn btn-primary mb-2" onClick={handleSubmit}>Submit</Button>
     </Form>
@@ -105,5 +133,5 @@ RegistrationView.propTypes = {
     password: PropTypes.string.isRequired,
     birthdate: PropTypes.string,
   }),
-  onRegister: PropTypes.func,
+  // onRegister: PropTypes.func,
 };

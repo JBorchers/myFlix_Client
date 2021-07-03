@@ -28950,7 +28950,6 @@ function RegistrationView(props) {
     });
     const [passwordError, setPasswordError] = _react.useState({
     });
-    // const [birthdateError, setBirthdateError] = useState({});
     const formValidation = ()=>{
         const usernameError1 = {
         };
@@ -28958,13 +28957,14 @@ function RegistrationView(props) {
         };
         const passwordError1 = {
         };
-        // const birhdateError = {};
+        const birhdateError = {
+        };
         let isValid = true;
         if (username.trim().length < 5) {
             usernameError1.usernameShort = "Must be alphanumeric and contains at least 5 characters";
             isValid = false;
         } else if (password.trim().length < 4) {
-            passwordError1.passwordMissing = "You must enter a password with a minimum of 4 characters ";
+            passwordError1.passwordMissing = "You must enter a password.(minimum 4 characters) ";
             isValid = false;
         } else if (!email.includes(".") || !email.includes("@")) {
             emailError1.emailNotEmail = "A valid email address is required.";
@@ -29003,31 +29003,31 @@ function RegistrationView(props) {
         handleSubmit: handleSubmit,
         __source: {
             fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 76
+            lineNumber: 75
         },
         __self: this
     }, /*#__PURE__*/ _reactDefault.default.createElement("div", {
         className: "form-group",
         __source: {
             fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 78
+            lineNumber: 77
         },
         __self: this
     }, /*#__PURE__*/ _reactDefault.default.createElement("label", {
         __source: {
             fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 79
+            lineNumber: 78
         },
         __self: this
     }, "Username:"), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Control, {
         type: "text",
         value: username,
-        placeholder: "Enter a unique username",
+        placeholder: "Enter a valid username of at least 6 characters",
         onChange: (e)=>setUsername(e.target.value)
         ,
         __source: {
             fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 80
+            lineNumber: 79
         },
         __self: this
     }), Object.keys(usernameError).map((key)=>{
@@ -29038,7 +29038,7 @@ function RegistrationView(props) {
             },
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
-                lineNumber: 83
+                lineNumber: 82
             },
             __self: this
         }, usernameError[key]));
@@ -29046,13 +29046,13 @@ function RegistrationView(props) {
         className: "form-group",
         __source: {
             fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 89
+            lineNumber: 88
         },
         __self: this
     }, /*#__PURE__*/ _reactDefault.default.createElement("label", {
         __source: {
             fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 90
+            lineNumber: 89
         },
         __self: this
     }, /*#__PURE__*/ _reactDefault.default.createElement("p", {
@@ -29061,10 +29061,9 @@ function RegistrationView(props) {
             lineNumber: 90
         },
         __self: this
-    }, "Password:")), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Control, {
+    }, "Password:"), /*#__PURE__*/ _reactDefault.default.createElement("input", {
         type: "password",
         value: password,
-        placeholder: "Enter a Password",
         onChange: (e)=>setPassword(e.target.value)
         ,
         __source: {
@@ -29072,29 +29071,46 @@ function RegistrationView(props) {
             lineNumber: 91
         },
         __self: this
-    }), Object.keys(passwordError).map((key)=>{
-        return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
-            key: key,
-            style: {
-                color: "red"
-            },
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
-                lineNumber: 95
-            },
-            __self: this
-        }, passwordError[key]));
-    })), /*#__PURE__*/ _reactDefault.default.createElement("div", {
+    }))), /*#__PURE__*/ _reactDefault.default.createElement("div", {
         className: "form-group",
         __source: {
             fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 101
+            lineNumber: 94
         },
         __self: this
     }, /*#__PURE__*/ _reactDefault.default.createElement("label", {
         __source: {
             fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 102
+            lineNumber: 95
+        },
+        __self: this
+    }, /*#__PURE__*/ _reactDefault.default.createElement("p", {
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
+            lineNumber: 96
+        },
+        __self: this
+    }, "Email:"), /*#__PURE__*/ _reactDefault.default.createElement("input", {
+        type: "text",
+        value: email,
+        onChange: (e)=>setEmail(e.target.value)
+        ,
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
+            lineNumber: 97
+        },
+        __self: this
+    }))), /*#__PURE__*/ _reactDefault.default.createElement("div", {
+        className: "form-group",
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
+            lineNumber: 100
+        },
+        __self: this
+    }, /*#__PURE__*/ _reactDefault.default.createElement("label", {
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
+            lineNumber: 101
         },
         __self: this
     }, /*#__PURE__*/ _reactDefault.default.createElement("p", {
@@ -29103,59 +29119,23 @@ function RegistrationView(props) {
             lineNumber: 102
         },
         __self: this
-    }, "Email:")), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Control, {
-        type: "email",
-        value: email,
-        placeholder: "Enter a valid Email (ex. user@email.com)",
-        onChange: (e)=>setEmail(e.target.value)
-        ,
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 103
-        },
-        __self: this
-    }), Object.keys(emailError).map((key)=>{
-        return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
-            key: key,
-            style: {
-                color: "red"
-            },
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
-                lineNumber: 107
-            },
-            __self: this
-        }, emailError[key]));
-    })), /*#__PURE__*/ _reactDefault.default.createElement("div", {
-        className: "form-group",
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 113
-        },
-        __self: this
-    }, /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Label, {
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 114
-        },
-        __self: this
-    }, "Birthday:"), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Control, {
+    }, "Birthdate:"), /*#__PURE__*/ _reactDefault.default.createElement("input", {
         type: "date",
         value: birthdate,
         onChange: (e)=>setBirthdate(e.target.value)
         ,
         __source: {
             fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 115
+            lineNumber: 103
         },
         __self: this
-    })), /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
+    }))), /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
         type: "submit",
         className: "btn btn-primary mb-2",
         onClick: handleSubmit,
         __source: {
             fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 124
+            lineNumber: 106
         },
         __self: this
     }, "Submit")));
@@ -40728,4 +40708,4 @@ class FavoritesView extends _reactDefault.default.Component {
 }
 },{"react":"3b2NM","axios":"7rA65","react-bootstrap":"4n7hB","react-router-dom":"1PMSK","@parcel/transformer-js/src/esmodule-helpers.js":"77zDO","../../../../../AppData/Roaming/nvm/v14.16.1/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"3Oiqr"}],"5onr6":[function() {},{}]},["1j6wU","4P6lB","63CEf"], "63CEf", "parcelRequire31da")
 
-//# sourceMappingURL=index.e3b7111a.js.map
+//# sourceMappingURL=index.HASH_REF_089dcf3edcdb77dc17235d32e3b7111a.js.map
