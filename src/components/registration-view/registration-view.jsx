@@ -29,12 +29,16 @@ export function RegistrationView(props) {
       usernameError.usernameShort = "Must be alphanumeric and contains at least 5 characters";
       isValid = false;
     }
+    else if (!username.match(/^[0-9a-zA-Z]+$/)) {
+      usernameError.usernameNotAlphanumeric = "Username must only include alphanumeric symbols.";
+      isValid = false;
+    }
     else if (password.trim().length < 4) {
       passwordError.passwordMissing = "You must enter a password with a minimum of 4 characters ";
       isValid = false;
     }
     else if (!email.includes(".") || !email.includes("@")) {
-      emailError.emailNotEmail = "A valid email address is required.";
+      emailError.emailNotEmail = "invalid email";
       isValid = false;
     }
     else if (birthdate === '') {
@@ -131,7 +135,7 @@ RegistrationView.propTypes = {
     email: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,
     password: PropTypes.string.isRequired,
-    birthdate: PropTypes.string,
+    birthdate: PropTypes.instanceOf(Date),
   }),
   // onRegister: PropTypes.func,
 };
