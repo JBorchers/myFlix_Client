@@ -16,7 +16,7 @@ export function ProfileView(props) {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [birthdate, setBirthdate] = useState('');
-  // const [favoriteMovies] = useState('');
+
 
   // constructor(props) {
   //   super(props);
@@ -33,7 +33,7 @@ export function ProfileView(props) {
   //   };
   // }
 
-  // const { username, email, birthdate, movies, favoriteMovies } = userProfile;
+  // const { birthdate } = userData;
 
 
   // componentDidMount() {
@@ -172,10 +172,6 @@ export function ProfileView(props) {
     return isValid;
   };
 
-  // Filters the movies based on the favorite_movies (array of only movie IDs)
-  // const filteredMovies = movies.filter(movie => {
-  //   return favoriteMovies.indexOf(movie._id) >= 0;
-  // });
 
 
   // render() {
@@ -209,8 +205,6 @@ export function ProfileView(props) {
                   placeholder="Change username" />
               </label>
 
-
-
               <div className="form-group">
                 <label>
                   <p>Password:</p>
@@ -231,16 +225,7 @@ export function ProfileView(props) {
                   <input defaultValue={props.userData.Birthdate} type="date" onChange={e => setBirthdate(e.target.value)} />
                 </label>
               </div>
-              {/* <div className="user-info">
-                <div className="user-label">Favorite Movies:</div>
-                <ul className="user">
-                  {favoriteMovies.map((movie, index) =>
-                    <li key={index} className="fav-list">
-                      <Link to={`/movies/${movie._id}`}>{movie.title}</Link>
-                    <button className="close" onClick={() => deleteMovie(movie._id)} >&times;</button>
-                    </li>)}
-                </ul>
-              </div> */}
+
 
             </div>
             <Button type="submit" className="btn btn-primary mb-2" onClick={handleUpdate}>Update</Button>
