@@ -68,31 +68,32 @@ export function RegistrationView(props) {
 
   return (
     <Form handleSubmit={handleSubmit}>
-      <div class="form-group">
+      {/* <Form onClick={handleSubmit}> */}
+      <div className="form-group">
         <label>
           <p>Username:</p>
           <input type="text" value={username} onChange={e => setUsername(e.target.value)} />
         </label>
       </div>
-      <div class="form-group">
+      <div className="form-group">
         <label>
           <p>Password:</p>
           <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
         </label>
       </div>
-      <div class="form-group">
+      <div className="form-group">
         <label>
           <p>Email:</p>
           <input type="text" value={email} onChange={e => setEmail(e.target.value)} />
         </label>
       </div>
-      <div class="form-group">
+      <div className="form-group">
         <label>
           <p>Birthdate:</p>
-          <input type="text" value={birthdate} onChange={e => setBirthdate(e.target.value)} />
+          <input type="date" value={birthdate} onChange={e => setBirthdate(e.target.value)} />
         </label>
       </div>
-      <Button type="submit" class="btn btn-primary mb-2" onClick={handleSubmit}>Submit</Button>
+      <Button type="submit" className="btn btn-primary mb-2" onClick={handleSubmit}>Submit</Button>
     </Form>
   );
 }
@@ -102,7 +103,7 @@ RegistrationView.propTypes = {
     email: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,
     password: PropTypes.string.isRequired,
-    birthdate: PropTypes.instanceOf(Date).isRequired
+    birthdate: PropTypes.string,
   }),
-  onRegister: PropTypes.func.isRequired
+  onRegister: PropTypes.func,
 };
