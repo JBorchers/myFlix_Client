@@ -20,7 +20,10 @@ export class MovieView extends React.Component {
       (response) => {
         console.log(response);
         alert('This movie has been added to your favorites list!');
-      }).catch(
+      }).then(
+        // reloads page after click
+        window.location.reload(false)
+      ).catch(
         function (error) {
           console.log(error)
           alert('There was an error.');
@@ -67,7 +70,7 @@ export class MovieView extends React.Component {
           </Link>
         </div>
         <div className="">
-          <Button className="btn btn-primary mb-2" variant='' onClick={() => this.addFavorite(movie)}>Add to Favorites</Button>
+          <Button className="btn btn-primary mb-2" variant='' onClick={() => this.addFavorite(movie)} >Add to Favorites</Button>
         </div>
         <button onClick={onBackClick}>Back</button>
 
