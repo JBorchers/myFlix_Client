@@ -59,6 +59,7 @@ export class MainView extends React.Component {
         this.setState({
           userData: response.data
         });
+        // this.forceUpdate();
         console.log(response)
       })
       .catch(function (error) {
@@ -99,7 +100,7 @@ export class MainView extends React.Component {
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', authData.user.Username);
     this.getMovies(authData.token);
-    // this.getUsers(authData.token, authData.user.Username);
+    this.getUsers(authData.token, authData.user.Username);
   }
 
 
