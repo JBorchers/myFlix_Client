@@ -37,8 +37,8 @@ export function ProfileView(props) {
 
 
   // componentDidMount() {
-  //   let accessToken = localStorage.getItem('token');
-  //   this.getUsers(accessToken);
+  //   let accessToken = localStorage.getItem('token')
+  //   return getUsers(accessToken);
   // }
 
 
@@ -50,6 +50,7 @@ export function ProfileView(props) {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
+        // window.location.reload(false);
         // this.setState({
         //   Username: response.data.Username,
         //   Password: response.data.Password,
@@ -177,9 +178,10 @@ export function ProfileView(props) {
   // render() {
   const { user, movies, favoriteMovies } = props;
   // const { UsernameError, EmailError, PasswordError, BirthdateError } = this.state;
-  // const FavoriteMovieList = movies.filter((movie) => {
-  //   return this.state.FavoriteMovies.includes(movie._id);
+  // const favoriteMovies = movies.filter(m => {
+  //   return favoriteMoviesList.indexOf(m._id) >= 0;
   // });
+
   console.log(props.userData);
 
   return (
@@ -188,9 +190,10 @@ export function ProfileView(props) {
         <h1 className="justify-content-md-center mb-30" md={9}><span className="glyphicon glyphicon-user"></span>Your Profile</h1>
         <Row>
           <Col md={3}>
+            <p>Update your information</p>
             {/* <p>Username: {`${username}`}</p>
             <p>Email: {`${email}`}</p>*/}
-            <p>Birthday: {`${birthdate}`}</p>
+
             {/* <p>Favorite Movies: {`${favoriteMovies}`}</p> */}
           </Col>
         </Row>
@@ -228,7 +231,7 @@ export function ProfileView(props) {
 
 
             </div>
-            <Button type="submit" className="btn btn-primary mb-2" onClick={handleUpdate}>Update</Button>
+            <Button type="submit" className="btn btn-primary mb-2" onClick={handleUpdate}>Update your information</Button>
             <div><Button className='button' variant='danger' onClick={handleDeregister}>
               Click Here to Deregister
             </Button>
