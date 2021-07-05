@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Form from 'react-bootstrap/Form';
 import { Card, FormControl } from 'react-bootstrap';
 import axios from "axios";
 import Container from "react-bootstrap/Container";
@@ -16,6 +15,10 @@ export function ProfileView(props) {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [birthdate, setBirthdate] = useState('');
+
+  const [usernameError, setUsernameError] = useState({});
+  const [emailError, setEmailError] = useState({});
+  const [passwordError, setPasswordError] = useState({});
 
 
   // constructor(props) {
@@ -77,28 +80,31 @@ export function ProfileView(props) {
     let token = localStorage.getItem("token");
     // console.log({ token });
     let user = localStorage.getItem("user");
-    // console.log(this.state);
-    // let setisValid = this.formValidation();
-    // if (setisValid) {
-    axios.put(`${Config.API_URL}/users/${user}`,
-      {
-        Username: username,
-        Password: password,
-        Email: email,
-        Birthdate: birthdate,
-      },
-      { headers: { Authorization: `Bearer ${token}` } }
-    )
-      .then((response) => {
-        const data = response.data;
-        localStorage.setItem('user', data.Username);
-        console.log(data);
-        alert(user + " has been updated.");
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error.response.data);
-      });
+    let isValid = formValidation();
+    if (isValid) {
+      // console.log(this.state);
+      // let setisValid = this.formValidation();
+      // if (setisValid) {
+      axios.put(`${Config.API_URL}/users/${user}`,
+        {
+          Username: username,
+          Password: password,
+          Email: email,
+          Birthdate: birthdate,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+        .then((response) => {
+          const data = response.data;
+          localStorage.setItem('user', data.Username);
+          console.log(data);
+          alert(user + " has been updated.");
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error.response.data);
+        })
+    };
 
   }
 
@@ -163,13 +169,16 @@ export function ProfileView(props) {
       isValid = false;
     }
     else if (!email.includes(".") || !email.includes("@")) {
-      emailError.emailNotEmail = "A valid email address is required.";
+      emailError.emailNotEmail = "invalid email";
       isValid = false;
     }
     else if (birthdate === '') {
       birhdateError.noBirthdate = "Please enter a birthdate";
       isValid = false;
     }
+    setUsernameError(usernameError);
+    setPasswordError(passwordError);
+    setEmailError(emailError);
     return isValid;
   };
 
@@ -188,49 +197,63 @@ export function ProfileView(props) {
     <div className="userProfile">
       <Container>
         <h1 className="justify-content-md-center mb-30" md={9}><span className="glyphicon glyphicon-user"></span>Your Profile</h1>
-        <Row>
+        {/* <Row>
           <Col md={3}>
             <p>Update your information</p>
             {/* <p>Username: {`${username}`}</p>
             <p>Email: {`${email}`}</p>*/}
 
-            {/* <p>Favorite Movies: {`${favoriteMovies}`}</p> */}
-          </Col>
-        </Row>
+        {/* <p>Favorite Movies: {`${favoriteMovies}`}</p> */}
+        {/* </Col>
+        </Row> */}
 
         <Col md={9}>
           {/* <h5 className="justify-content-md-center mb-30" md={9}><span className="glyphicon glyphicon-user"></span>Update Profile</h5> */}
           <Form>
             <div className="form-group">
-              <label>
-                <p>Username:</p>
-                <input defaultValue={user} type="text" onChange={e => setUsername(e.target.value)}
-                  placeholder="Change username" />
-              </label>
-
-              <div className="form-group">
-                <label>
-                  <p>Password:</p>
-                  <input defaultValue={user} type="password" onChange={e => setPassword(e.target.value)} />
-                </label>
-              </div>
-
-              <div className="form-group">
-                <label>
-                  <p>Email:</p>
-                  <input defaultValue={props.userData.Email} type="email" onChange={e => setEmail(e.target.value)} />
-                </label>
-              </div>
-
-              <div className="form-group">
-                <label>
-                  <p>Birthdate:</p>
-                  <input defaultValue={props.userData.Birthdate} type="date" onChange={e => setBirthdate(e.target.value)} />
-                </label>
-              </div>
-
-
+              <label>Username:</label>
+              <Form.Control type="text" defaultValue={props.userData.Username} onChange={e => setUsername(e.target.value)} />
+              {Object.keys(usernameError).map((key) => {
+                return (
+                  <div key={key} style={{ color: "red" }}>
+                    {usernameError[key]}
+                  </div>
+                );
+              })}
             </div>
+
+            <div className="form-group">
+              <label><p>Password:</p></label>
+              <Form.Control type="password" value={password} placeholder="Enter a new password" onChange={e => setPassword(e.target.value)}
+              />
+              {Object.keys(passwordError).map((key) => {
+                return (
+                  <div key={key} style={{ color: "red" }}>
+                    {passwordError[key]}
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="form-group">
+              <label><p>Email:</p></label>
+              <Form.Control type="email" defaultValue={props.userData.Email} onChange={e => setEmail(e.target.value)}
+              />
+              {Object.keys(emailError).map((key) => {
+                return (
+                  <div key={key} style={{ color: "red" }}>
+                    {emailError[key]}
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="form-group">
+              <Form.Label>Birthday:</Form.Label>
+              <Form.Control type="date" defaultValue={props.userData.Birthdate} onChange={e => setBirthdate(e.target.value)} />
+            </div>
+
+
             <Button type="submit" className="btn btn-primary mb-2" onClick={handleUpdate}>Update your information</Button>
             <div><Button className='button' variant='danger' onClick={handleDeregister}>
               Click Here to Deregister
