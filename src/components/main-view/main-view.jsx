@@ -136,13 +136,13 @@ export class MainView extends React.Component {
           <Container>
             <Navbar bg="dark" variant="dark" fixed="top">
               <Link to={`/`}>
-                <Navbar.Brand>Welcome to MyFlix!</Navbar.Brand>
+                <Navbar.Brand >MyFlix</Navbar.Brand>
               </Link>
               <Link to={`/users/${user}`}>
-                <Button variant="link" className="navbar-link text-light">Profile</Button>
+                <Button variant="link" className="navbar-link text-light ms-auto">Profile</Button>
               </Link>
               <Link to={`/`}>
-                <Button variant="link" className="navbar-link text-light"
+                <Button variant="link" className="navbar-link text-light ms-end"
                   onClick={() => this.onLoggedOut()}
                 >Logout</Button>
               </Link >
