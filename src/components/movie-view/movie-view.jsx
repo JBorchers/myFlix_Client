@@ -46,11 +46,11 @@ export class MovieView extends React.Component {
           <img src={movie.ImagePath} />
         </div>
         <div className="movie-title">
-          <span className="label">Title: </span>
-          <span className="value">{movie.Title}</span>
+          {/* <span className="label">Title: </span> */}
+          <span className="value display-4 text-muted">{movie.Title}</span>
         </div>
         <div className="movie-description">
-          <span className="label">Release Date: </span>
+          <span className="label">Released in </span>
           <span className="value">{movie.ReleaseDate}</span>
         </div>
         <div className="movie-description">
@@ -70,9 +70,9 @@ export class MovieView extends React.Component {
           </Link>
         </div>
         <div className="">
-          <Button className="btn btn-primary mb-2" variant='' onClick={() => this.addFavorite(movie)} >Add to Favorites</Button>
+          <Button variant='info' onClick={() => this.addFavorite(movie)} >Add to Favorites</Button>
         </div>
-        <button onClick={onBackClick}>Back</button>
+        <Button variant='light' onClick={onBackClick}>Back</Button>
 
       </div>
     );
