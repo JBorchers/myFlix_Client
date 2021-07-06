@@ -196,7 +196,7 @@ export function ProfileView(props) {
   return (
     <div className="userProfile">
       <Container>
-        <h1 className="justify-content-md-center mb-30" md={9}><span className="glyphicon glyphicon-user"></span>Your Profile</h1>
+        <h1 className="display-4 text-muted">Your Profile</h1>
         {/* <Row>
           <Col md={3}>
             <p>Update your information</p>
@@ -254,17 +254,18 @@ export function ProfileView(props) {
             </div>
 
 
-            <Button type="submit" className="btn btn-primary mb-2" onClick={handleUpdate}>Update your information</Button>
-            <div><Button className='button' variant='danger' onClick={handleDeregister}>
+            <Button type="submit" className='button' variant='info' onClick={handleUpdate}>Update your information</Button>
+            <Button className='button' variant='outline-danger' onClick={handleDeregister}>
               Click Here to Deregister
             </Button>
-            </div>
+
           </Form>
 
-          <Col md={6}>
+          <h3 className="display-4 text-muted">MyFlix Favorites:</h3>
+          <Col className="col-6 col-md-6">
             <div id="favoriteMovies">
 
-              <h5>Your Favorite Movies:</h5>
+
               {favoriteMovies.map((movie, i) => {
                 return (
                   <Card className="shadow p-3 mb-5 bg-white rounded" key={i}>
@@ -274,9 +275,9 @@ export function ProfileView(props) {
                       <Card.Text>{movie.Description}</Card.Text>
                       <Card.Text>{movie.ReleaseDate}</Card.Text>
                       <Link to={`/movies/${movie._id}`}>
-                        <Button variant="link">Open</Button>
+                        <Button variant="info">Open</Button>
                       </Link>
-                      <Button onClick={() => removeFavorite(movie)} >Remove</Button>
+                      <Button variant="danger" onClick={() => removeFavorite(movie)} >Remove</Button>
                     </Card.Body>
                   </Card>
                 );
