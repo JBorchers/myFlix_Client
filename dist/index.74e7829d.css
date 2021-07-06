@@ -2,12 +2,19 @@
   transform: scale(1.03);
   transition: 0.1s ease-in-out;
 }
-
+.border {
+  margin: 15px;
+}
 
 
 
 body {
-  margin-top: 20px;
+  padding-top: 100px;
+  padding-bottom: 15px;
+}
+
+.btn {
+  margin: 7px;
 }
 .my-flix {
   color: steelblue;

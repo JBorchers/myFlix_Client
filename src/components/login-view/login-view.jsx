@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Config from '../../config.js';
 import { Link } from "react-router-dom";
+import Container from "react-bootstrap/Container";
 
 import './login-view.scss';
 
@@ -39,37 +40,40 @@ export function LoginView(props) {
   };
 
   return (
-    <Form>
-      <Form.Group controlId="formUsername">
-        <Form.Label>
-          <p>Username:</p>
-        </Form.Label>
-        <Form.Control type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="Username" />
-        <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
-      </Form.Group>
+    <Container>
+      <h1 className="display-4 text-muted">Welcome to MyFlix!</h1>
+      <Form>
+        <Form.Group controlId="formUsername">
+          <Form.Label>
+            <p>Username:</p>
+          </Form.Label>
+          <Form.Control type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="Username" />
+          <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
+        </Form.Group>
 
-      <Form.Group controlId="formPassword">
-        <Form.Label>
-          <p>Password:</p>
-        </Form.Label>
-        <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" />
+        <Form.Group controlId="formPassword">
+          <Form.Label>
+            <p>Password:</p>
+          </Form.Label>
+          <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" />
 
-        <div className="form-check">
-          <input type="checkbox"></input>
-          <label className="form-check-label">
-            Remember me
-          </label>
+          {/* <div className="form-check">
+            <input type="checkbox"></input>
+            <label className="form-check-label">
+              Remember me
+            </label>
+          </div> */}
+        </Form.Group>
+        <div>
+          {/* placeholder link to RegistrationView */}
+          {/* <p>Not a member? <a href="#!">Register</a></p> */}
         </div>
-      </Form.Group>
-      <div>
-        {/* placeholder link to RegistrationView */}
-        {/* <p>Not a member? <a href="#!">Register</a></p> */}
-      </div>
-      <Button type="submit" className="btn btn-primary mb-2" onClick={e => handleSubmit(e)}>Submit</Button>
-      <div>
-        <Link to={`/register`} type="link" >New? Click here to sign up!</Link>
-      </div>
-    </Form>
+        <Button type="submit" variant="info" onClick={e => handleSubmit(e)}>Submit</Button>
+        <div>
+          <Link to={`/register`} type="link" >New? Click here to sign up!</Link>
+        </div>
+      </Form>
+    </Container>
   )
 }
 
