@@ -1,8 +1,14 @@
 import React from 'react';
 import axios from 'axios';
 
+import { connect } from 'react-redux';
+
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
+
+import { setMovies } from '../../actions/actions';
+
+import MoviesList from '../movies-list/movies-list';
 
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
@@ -22,13 +28,13 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import CardDeck from 'react-bootstrap/CardDeck';
 
-export class MainView extends React.Component {
+class MainView extends React.Component {
 
   // Initial state is set to null
   constructor() {
     super();
     this.state = {
-      movies: [],
+      // movies: [],
       user: null,
       userData: {}
     }
@@ -39,15 +45,21 @@ export class MainView extends React.Component {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(response => {
-        // Assign the result to the state
-        this.setState({
-          movies: response.data
-        });
+        this.props.setMovies(response.data);
       })
       .catch(function (error) {
         console.log(error);
       });
   }
+  // Assign the result to the state
+  //       this.setState({
+  //         movies: response.data
+  //       });
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  // }
 
   getUsers(token, user) {
     axios.get(`${Config.API_URL}/users/${user}`, {
@@ -128,7 +140,9 @@ export class MainView extends React.Component {
 
 
   render() {
-    const { movies, user, history, userData } = this.state;
+    // const { movies, user, history, userData } = this.state;
+    const { user, history, userData } = this.state;
+    const { movies } = this.props;
 
     return (
       <Router>
@@ -154,12 +168,21 @@ export class MainView extends React.Component {
             if (!user) return <Col>
               <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
             </Col>
+            if (movies.length === 0) return <div className="main-view" />;
+            return <MoviesList movies={movies} />;
+          }} />
+
+          {/* main view */}
+          {/* <Route exact path="/" render={() => {
+            if (!user) return <Col>
+              <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+            </Col>
             return movies.map(m => (
               <Col md={3} key={m._id}>
                 <MovieCard movie={m} />
               </Col>
             ))
-          }} />
+          }} /> */}
 
           {/* registration view */}
           <Route path="/register" render={() => {
@@ -224,57 +247,11 @@ export class MainView extends React.Component {
   }
 }
 
-// // simplified with ternary operator
-// render() {
-//   const { movies, selectedMovie, user, register } = this.state;
+let mapStateToProps = state => {
+  return { movies: state.movies }
+}
 
-// // if there is no user, the LoginView is rendered
-// // if user is loggin in, user details are passed as a prop to the LoginView
-// if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
-
-// if (this.state.user === null)
-//   return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />;
-
-// if (!register) return <RegistrationView onRegister={register => this.onRegister(register)} />;
-
-// // Before the movies have been loaded
-// if (movies.length === 0) return <div className="main-view" />;
-
-//     return (
-//       <div className="main-view">
-//         {/* If the state of `selectedMovie` is not null,
-//         that selected movie will be returned
-//         otherwise, all movies will be returned */}
-//         {selectedMovie
-//           ? (
-//             <Container>
-//               <Card class="shadow-lg p-3 mb-5 bg-white rounded">
-//                 <Row md={{ cols: 2 }} className="justify-content-md-center cols: 2">
-//                   <Col md={3} className="container-fluid cols: 2">
-//                     <MovieView class="shadow p-3 mb-5 bg-white rounded" movie={selectedMovie} onBackClick={newSelectedMovie => { this.setSelectedMovie(newSelectedMovie); }} />
-//                   </Col>
-//                 </Row>
-//               </Card>
-//             </Container>
-
-//           )
-//           : (
-//             <Container>
-//               <CardDeck class="shadow-lg p-3 mb-5 bg-white rounded">
-//                 <Row md={{ cols: 2 }} className="justify-content-md-center cols: 2">
-//                   <Col md={5} className="cols: 2" class="shadow-lg p-3 mb-5 bg-white rounded">
-//                     {movies.map(movie => (
-//                       <MovieCard key={movie._id} movie={movie} onMovieClick={newSelectedMovie => { this.setSelectedMovie(newSelectedMovie); }} />
-//                     ))}
-//                   </Col>
-//                 </Row>
-//               </CardDeck>
-//             </Container>
-//           )
-//         }
-//       </div>
-//     );
-//   }
-// }
-
-export default MainView;
+// wraps any stateful component to connect to a store
+// follows this syntax:
+// function connect(mapStateToProps?, mapDispatchToProps?, mergeProps?, options?)
+export default connect(mapStateToProps, { setMovies })(MainView);
