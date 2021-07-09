@@ -47,36 +47,38 @@ export class MovieView extends React.Component {
         <div className="movie-poster">
           <img src={movie.ImagePath} />
         </div>
-        <div className="movie-title">
-          {/* <span className="label">Title: </span> */}
-          <span className="value display-4 text-white">{movie.Title}</span>
-        </div>
-        <div className="movie-description">
-          <span className="label">Released in </span>
-          <span className="value">{movie.ReleaseDate}</span>
-        </div>
-        <div className="movie-description">
-          <span className="label">Description: </span>
-          <span className="value">{movie.Description}</span>
-        </div>
-        <div className="movie-description">
-          <span className="label">Director: </span>
-          <Link className="link" to={`/directors/${movie.Director.Name}`}>
-            <span className="value">{movie.Director.Name}</span>
-          </Link>
-        </div>
-        <div className="movie-description">
-          <span className="label">Genre: </span>
-          <Link className="link" to={`/genre/${movie.Genre.Name}`}>
-            <span className="value">{movie.Genre.Name}</span>
-          </Link>
-        </div>
-        <div className="">
-          <Button variant='info' onClick={() => this.addFavorite(movie)} >Add to Favorites</Button>
-        </div>
-        <Button variant='info' onClick={onBackClick}>Back</Button>
+        <div className="movie-info">
+          <h1 className="movie-title">
+            {/* <span className="label">Title: </span> */}
+            <span className="value display-4 text-white">{movie.Title}</span>
+          </h1>
+          <h4 className="movie-description">
+            {/* <span className="label">Released in </span> */}
+            <span className="value">{movie.ReleaseDate}</span>
+          </h4>
+          <h4 className="movie-description">
+            <span className="label">Description: </span>
+            <span className="value">{movie.Description}</span>
+          </h4>
+          <h4 className="movie-description">
+            <span className="label">Director: </span>
+            <Link className="link" to={`/directors/${movie.Director.Name}`}>
+              <span className="value">{movie.Director.Name}</span>
+            </Link>
+          </h4>
+          <h4 className="movie-description">
+            <span className="label">Genre: </span>
+            <Link className="link" to={`/genre/${movie.Genre.Name}`}>
+              <span className="value">{movie.Genre.Name}</span>
+            </Link>
+          </h4>
+          <div className="">
+            <Button variant='info' onClick={() => this.addFavorite(movie)} >Add to Favorites</Button>
+          </div>
+          <Button variant='info' onClick={onBackClick}>Back</Button>
 
-      </div>
+        </div>
+      </div >
     );
   }
 };

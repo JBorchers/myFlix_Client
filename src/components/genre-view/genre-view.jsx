@@ -13,17 +13,19 @@ export class GenreView extends React.Component {
     return (
       <div className="genre-view">
         <div className="genre-name">
-          <h5><span className="label">{genre.Name} Films </span></h5>
+          <h1><span className="value display-4 text-white">{genre.Name} Films </span></h1>
           {/* <span className="value">{genre.Name}</span> */}
         </div>
-        <div className="genre-description">
-          <span className="label">Description: </span>
+        <h4 className="genre-description">
+          {/* <span className="label">Description: </span> */}
           <span className="value">{genre.Description}</span>
-        </div>
+        </h4>
+        <p> </p>
+        <h4>Featured movies in this genre:</h4>
         <Col md={6}>
           <div id="genresMovies">
 
-            <h5>Movies in this genre:</h5>
+            {/* <h5>Movies in this genre:</h5> */}
             {genresMovies.map(m => {
               return (
                 <Col md={12} key={m._id}>

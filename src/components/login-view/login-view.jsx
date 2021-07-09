@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import Config from '../../config.js';
 import { Link } from "react-router-dom";
 import Container from "react-bootstrap/Container";
+import { Button, Form, Col, Row } from "react-bootstrap";
 
 import './login-view.scss';
 
@@ -41,38 +40,40 @@ export function LoginView(props) {
 
   return (
     <Container>
-      <h1 className="display-4 text-white">Welcome to MyFlix!</h1>
-      <Form>
-        <Form.Group controlId="formUsername">
-          {/* <Form.Label>
+      <Col md={6}>
+        <h1 className="display-4 text-white">Welcome to MyFlix!</h1>
+        <Form>
+          <Form.Group controlId="formUsername">
+            {/* <Form.Label>
             <p>Username:</p>
           </Form.Label> */}
-          <Form.Control type="text" className="shadow p-3 bg-white rounded" value={username} onChange={e => setUsername(e.target.value)} placeholder="Username" />
-          <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
-        </Form.Group>
+            <Form.Control type="text" className="shadow p-3 bg-white rounded" value={username} onChange={e => setUsername(e.target.value)} placeholder="Username" />
+            <small id="emailHelp" className="form-text">We'll never share your email with anyone else.</small>
+          </Form.Group>
 
-        <Form.Group controlId="formPassword">
-          {/* <Form.Label>
+          <Form.Group controlId="formPassword">
+            {/* <Form.Label>
             <p>Password:</p>
           </Form.Label> */}
-          <Form.Control type="password" className="shadow p-3 bg-white rounded" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" />
+            <Form.Control type="password" className="shadow p-3 bg-white rounded" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" />
 
-          {/* <div className="form-check">
+            {/* <div className="form-check">
             <input type="checkbox"></input>
             <label className="form-check-label">
               Remember me
             </label>
           </div> */}
-        </Form.Group>
-        <div>
-          {/* placeholder link to RegistrationView */}
-          {/* <p>Not a member? <a href="#!">Register</a></p> */}
-        </div>
-        <Button type="submit" variant="info" className="shadow" onClick={e => handleSubmit(e)}>Submit</Button>
-        <Link to={`/register`} >
-          <Button variant="info" className="shadow">New? Click here to sign up!</Button>
-        </Link>
-      </Form>
+          </Form.Group>
+          <div>
+            {/* placeholder link to RegistrationView */}
+            {/* <p>Not a member? <a href="#!">Register</a></p> */}
+          </div>
+          <Button type="submit" variant="info" className="shadow" onClick={e => handleSubmit(e)}>Submit</Button>
+          <Link to={`/register`} >
+            <Button variant="info" className="shadow">New? Click here to sign up!</Button>
+          </Link>
+        </Form>
+      </Col>
     </Container>
   )
 }

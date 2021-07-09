@@ -196,7 +196,7 @@ export function ProfileView(props) {
   return (
     <div className="userProfile">
       <Container>
-        <h1 className="display-4 text-muted">Your Profile</h1>
+        <h1 className="display-4 text-white">Your Profile</h1>
         {/* <Row>
           <Col md={3}>
             <p>Update your information</p>
@@ -211,7 +211,7 @@ export function ProfileView(props) {
           {/* <h5 className="justify-content-md-center mb-30" md={9}><span className="glyphicon glyphicon-user"></span>Update Profile</h5> */}
           <Form>
             <div className="form-group">
-              <label>Username:</label>
+              <label><h3 className="text-white">Username:</h3></label>
               <Form.Control type="text" defaultValue={props.userData.Username} onChange={e => setUsername(e.target.value)} />
               {Object.keys(usernameError).map((key) => {
                 return (
@@ -223,20 +223,7 @@ export function ProfileView(props) {
             </div>
 
             <div className="form-group">
-              <label><p>Password:</p></label>
-              <Form.Control type="password" value={password} placeholder="Enter a new password" onChange={e => setPassword(e.target.value)}
-              />
-              {Object.keys(passwordError).map((key) => {
-                return (
-                  <div key={key} style={{ color: "red" }}>
-                    {passwordError[key]}
-                  </div>
-                );
-              })}
-            </div>
-
-            <div className="form-group">
-              <label><p>Email:</p></label>
+              <label><h3 className="text-white">Email:</h3></label>
               <Form.Control type="email" defaultValue={props.userData.Email} onChange={e => setEmail(e.target.value)}
               />
               {Object.keys(emailError).map((key) => {
@@ -249,19 +236,32 @@ export function ProfileView(props) {
             </div>
 
             <div className="form-group">
-              <Form.Label>Birthday:</Form.Label>
+              <Form.Label><h3 className="text-white">Birthday</h3></Form.Label>
               <Form.Control type="date" defaultValue={props.userData.Birthdate} onChange={e => setBirthdate(e.target.value)} />
+            </div>
+
+            <div className="form-group">
+              <label><h3 className="text-white">Password</h3></label>
+              <Form.Control type="password" value={password} placeholder="Enter a new password" onChange={e => setPassword(e.target.value)}
+              />
+              {Object.keys(passwordError).map((key) => {
+                return (
+                  <div key={key} style={{ color: "red" }}>
+                    {passwordError[key]}
+                  </div>
+                );
+              })}
             </div>
 
 
             <Button type="submit" className='button' variant='info' onClick={handleUpdate}>Update your information</Button>
-            <Button className='button' variant='outline-danger' onClick={handleDeregister}>
+            <Button className='button' variant='danger' onClick={handleDeregister}>
               Click Here to Deregister
             </Button>
 
           </Form>
 
-          <h3 className="display-4 text-muted">MyFlix Favorites:</h3>
+          <h1 className="display-4 text-white">MyFlix Favorites:</h1>
           <Col className="col-6 col-md-6">
             <div id="favoriteMovies">
 

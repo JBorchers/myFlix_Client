@@ -21,7 +21,7 @@ function movies(state = [], action) {
       return action.value;
     // case ADD_MOVIE:
     //   return action.value;
-    // case DELET_MOVIE:
+    // case DELETE_MOVIE:
     //   return action.value;
     default:
       return state;

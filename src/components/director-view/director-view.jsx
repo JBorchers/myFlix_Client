@@ -12,23 +12,26 @@ export class DirectorView extends React.Component {
 
     return (
       <div className="director-view">
-        <div className="director-name">
+        <h1 className="director-name">
           {/* <h5><span className="label">Director: </span> */}
-          <h5><span className="value">{director.Name}</span></h5>
-        </div>
-        <div className="director-bio">
-          <span className="label">Bio: </span>
+          <h1><span className="value display-4 text-white">{director.Name}</span></h1>
+        </h1>
+        <h4 className="director-bio">
+          {/* <span className="label">Bio: </span> */}
           <span className="value">{director.Bio}</span>
-        </div>
-        <div className="director-birth">
+        </h4>
+        <h4 className="director-birth">
           <span className="label">Born: </span>
           <span className="value">{director.Birth}</span>
+        </h4>
+        <div>
+          <h4>Featured Movies:</h4>
         </div>
 
         <Col md={6}>
           <div id="directorsMovies">
 
-            <h5>Movies by this director:</h5>
+            {/* <h5>Movies by this director:</h5> */}
             {directorsMovies.map(m => {
               return (
                 <Col md={12} key={m._id}>
