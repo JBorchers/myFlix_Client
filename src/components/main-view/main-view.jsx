@@ -148,10 +148,12 @@ class MainView extends React.Component {
       <Router>
         <Row className="main-view justify-content-md-center">
           <Container>
-            <Navbar bg="dark" variant="dark" fixed="top">
-              <Link to={`/`}>
-                <Navbar.Brand >MyFlix</Navbar.Brand>
-              </Link>
+            <Navbar bg="dark" variant="dark" fixed="top" className="shadow">
+              <Button variant="link" className="navbar-link ms-auto">
+                <Link to={`/`}>
+                  <Navbar.Brand >MyFlix</Navbar.Brand>
+                </Link>
+              </Button>
               <Link to={`/users/${user}`}>
                 <Button variant="link" className="navbar-link text-light ms-auto">Profile</Button>
               </Link>

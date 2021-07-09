@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Config from '../../config.js';
 
 import './registration-view.scss';
+import { Container } from 'react-bootstrap';
 
 export function RegistrationView(props) {
   const [username, setUsername] = useState('');
@@ -77,56 +78,59 @@ export function RegistrationView(props) {
   }
 
   return (
-    <Form handleSubmit={handleSubmit}>
-      {/* <Form onClick={handleSubmit}> */}
-      <div className="form-group">
-        <label>Username:</label>
-        <Form.Control type="text" value={username} placeholder="Enter a unique username" onChange={e => setUsername(e.target.value)} />
-        {Object.keys(usernameError).map((key) => {
-          return (
-            <div key={key} style={{ color: "red" }}>
-              {usernameError[key]}
-            </div>
-          );
-        })}
-      </div>
-      <div className="form-group">
-        <label><p>Password:</p></label>
-        <Form.Control type="password" value={password} placeholder="Enter a Password" onChange={e => setPassword(e.target.value)}
-        />
-        {Object.keys(passwordError).map((key) => {
-          return (
-            <div key={key} style={{ color: "red" }}>
-              {passwordError[key]}
-            </div>
-          );
-        })}
-      </div>
-      <div className="form-group">
-        <label><p>Email:</p></label>
-        <Form.Control type="email" value={email} placeholder="Enter a valid Email (ex. user@email.com)" onChange={e => setEmail(e.target.value)}
-        />
-        {Object.keys(emailError).map((key) => {
-          return (
-            <div key={key} style={{ color: "red" }}>
-              {emailError[key]}
-            </div>
-          );
-        })}
-      </div>
-      <div className="form-group">
-        <Form.Label>Birthday:</Form.Label>
-        <Form.Control type="date" value={birthdate} onChange={e => setBirthdate(e.target.value)} />
-        {/* {Object.keys(birthdateError).map((key) => { */}
-        {/* return (
+    <Container>
+      <h1 className="display-4 text-white">Sign Up for MyFlix!</h1>
+      <Form handleSubmit={handleSubmit}>
+        {/* <Form onClick={handleSubmit}> */}
+        <div className="form-group">
+          {/* <label>Username:</label> */}
+          <Form.Control type="text" value={username} className="shadow p-3 bg-white rounded" placeholder="Enter a unique username" onChange={e => setUsername(e.target.value)} />
+          {Object.keys(usernameError).map((key) => {
+            return (
+              <div key={key} style={{ color: "red" }}>
+                {usernameError[key]}
+              </div>
+            );
+          })}
+        </div>
+        <div className="form-group">
+          {/* <label><p>Password:</p></label> */}
+          <Form.Control type="password" value={password} placeholder="Enter a Password" className="shadow p-3 bg-white rounded" onChange={e => setPassword(e.target.value)}
+          />
+          {Object.keys(passwordError).map((key) => {
+            return (
+              <div key={key} style={{ color: "red" }}>
+                {passwordError[key]}
+              </div>
+            );
+          })}
+        </div>
+        <div className="form-group">
+          {/* <label><p>Email:</p></label> */}
+          <Form.Control type="email" value={email} className="shadow p-3 bg-white rounded" placeholder="Enter a valid Email (ex. user@email.com)" onChange={e => setEmail(e.target.value)}
+          />
+          {Object.keys(emailError).map((key) => {
+            return (
+              <div key={key} style={{ color: "red" }}>
+                {emailError[key]}
+              </div>
+            );
+          })}
+        </div>
+        <div className="form-group">
+          <Form.Label>Birthday:</Form.Label>
+          <Form.Control type="date" value={birthdate} className="shadow p-3 bg-white rounded" onChange={e => setBirthdate(e.target.value)} />
+          {/* {Object.keys(birthdateError).map((key) => { */}
+          {/* return (
             <div key={key} style={{ color: "red" }}>
               {birthdateError[key]}
             </div>
           );
         })} */}
-      </div>
-      <Button type="submit" className="btn btn-primary mb-2" onClick={handleSubmit}>Submit</Button>
-    </Form>
+        </div>
+        <Button type="submit" variant="info" className="shadow" onClick={handleSubmit}>Submit</Button>
+      </Form>
+    </Container>
   );
 }
 

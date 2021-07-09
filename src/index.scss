@@ -3,3 +3,10 @@ $color: steelblue;
 .my-flix {
   color: $color;
 }
+
+body {
+  background-image: url("https://s3.amazonaws.com/shecodesio-production/uploads/files/000/012/593/original/iStock-860568118.jpg?1625787844");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}

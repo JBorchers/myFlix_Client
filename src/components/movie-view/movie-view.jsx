@@ -5,6 +5,8 @@ import axios from "axios";
 import Config from '../../config.js';
 import { Link } from "react-router-dom";
 
+// import './movie-view.scss';
+
 export class MovieView extends React.Component {
 
   keypressCallback(event) {
@@ -47,7 +49,7 @@ export class MovieView extends React.Component {
         </div>
         <div className="movie-title">
           {/* <span className="label">Title: </span> */}
-          <span className="value display-4 text-muted">{movie.Title}</span>
+          <span className="value display-4 text-white">{movie.Title}</span>
         </div>
         <div className="movie-description">
           <span className="label">Released in </span>
@@ -72,7 +74,7 @@ export class MovieView extends React.Component {
         <div className="">
           <Button variant='info' onClick={() => this.addFavorite(movie)} >Add to Favorites</Button>
         </div>
-        <Button variant='light' onClick={onBackClick}>Back</Button>
+        <Button variant='info' onClick={onBackClick}>Back</Button>
 
       </div>
     );
