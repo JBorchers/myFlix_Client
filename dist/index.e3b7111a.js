@@ -39900,30 +39900,24 @@ class DirectorView extends _reactDefault.default.Component {
                 lineNumber: 25
             },
             __self: this
-        }, director.Birth)), /*#__PURE__*/ _reactDefault.default.createElement("div", {
+        }, director.Birth)), /*#__PURE__*/ _reactDefault.default.createElement("h4", {
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
                 lineNumber: 27
             },
             __self: this
-        }, /*#__PURE__*/ _reactDefault.default.createElement("h4", {
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
-                lineNumber: 28
-            },
-            __self: this
-        }, "Featured Movies:")), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Col, {
+        }, "Featured Movies:"), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Col, {
             md: 6,
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
-                lineNumber: 31
+                lineNumber: 29
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement("div", {
             id: "directorsMovies",
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
-                lineNumber: 32
+                lineNumber: 30
             },
             __self: this
         }, directorsMovies.map((m)=>{
@@ -39932,14 +39926,14 @@ class DirectorView extends _reactDefault.default.Component {
                 key: m._id,
                 __source: {
                     fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
-                    lineNumber: 37
+                    lineNumber: 35
                 },
                 __self: this
             }, /*#__PURE__*/ _reactDefault.default.createElement(_movieCard.MovieCard, {
                 movie: m,
                 __source: {
                     fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
-                    lineNumber: 38
+                    lineNumber: 36
                 },
                 __self: this
             })));
@@ -39951,7 +39945,7 @@ class DirectorView extends _reactDefault.default.Component {
             },
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
-                lineNumber: 56
+                lineNumber: 54
             },
             __self: this
         }, "Back")));
@@ -40538,12 +40532,6 @@ function ProfileView(props) {
             },
             __self: this
         }, movie.Title), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Card.Text, {
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-                lineNumber: 275
-            },
-            __self: this
-        }, movie.Description), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Card.Text, {
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
                 lineNumber: 276

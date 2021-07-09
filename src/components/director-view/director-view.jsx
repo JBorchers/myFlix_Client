@@ -24,9 +24,7 @@ export class DirectorView extends React.Component {
           <span className="label">Born: </span>
           <span className="value">{director.Birth}</span>
         </h4>
-        <div>
-          <h4>Featured Movies:</h4>
-        </div>
+        <h4>Featured Movies:</h4>
 
         <Col md={6}>
           <div id="directorsMovies">
