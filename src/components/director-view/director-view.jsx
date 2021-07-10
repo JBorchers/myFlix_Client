@@ -4,7 +4,11 @@ import { Button, Card, Container, Row, Col } from 'react-bootstrap';
 import './director-view.scss';
 import { MovieCard } from "../movie-card/movie-card";
 
+import { connect } from 'react-redux';
+
+// class DirectorView extends React.Component {
 export class DirectorView extends React.Component {
+
 
   render() {
     const { director, onBackClick, movie, directorsMovies } = this.props;
@@ -35,7 +39,7 @@ export class DirectorView extends React.Component {
                 <Col md={12} key={m._id}>
                   <MovieCard movie={m} />
                 </Col>
-              )
+              );
             })}
           </div>
         </Col>
@@ -65,3 +69,5 @@ DirectorView.propTypes = {
   }),
   onBackClick: PropTypes.func.isRequired
 };
+
+// export default connect(mapStateToProps)(DirectorView)
