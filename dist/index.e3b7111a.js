@@ -21887,7 +21887,7 @@ var _moviesList = require("../movies-list/movies-list");
 var _moviesListDefault = parcelHelpers.interopDefault(_moviesList);
 var _loginView = require("../login-view/login-view");
 var _registrationView = require("../registration-view/registration-view");
-var _movieCard = require("../movie-card/movie-card");
+// import { MovieCard } from '../movie-card/movie-card';
 var _movieView = require("../movie-view/movie-view");
 var _directorView = require("../director-view/director-view");
 var _genreView = require("../genre-view/genre-view");
@@ -21914,7 +21914,7 @@ class MainView extends _reactDefault.default.Component {
         super();
         this.state = {
             // movies: [],
-            user: null,
+            // user: null,
             userData: {
             }
         };
@@ -21945,16 +21945,32 @@ class MainView extends _reactDefault.default.Component {
                 Authorization: `Bearer ${token}`
             }
         }).then((response)=>{
-            // Assign the result to the state
+            this.props.setUser(response.data);
             this.setState({
-                userData: response.data
+                user: response.data
             });
-            // this.forceUpdate();
-            console.log(response);
+            console.log('getUser response', response.data);
         }).catch(function(error) {
             console.log(error);
         });
+        console.log('getUser reached');
     }
+    // getUsers(token, user) {
+    //   axios.get(`${Config.API_URL}/users/${user}`, {
+    //     headers: { Authorization: `Bearer ${token}` }
+    //   })
+    //     .then(response => {
+    //       // Assign the result to the state
+    //       this.setState({
+    //         userData: response.data
+    //       });
+    //       // this.forceUpdate();
+    //       console.log(response)
+    //     })
+    //     .catch(function (error) {
+    //       console.log(error);
+    //     });
+    // }
     componentDidMount() {
         let accessToken = localStorage.getItem('token');
         let user = localStorage.getItem('user');
@@ -21963,7 +21979,7 @@ class MainView extends _reactDefault.default.Component {
                 user: user
             });
             this.getMovies(accessToken);
-            this.getUsers(accessToken, user);
+            this.props.setUser(accessToken, user);
         }
     }
     // // When a movie is clicked, this function is invoked and updates the state of the `selectedMovie` property to that movie
@@ -21976,9 +21992,10 @@ class MainView extends _reactDefault.default.Component {
     // when a user successfully logs in, this function updates the `user` property in state to that particular user
     onLoggedIn(authData) {
         console.log(authData);
+        this.props.setUser(authData.user);
         this.setState({
-            user: authData.user.Username,
-            userData: authData.user
+            username: authData.user.username,
+            token: authData.token
         });
         // stores logged in user and token - saved in user state
         localStorage.setItem('token', authData.token);
@@ -21988,9 +22005,7 @@ class MainView extends _reactDefault.default.Component {
     }
     onRegister(register) {
         console.log(register);
-        this.setState({
-            register
-        });
+        this.props.setUser(register);
     }
     onLoggedOut() {
         localStorage.removeItem('token');
@@ -22016,20 +22031,20 @@ class MainView extends _reactDefault.default.Component {
         return(/*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.BrowserRouter, {
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 148
+                lineNumber: 163
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_rowDefault.default, {
             className: "main-view justify-content-md-center",
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 149
+                lineNumber: 164
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_containerDefault.default, {
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 150
+                lineNumber: 165
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Navbar, {
@@ -22039,7 +22054,7 @@ class MainView extends _reactDefault.default.Component {
             className: "shadow",
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 151
+                lineNumber: 166
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
@@ -22047,27 +22062,27 @@ class MainView extends _reactDefault.default.Component {
             className: "navbar-link ms-auto",
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 152
+                lineNumber: 167
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Link, {
             to: `/`,
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 153
+                lineNumber: 168
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Navbar.Brand, {
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 154
+                lineNumber: 169
             },
             __self: this
         }, "MyFlix"))), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Link, {
             to: `/users/${user}`,
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 157
+                lineNumber: 172
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
@@ -22075,14 +22090,14 @@ class MainView extends _reactDefault.default.Component {
             className: "navbar-link text-light ms-auto",
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 158
+                lineNumber: 173
             },
             __self: this
         }, "Profile")), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Link, {
             to: `/`,
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 160
+                lineNumber: 175
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
@@ -22092,7 +22107,7 @@ class MainView extends _reactDefault.default.Component {
             ,
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 161
+                lineNumber: 176
             },
             __self: this
         }, "Logout")))), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
@@ -22111,7 +22126,7 @@ class MainView extends _reactDefault.default.Component {
             },
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 169
+                lineNumber: 184
             },
             __self: this
         }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
@@ -22124,7 +22139,7 @@ class MainView extends _reactDefault.default.Component {
             },
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 190
+                lineNumber: 205
             },
             __self: this
         }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
@@ -22144,7 +22159,7 @@ class MainView extends _reactDefault.default.Component {
             },
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 198
+                lineNumber: 213
             },
             __self: this
         }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
@@ -22166,7 +22181,7 @@ class MainView extends _reactDefault.default.Component {
             },
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 207
+                lineNumber: 222
             },
             __self: this
         }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
@@ -22188,7 +22203,7 @@ class MainView extends _reactDefault.default.Component {
             },
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 218
+                lineNumber: 233
             },
             __self: this
         }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
@@ -22201,16 +22216,15 @@ class MainView extends _reactDefault.default.Component {
                     movies: movies,
                     user: user,
                     userData: userData,
-                    removeFavoriteMovie: this.removeFavoriteMovie,
+                    // removeFavoriteMovie={this.removeFavoriteMovie}
                     // // displays movies
-                    favoriteMovies: movies.filter((movie)=>userData.FavoriteMovies.includes(movie._id)
-                    ),
+                    // favoriteMovies={movies.filter(movie => userData.FavoriteMovies.includes(movie._id))}
                     onBackClick: ()=>history.goBack()
                 })));
             },
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 229
+                lineNumber: 244
             },
             __self: this
         }))));
@@ -22222,7 +22236,8 @@ let mapStateToProps = (state)=>{
     };
 };
 exports.default = _reactRedux.connect(mapStateToProps, {
-    setMovies: _actions.setMovies
+    setMovies: _actions.setMovies,
+    setUser: _actions.setUser
 })(MainView);
 
   helpers.postlude(module);
@@ -22230,7 +22245,7 @@ exports.default = _reactRedux.connect(mapStateToProps, {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"3b2NM","../movie-card/movie-card":"9069x","../movie-view/movie-view":"1rdX8","@parcel/transformer-js/src/esmodule-helpers.js":"367CR","axios":"7rA65","../login-view/login-view":"45yj8","../registration-view/registration-view":"2iR0F","react-bootstrap/Container":"3Mt3t","react-bootstrap/Row":"3fzwD","react-bootstrap/Col":"2D0r8","react-bootstrap/Card":"1CZWQ","react-bootstrap/CardDeck":"4fiZs","../../config.js":"5yJJr","react-router-dom":"1PMSK","react-bootstrap":"4n7hB","../director-view/director-view":"3zNOc","../genre-view/genre-view":"2qQol","../profile-view/profile-view":"4tSeG","react-bootstrap/Button":"1ru0l","react-redux":"7GDa4","../../actions/actions":"5S6cN","../movies-list/movies-list":"37Qlg","../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"4Jj4f"}],"9069x":[function(require,module,exports) {
+},{"react":"3b2NM","../movie-view/movie-view":"1rdX8","@parcel/transformer-js/src/esmodule-helpers.js":"367CR","axios":"7rA65","../login-view/login-view":"45yj8","../registration-view/registration-view":"2iR0F","react-bootstrap/Container":"3Mt3t","react-bootstrap/Row":"3fzwD","react-bootstrap/Col":"2D0r8","react-bootstrap/Card":"1CZWQ","react-bootstrap/CardDeck":"4fiZs","../../config.js":"5yJJr","react-router-dom":"1PMSK","react-bootstrap":"4n7hB","../director-view/director-view":"3zNOc","../genre-view/genre-view":"2qQol","../profile-view/profile-view":"4tSeG","react-bootstrap/Button":"1ru0l","react-redux":"7GDa4","../../actions/actions":"5S6cN","../movies-list/movies-list":"37Qlg","../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"4Jj4f"}],"1rdX8":[function(require,module,exports) {
 var helpers = require("../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -22239,7 +22254,8 @@ helpers.prelude(module);
 try {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "MovieCard", ()=>MovieCard
+// import './movie-view.scss';
+parcelHelpers.export(exports, "MovieView", ()=>MovieView
 );
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
@@ -22247,80 +22263,207 @@ var _propTypes = require("prop-types");
 var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
 var _button = require("react-bootstrap/Button");
 var _buttonDefault = parcelHelpers.interopDefault(_button);
-var _card = require("react-bootstrap/Card");
-var _cardDefault = parcelHelpers.interopDefault(_card);
-var _movieCardScss = require("./movie-card.scss");
+var _axios = require("axios");
+var _axiosDefault = parcelHelpers.interopDefault(_axios);
+var _configJs = require("../../config.js");
+var _configJsDefault = parcelHelpers.interopDefault(_configJs);
 var _reactRouterDom = require("react-router-dom");
-class MovieCard extends _reactDefault.default.Component {
+class MovieView extends _reactDefault.default.Component {
+    keypressCallback(event) {
+        console.log(event.key);
+    }
+    addFavorite(movie) {
+        let token = localStorage.getItem('token');
+        let user = localStorage.getItem('user');
+        _axiosDefault.default.post(`${_configJsDefault.default.API_URL}/users/${user}/movies/${movie._id}`, null, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>{
+            console.log(response);
+            alert('This movie has been added to your favorites list!');
+        }).then(// reloads page after click
+        window.location.reload(false)).catch(function(error) {
+            console.log(error);
+            alert('There was an error.');
+        });
+    }
+    componentDidMount() {
+        document.addEventListener('keypress', (event)=>{
+            console.log(event.key);
+        });
+    }
     render() {
-        // 'movie' is the name of the prop used in <MovieCard … />
-        const { movie  } = this.props;
-        return(/*#__PURE__*/ _reactDefault.default.createElement(_cardDefault.default, {
-            className: "shadow p-3 mb-5 bg-white rounded",
+        const { movie , onBackClick  } = this.props;
+        return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
+            className: "movie-view",
             __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-card\\movie-card.jsx",
-                lineNumber: 16
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
+                lineNumber: 46
             },
             __self: this
-        }, /*#__PURE__*/ _reactDefault.default.createElement(_cardDefault.default.Img, {
-            variant: "top",
+        }, /*#__PURE__*/ _reactDefault.default.createElement("div", {
+            className: "movie-poster",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
+                lineNumber: 47
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement("img", {
             src: movie.ImagePath,
             __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-card\\movie-card.jsx",
-                lineNumber: 17
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
+                lineNumber: 48
             },
             __self: this
-        }), /*#__PURE__*/ _reactDefault.default.createElement(_cardDefault.default.Body, {
+        })), /*#__PURE__*/ _reactDefault.default.createElement("div", {
+            className: "movie-info",
             __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-card\\movie-card.jsx",
-                lineNumber: 18
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
+                lineNumber: 50
             },
             __self: this
-        }, /*#__PURE__*/ _reactDefault.default.createElement(_cardDefault.default.Title, {
+        }, /*#__PURE__*/ _reactDefault.default.createElement("h1", {
+            className: "movie-title",
             __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-card\\movie-card.jsx",
-                lineNumber: 19
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
+                lineNumber: 51
             },
             __self: this
-        }, movie.Title), /*#__PURE__*/ _reactDefault.default.createElement(_cardDefault.default.Text, {
+        }, /*#__PURE__*/ _reactDefault.default.createElement("span", {
+            className: "value display-4 text-white",
             __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-card\\movie-card.jsx",
-                lineNumber: 21
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
+                lineNumber: 53
             },
             __self: this
-        }, movie.ReleaseDate), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Link, {
-            to: `/movies/${movie._id}`,
+        }, movie.Title)), /*#__PURE__*/ _reactDefault.default.createElement("h4", {
+            className: "movie-description",
             __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-card\\movie-card.jsx",
-                lineNumber: 22
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
+                lineNumber: 55
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement("span", {
+            className: "value",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
+                lineNumber: 57
+            },
+            __self: this
+        }, movie.ReleaseDate)), /*#__PURE__*/ _reactDefault.default.createElement("h4", {
+            className: "movie-description",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
+                lineNumber: 59
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement("span", {
+            className: "label",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
+                lineNumber: 60
+            },
+            __self: this
+        }, "Description: "), /*#__PURE__*/ _reactDefault.default.createElement("span", {
+            className: "value",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
+                lineNumber: 61
+            },
+            __self: this
+        }, movie.Description)), /*#__PURE__*/ _reactDefault.default.createElement("h4", {
+            className: "movie-description",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
+                lineNumber: 63
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement("span", {
+            className: "label",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
+                lineNumber: 64
+            },
+            __self: this
+        }, "Director: "), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Link, {
+            className: "link",
+            to: `/directors/${movie.Director.Name}`,
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
+                lineNumber: 65
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement("span", {
+            className: "value",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
+                lineNumber: 66
+            },
+            __self: this
+        }, movie.Director.Name))), /*#__PURE__*/ _reactDefault.default.createElement("h4", {
+            className: "movie-description",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
+                lineNumber: 69
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement("span", {
+            className: "label",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
+                lineNumber: 70
+            },
+            __self: this
+        }, "Genre: "), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Link, {
+            className: "link",
+            to: `/genre/${movie.Genre.Name}`,
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
+                lineNumber: 71
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement("span", {
+            className: "value",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
+                lineNumber: 72
+            },
+            __self: this
+        }, movie.Genre.Name))), /*#__PURE__*/ _reactDefault.default.createElement("div", {
+            className: "",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
+                lineNumber: 75
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
             variant: "info",
+            onClick: ()=>this.addFavorite(movie)
+            ,
             __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-card\\movie-card.jsx",
-                lineNumber: 23
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
+                lineNumber: 76
             },
             __self: this
-        }, "Open")))));
+        }, "Add to Favorites")), /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
+            variant: "info",
+            onClick: onBackClick,
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
+                lineNumber: 78
+            },
+            __self: this
+        }, "Back"))));
     }
 }
-MovieCard.propTypes = {
-    // must contain a movie object
-    movie: _propTypesDefault.default.shape({
-        Title: _propTypesDefault.default.string.isRequired,
-        Description: _propTypesDefault.default.string.isRequired,
-        ImagePath: _propTypesDefault.default.string.isRequired,
-        ReleaseDate: _propTypesDefault.default.string.isRequired
-    }).isRequired
-};
 
   helpers.postlude(module);
 } finally {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"3b2NM","@parcel/transformer-js/src/esmodule-helpers.js":"367CR","prop-types":"4dfy5","react-bootstrap/Button":"1ru0l","react-bootstrap/Card":"1CZWQ","./movie-card.scss":"6vKcg","react-router-dom":"1PMSK","../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"4Jj4f"}],"367CR":[function(require,module,exports) {
+},{"react":"3b2NM","@parcel/transformer-js/src/esmodule-helpers.js":"367CR","prop-types":"4dfy5","react-bootstrap/Button":"1ru0l","axios":"7rA65","../../config.js":"5yJJr","react-router-dom":"1PMSK","../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"4Jj4f"}],"367CR":[function(require,module,exports) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
@@ -23328,227 +23471,1381 @@ var _default = createChainedFunction;
 exports.default = _default;
 module.exports = exports["default"];
 
-},{}],"1CZWQ":[function(require,module,exports) {
-"use strict";
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-exports.__esModule = true;
-exports.default = void 0;
-var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
-var _objectWithoutPropertiesLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutPropertiesLoose"));
-var _classnames = _interopRequireDefault(require("classnames"));
-var _react = _interopRequireWildcard(require("react"));
-var _ThemeProvider = require("./ThemeProvider");
-var _createWithBsPrefix = _interopRequireDefault(require("./createWithBsPrefix"));
-var _divWithClassName = _interopRequireDefault(require("./divWithClassName"));
-var _CardContext = _interopRequireDefault(require("./CardContext"));
-var _CardImg = _interopRequireDefault(require("./CardImg"));
-var _excluded = [
-    "bsPrefix",
-    "className",
-    "bg",
-    "text",
-    "border",
-    "body",
-    "children",
-    "as"
-];
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache1(nodeInterop1) {
-        return nodeInterop1 ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
+},{}],"7rA65":[function(require,module,exports) {
+module.exports = require('./lib/axios');
+
+},{"./lib/axios":"4qfhW"}],"4qfhW":[function(require,module,exports) {
+'use strict';
+var utils = require('./utils');
+var bind = require('./helpers/bind');
+var Axios = require('./core/Axios');
+var mergeConfig = require('./core/mergeConfig');
+var defaults = require('./defaults');
+/**
+ * Create an instance of Axios
+ *
+ * @param {Object} defaultConfig The default config for the instance
+ * @return {Axios} A new instance of Axios
+ */ function createInstance(defaultConfig) {
+    var context = new Axios(defaultConfig);
+    var instance = bind(Axios.prototype.request, context);
+    // Copy axios.prototype to instance
+    utils.extend(instance, Axios.prototype, context);
+    // Copy context to instance
+    utils.extend(instance, context);
+    return instance;
 }
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || typeof obj !== "object" && typeof obj !== "function") return {
-        default: obj
-    };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {
-    };
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
+// Create the default instance to be exported
+var axios = createInstance(defaults);
+// Expose Axios class to allow class inheritance
+axios.Axios = Axios;
+// Factory for creating new instances
+axios.create = function create(instanceConfig) {
+    return createInstance(mergeConfig(axios.defaults, instanceConfig));
+};
+// Expose Cancel & CancelToken
+axios.Cancel = require('./cancel/Cancel');
+axios.CancelToken = require('./cancel/CancelToken');
+axios.isCancel = require('./cancel/isCancel');
+// Expose all/spread
+axios.all = function all(promises) {
+    return Promise.all(promises);
+};
+axios.spread = require('./helpers/spread');
+// Expose isAxiosError
+axios.isAxiosError = require('./helpers/isAxiosError');
+module.exports = axios;
+// Allow use of default import syntax in TypeScript
+module.exports.default = axios;
+
+},{"./utils":"7J9rV","./helpers/bind":"78Fwk","./core/Axios":"26bz2","./core/mergeConfig":"42z1a","./defaults":"5j10E","./cancel/Cancel":"1Ql7i","./cancel/CancelToken":"hHamf","./cancel/isCancel":"3MAgn","./helpers/spread":"9FoXt","./helpers/isAxiosError":"1bzv8"}],"7J9rV":[function(require,module,exports) {
+'use strict';
+var bind = require('./helpers/bind');
+/*global toString:true*/ // utils is a library of generic helper functions non-specific to axios
+var toString = Object.prototype.toString;
+/**
+ * Determine if a value is an Array
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an Array, otherwise false
+ */ function isArray(val) {
+    return toString.call(val) === '[object Array]';
+}
+/**
+ * Determine if a value is undefined
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if the value is undefined, otherwise false
+ */ function isUndefined(val) {
+    return typeof val === 'undefined';
+}
+/**
+ * Determine if a value is a Buffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Buffer, otherwise false
+ */ function isBuffer(val) {
+    return val !== null && !isUndefined(val) && val.constructor !== null && !isUndefined(val.constructor) && typeof val.constructor.isBuffer === 'function' && val.constructor.isBuffer(val);
+}
+/**
+ * Determine if a value is an ArrayBuffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an ArrayBuffer, otherwise false
+ */ function isArrayBuffer(val) {
+    return toString.call(val) === '[object ArrayBuffer]';
+}
+/**
+ * Determine if a value is a FormData
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an FormData, otherwise false
+ */ function isFormData(val) {
+    return typeof FormData !== 'undefined' && val instanceof FormData;
+}
+/**
+ * Determine if a value is a view on an ArrayBuffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a view on an ArrayBuffer, otherwise false
+ */ function isArrayBufferView(val) {
+    var result;
+    if (typeof ArrayBuffer !== 'undefined' && ArrayBuffer.isView) result = ArrayBuffer.isView(val);
+    else result = val && val.buffer && val.buffer instanceof ArrayBuffer;
+    return result;
+}
+/**
+ * Determine if a value is a String
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a String, otherwise false
+ */ function isString(val) {
+    return typeof val === 'string';
+}
+/**
+ * Determine if a value is a Number
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Number, otherwise false
+ */ function isNumber(val) {
+    return typeof val === 'number';
+}
+/**
+ * Determine if a value is an Object
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an Object, otherwise false
+ */ function isObject(val) {
+    return val !== null && typeof val === 'object';
+}
+/**
+ * Determine if a value is a plain Object
+ *
+ * @param {Object} val The value to test
+ * @return {boolean} True if value is a plain Object, otherwise false
+ */ function isPlainObject(val) {
+    if (toString.call(val) !== '[object Object]') return false;
+    var prototype = Object.getPrototypeOf(val);
+    return prototype === null || prototype === Object.prototype;
+}
+/**
+ * Determine if a value is a Date
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Date, otherwise false
+ */ function isDate(val) {
+    return toString.call(val) === '[object Date]';
+}
+/**
+ * Determine if a value is a File
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a File, otherwise false
+ */ function isFile(val) {
+    return toString.call(val) === '[object File]';
+}
+/**
+ * Determine if a value is a Blob
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Blob, otherwise false
+ */ function isBlob(val) {
+    return toString.call(val) === '[object Blob]';
+}
+/**
+ * Determine if a value is a Function
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Function, otherwise false
+ */ function isFunction(val) {
+    return toString.call(val) === '[object Function]';
+}
+/**
+ * Determine if a value is a Stream
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Stream, otherwise false
+ */ function isStream(val) {
+    return isObject(val) && isFunction(val.pipe);
+}
+/**
+ * Determine if a value is a URLSearchParams object
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a URLSearchParams object, otherwise false
+ */ function isURLSearchParams(val) {
+    return typeof URLSearchParams !== 'undefined' && val instanceof URLSearchParams;
+}
+/**
+ * Trim excess whitespace off the beginning and end of a string
+ *
+ * @param {String} str The String to trim
+ * @returns {String} The String freed of excess whitespace
+ */ function trim(str) {
+    return str.replace(/^\s*/, '').replace(/\s*$/, '');
+}
+/**
+ * Determine if we're running in a standard browser environment
+ *
+ * This allows axios to run in a web worker, and react-native.
+ * Both environments support XMLHttpRequest, but not fully standard globals.
+ *
+ * web workers:
+ *  typeof window -> undefined
+ *  typeof document -> undefined
+ *
+ * react-native:
+ *  navigator.product -> 'ReactNative'
+ * nativescript
+ *  navigator.product -> 'NativeScript' or 'NS'
+ */ function isStandardBrowserEnv() {
+    if (typeof navigator !== 'undefined' && (navigator.product === 'ReactNative' || navigator.product === 'NativeScript' || navigator.product === 'NS')) return false;
+    return typeof window !== 'undefined' && typeof document !== 'undefined';
+}
+/**
+ * Iterate over an Array or an Object invoking a function for each item.
+ *
+ * If `obj` is an Array callback will be called passing
+ * the value, index, and complete array for each item.
+ *
+ * If 'obj' is an Object callback will be called passing
+ * the value, key, and complete object for each property.
+ *
+ * @param {Object|Array} obj The object to iterate
+ * @param {Function} fn The callback to invoke for each item
+ */ function forEach(obj, fn) {
+    // Don't bother if no value provided
+    if (obj === null || typeof obj === 'undefined') return;
+    // Force an array if not already something iterable
+    if (typeof obj !== 'object') /*eslint no-param-reassign:0*/ obj = [
+        obj
+    ];
+    if (isArray(obj)) // Iterate over array values
+    for(var i = 0, l = obj.length; i < l; i++)fn.call(null, obj[i], i, obj);
+    else {
+        // Iterate over object keys
+        for(var key in obj)if (Object.prototype.hasOwnProperty.call(obj, key)) fn.call(null, obj[key], key, obj);
     }
-    newObj.default = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
 }
-var DivStyledAsH5 = _divWithClassName.default('h5');
-var DivStyledAsH6 = _divWithClassName.default('h6');
-var CardBody = _createWithBsPrefix.default('card-body');
-var CardTitle = _createWithBsPrefix.default('card-title', {
-    Component: DivStyledAsH5
-});
-var CardSubtitle = _createWithBsPrefix.default('card-subtitle', {
-    Component: DivStyledAsH6
-});
-var CardLink = _createWithBsPrefix.default('card-link', {
-    Component: 'a'
-});
-var CardText = _createWithBsPrefix.default('card-text', {
-    Component: 'p'
-});
-var CardHeader = _createWithBsPrefix.default('card-header');
-var CardFooter = _createWithBsPrefix.default('card-footer');
-var CardImgOverlay = _createWithBsPrefix.default('card-img-overlay');
-var defaultProps = {
-    body: false
+/**
+ * Accepts varargs expecting each argument to be an object, then
+ * immutably merges the properties of each object and returns result.
+ *
+ * When multiple objects contain the same key the later object in
+ * the arguments list will take precedence.
+ *
+ * Example:
+ *
+ * ```js
+ * var result = merge({foo: 123}, {foo: 456});
+ * console.log(result.foo); // outputs 456
+ * ```
+ *
+ * @param {Object} obj1 Object to merge
+ * @returns {Object} Result of all merge properties
+ */ function merge() {
+    var result = {
+    };
+    function assignValue(val, key) {
+        if (isPlainObject(result[key]) && isPlainObject(val)) result[key] = merge(result[key], val);
+        else if (isPlainObject(val)) result[key] = merge({
+        }, val);
+        else if (isArray(val)) result[key] = val.slice();
+        else result[key] = val;
+    }
+    for(var i = 0, l = arguments.length; i < l; i++)forEach(arguments[i], assignValue);
+    return result;
+}
+/**
+ * Extends object a by mutably adding to it the properties of object b.
+ *
+ * @param {Object} a The object to be extended
+ * @param {Object} b The object to copy properties from
+ * @param {Object} thisArg The object to bind function to
+ * @return {Object} The resulting value of object a
+ */ function extend(a, b, thisArg) {
+    forEach(b, function assignValue(val, key) {
+        if (thisArg && typeof val === 'function') a[key] = bind(val, thisArg);
+        else a[key] = val;
+    });
+    return a;
+}
+/**
+ * Remove byte order marker. This catches EF BB BF (the UTF-8 BOM)
+ *
+ * @param {string} content with BOM
+ * @return {string} content value without BOM
+ */ function stripBOM(content) {
+    if (content.charCodeAt(0) === 65279) content = content.slice(1);
+    return content;
+}
+module.exports = {
+    isArray: isArray,
+    isArrayBuffer: isArrayBuffer,
+    isBuffer: isBuffer,
+    isFormData: isFormData,
+    isArrayBufferView: isArrayBufferView,
+    isString: isString,
+    isNumber: isNumber,
+    isObject: isObject,
+    isPlainObject: isPlainObject,
+    isUndefined: isUndefined,
+    isDate: isDate,
+    isFile: isFile,
+    isBlob: isBlob,
+    isFunction: isFunction,
+    isStream: isStream,
+    isURLSearchParams: isURLSearchParams,
+    isStandardBrowserEnv: isStandardBrowserEnv,
+    forEach: forEach,
+    merge: merge,
+    extend: extend,
+    trim: trim,
+    stripBOM: stripBOM
 };
-var Card = /*#__PURE__*/ _react.default.forwardRef(function(_ref, ref) {
-    var bsPrefix = _ref.bsPrefix, className = _ref.className, bg = _ref.bg, text = _ref.text, border = _ref.border, body = _ref.body, children = _ref.children, _ref$as = _ref.as, Component = _ref$as === void 0 ? 'div' : _ref$as, props = _objectWithoutPropertiesLoose2.default(_ref, _excluded);
-    var prefix = _ThemeProvider.useBootstrapPrefix(bsPrefix, 'card');
-    var cardContext = _react.useMemo(function() {
-        return {
-            cardHeaderBsPrefix: prefix + "-header"
+
+},{"./helpers/bind":"78Fwk"}],"78Fwk":[function(require,module,exports) {
+'use strict';
+module.exports = function bind(fn, thisArg) {
+    return function wrap() {
+        var args = new Array(arguments.length);
+        for(var i = 0; i < args.length; i++)args[i] = arguments[i];
+        return fn.apply(thisArg, args);
+    };
+};
+
+},{}],"26bz2":[function(require,module,exports) {
+'use strict';
+var utils = require('./../utils');
+var buildURL = require('../helpers/buildURL');
+var InterceptorManager = require('./InterceptorManager');
+var dispatchRequest = require('./dispatchRequest');
+var mergeConfig = require('./mergeConfig');
+/**
+ * Create a new instance of Axios
+ *
+ * @param {Object} instanceConfig The default config for the instance
+ */ function Axios(instanceConfig) {
+    this.defaults = instanceConfig;
+    this.interceptors = {
+        request: new InterceptorManager(),
+        response: new InterceptorManager()
+    };
+}
+/**
+ * Dispatch a request
+ *
+ * @param {Object} config The config specific for this request (merged with this.defaults)
+ */ Axios.prototype.request = function request(config) {
+    /*eslint no-param-reassign:0*/ // Allow for axios('example/url'[, config]) a la fetch API
+    if (typeof config === 'string') {
+        config = arguments[1] || {
         };
-    }, [
-        prefix
-    ]);
-    return(/*#__PURE__*/ _react.default.createElement(_CardContext.default.Provider, {
-        value: cardContext
-    }, /*#__PURE__*/ _react.default.createElement(Component, _extends2.default({
-        ref: ref
-    }, props, {
-        className: _classnames.default(className, prefix, bg && "bg-" + bg, text && "text-" + text, border && "border-" + border)
-    }), body ? /*#__PURE__*/ // @ts-ignore
-    _react.default.createElement(CardBody, null, children) : children)));
-});
-Card.displayName = 'Card';
-Card.defaultProps = defaultProps;
-Card.Img = _CardImg.default;
-Card.Title = CardTitle;
-Card.Subtitle = CardSubtitle;
-Card.Body = CardBody;
-Card.Link = CardLink;
-Card.Text = CardText;
-Card.Header = CardHeader;
-Card.Footer = CardFooter;
-Card.ImgOverlay = CardImgOverlay;
-var _default = Card;
-exports.default = _default;
-module.exports = exports["default"];
-
-},{"@babel/runtime/helpers/interopRequireDefault":"4ttVj","@babel/runtime/helpers/extends":"3krLJ","@babel/runtime/helpers/objectWithoutPropertiesLoose":"3Yx9V","classnames":"5aJRc","react":"3b2NM","./ThemeProvider":"4rz1S","./createWithBsPrefix":"2oVVc","./divWithClassName":"27J3S","./CardContext":"71yot","./CardImg":"68LPL"}],"2oVVc":[function(require,module,exports) {
-"use strict";
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-exports.__esModule = true;
-exports.default = createWithBsPrefix;
-var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
-var _objectWithoutPropertiesLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutPropertiesLoose"));
-var _classnames = _interopRequireDefault(require("classnames"));
-var _camelize = _interopRequireDefault(require("dom-helpers/camelize"));
-var _react = _interopRequireDefault(require("react"));
-var _ThemeProvider = require("./ThemeProvider");
-var _excluded = [
-    "className",
-    "bsPrefix",
-    "as"
-];
-var pascalCase = function pascalCase1(str) {
-    return str[0].toUpperCase() + _camelize.default(str).slice(1);
-};
-// TODO: emstricten & fix the typing here! `createWithBsPrefix<TElementType>...`
-function createWithBsPrefix(prefix, _temp) {
-    var _ref = _temp === void 0 ? {
-    } : _temp, _ref$displayName = _ref.displayName, displayName = _ref$displayName === void 0 ? pascalCase(prefix) : _ref$displayName, Component = _ref.Component, defaultProps = _ref.defaultProps;
-    var BsComponent = /*#__PURE__*/ _react.default.forwardRef(function(_ref2, ref) {
-        var className = _ref2.className, bsPrefix = _ref2.bsPrefix, _ref2$as = _ref2.as, Tag = _ref2$as === void 0 ? Component || 'div' : _ref2$as, props = _objectWithoutPropertiesLoose2.default(_ref2, _excluded);
-        var resolvedPrefix = _ThemeProvider.useBootstrapPrefix(bsPrefix, prefix);
-        return(/*#__PURE__*/ _react.default.createElement(Tag, _extends2.default({
-            ref: ref,
-            className: _classnames.default(className, resolvedPrefix)
-        }, props)));
+        config.url = arguments[0];
+    } else config = config || {
+    };
+    config = mergeConfig(this.defaults, config);
+    // Set config.method
+    if (config.method) config.method = config.method.toLowerCase();
+    else if (this.defaults.method) config.method = this.defaults.method.toLowerCase();
+    else config.method = 'get';
+    // Hook up interceptors middleware
+    var chain = [
+        dispatchRequest,
+        undefined
+    ];
+    var promise = Promise.resolve(config);
+    this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {
+        chain.unshift(interceptor.fulfilled, interceptor.rejected);
     });
-    BsComponent.defaultProps = defaultProps;
-    BsComponent.displayName = displayName;
-    return BsComponent;
-}
-module.exports = exports["default"];
+    this.interceptors.response.forEach(function pushResponseInterceptors(interceptor) {
+        chain.push(interceptor.fulfilled, interceptor.rejected);
+    });
+    while(chain.length)promise = promise.then(chain.shift(), chain.shift());
+    return promise;
+};
+Axios.prototype.getUri = function getUri(config) {
+    config = mergeConfig(this.defaults, config);
+    return buildURL(config.url, config.params, config.paramsSerializer).replace(/^\?/, '');
+};
+// Provide aliases for supported request methods
+utils.forEach([
+    'delete',
+    'get',
+    'head',
+    'options'
+], function forEachMethodNoData(method) {
+    /*eslint func-names:0*/ Axios.prototype[method] = function(url, config) {
+        return this.request(mergeConfig(config || {
+        }, {
+            method: method,
+            url: url,
+            data: (config || {
+            }).data
+        }));
+    };
+});
+utils.forEach([
+    'post',
+    'put',
+    'patch'
+], function forEachMethodWithData(method) {
+    /*eslint func-names:0*/ Axios.prototype[method] = function(url, data, config) {
+        return this.request(mergeConfig(config || {
+        }, {
+            method: method,
+            url: url,
+            data: data
+        }));
+    };
+});
+module.exports = Axios;
 
-},{"@babel/runtime/helpers/interopRequireDefault":"4ttVj","@babel/runtime/helpers/extends":"3krLJ","@babel/runtime/helpers/objectWithoutPropertiesLoose":"3Yx9V","classnames":"5aJRc","dom-helpers/camelize":"7AXwA","react":"3b2NM","./ThemeProvider":"4rz1S"}],"7AXwA":[function(require,module,exports) {
-"use strict";
-exports.__esModule = true;
-exports.default = camelize;
-var rHyphen = /-(.)/g;
-function camelize(string) {
-    return string.replace(rHyphen, function(_, chr) {
-        return chr.toUpperCase();
+},{"./../utils":"7J9rV","../helpers/buildURL":"25KfR","./InterceptorManager":"33sRR","./dispatchRequest":"1mCjo","./mergeConfig":"42z1a"}],"25KfR":[function(require,module,exports) {
+'use strict';
+var utils = require('./../utils');
+function encode(val) {
+    return encodeURIComponent(val).replace(/%3A/gi, ':').replace(/%24/g, '$').replace(/%2C/gi, ',').replace(/%20/g, '+').replace(/%5B/gi, '[').replace(/%5D/gi, ']');
+}
+/**
+ * Build a URL by appending params to the end
+ *
+ * @param {string} url The base of the url (e.g., http://www.google.com)
+ * @param {object} [params] The params to be appended
+ * @returns {string} The formatted url
+ */ module.exports = function buildURL(url, params, paramsSerializer) {
+    /*eslint no-param-reassign:0*/ if (!params) return url;
+    var serializedParams;
+    if (paramsSerializer) serializedParams = paramsSerializer(params);
+    else if (utils.isURLSearchParams(params)) serializedParams = params.toString();
+    else {
+        var parts = [];
+        utils.forEach(params, function serialize(val, key) {
+            if (val === null || typeof val === 'undefined') return;
+            if (utils.isArray(val)) key = key + '[]';
+            else val = [
+                val
+            ];
+            utils.forEach(val, function parseValue(v) {
+                if (utils.isDate(v)) v = v.toISOString();
+                else if (utils.isObject(v)) v = JSON.stringify(v);
+                parts.push(encode(key) + '=' + encode(v));
+            });
+        });
+        serializedParams = parts.join('&');
+    }
+    if (serializedParams) {
+        var hashmarkIndex = url.indexOf('#');
+        if (hashmarkIndex !== -1) url = url.slice(0, hashmarkIndex);
+        url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams;
+    }
+    return url;
+};
+
+},{"./../utils":"7J9rV"}],"33sRR":[function(require,module,exports) {
+'use strict';
+var utils = require('./../utils');
+function InterceptorManager() {
+    this.handlers = [];
+}
+/**
+ * Add a new interceptor to the stack
+ *
+ * @param {Function} fulfilled The function to handle `then` for a `Promise`
+ * @param {Function} rejected The function to handle `reject` for a `Promise`
+ *
+ * @return {Number} An ID used to remove interceptor later
+ */ InterceptorManager.prototype.use = function use(fulfilled, rejected) {
+    this.handlers.push({
+        fulfilled: fulfilled,
+        rejected: rejected
+    });
+    return this.handlers.length - 1;
+};
+/**
+ * Remove an interceptor from the stack
+ *
+ * @param {Number} id The ID that was returned by `use`
+ */ InterceptorManager.prototype.eject = function eject(id) {
+    if (this.handlers[id]) this.handlers[id] = null;
+};
+/**
+ * Iterate over all the registered interceptors
+ *
+ * This method is particularly useful for skipping over any
+ * interceptors that may have become `null` calling `eject`.
+ *
+ * @param {Function} fn The function to call for each interceptor
+ */ InterceptorManager.prototype.forEach = function forEach(fn) {
+    utils.forEach(this.handlers, function forEachHandler(h) {
+        if (h !== null) fn(h);
+    });
+};
+module.exports = InterceptorManager;
+
+},{"./../utils":"7J9rV"}],"1mCjo":[function(require,module,exports) {
+'use strict';
+var utils = require('./../utils');
+var transformData = require('./transformData');
+var isCancel = require('../cancel/isCancel');
+var defaults = require('../defaults');
+/**
+ * Throws a `Cancel` if cancellation has been requested.
+ */ function throwIfCancellationRequested(config) {
+    if (config.cancelToken) config.cancelToken.throwIfRequested();
+}
+/**
+ * Dispatch a request to the server using the configured adapter.
+ *
+ * @param {object} config The config that is to be used for the request
+ * @returns {Promise} The Promise to be fulfilled
+ */ module.exports = function dispatchRequest(config) {
+    throwIfCancellationRequested(config);
+    // Ensure headers exist
+    config.headers = config.headers || {
+    };
+    // Transform request data
+    config.data = transformData(config.data, config.headers, config.transformRequest);
+    // Flatten headers
+    config.headers = utils.merge(config.headers.common || {
+    }, config.headers[config.method] || {
+    }, config.headers);
+    utils.forEach([
+        'delete',
+        'get',
+        'head',
+        'post',
+        'put',
+        'patch',
+        'common'
+    ], function cleanHeaderConfig(method) {
+        delete config.headers[method];
+    });
+    var adapter = config.adapter || defaults.adapter;
+    return adapter(config).then(function onAdapterResolution(response) {
+        throwIfCancellationRequested(config);
+        // Transform response data
+        response.data = transformData(response.data, response.headers, config.transformResponse);
+        return response;
+    }, function onAdapterRejection(reason) {
+        if (!isCancel(reason)) {
+            throwIfCancellationRequested(config);
+            // Transform response data
+            if (reason && reason.response) reason.response.data = transformData(reason.response.data, reason.response.headers, config.transformResponse);
+        }
+        return Promise.reject(reason);
+    });
+};
+
+},{"./../utils":"7J9rV","./transformData":"1ueU6","../cancel/isCancel":"3MAgn","../defaults":"5j10E"}],"1ueU6":[function(require,module,exports) {
+'use strict';
+var utils = require('./../utils');
+/**
+ * Transform the data for a request or a response
+ *
+ * @param {Object|String} data The data to be transformed
+ * @param {Array} headers The headers for the request or response
+ * @param {Array|Function} fns A single function or Array of functions
+ * @returns {*} The resulting transformed data
+ */ module.exports = function transformData(data, headers, fns) {
+    /*eslint no-param-reassign:0*/ utils.forEach(fns, function transform(fn) {
+        data = fn(data, headers);
+    });
+    return data;
+};
+
+},{"./../utils":"7J9rV"}],"3MAgn":[function(require,module,exports) {
+'use strict';
+module.exports = function isCancel(value) {
+    return !!(value && value.__CANCEL__);
+};
+
+},{}],"5j10E":[function(require,module,exports) {
+var process = require("process");
+'use strict';
+var utils = require('./utils');
+var normalizeHeaderName = require('./helpers/normalizeHeaderName');
+var DEFAULT_CONTENT_TYPE = {
+    'Content-Type': 'application/x-www-form-urlencoded'
+};
+function setContentTypeIfUnset(headers, value) {
+    if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) headers['Content-Type'] = value;
+}
+function getDefaultAdapter() {
+    var adapter;
+    if (typeof XMLHttpRequest !== 'undefined') // For browsers use XHR adapter
+    adapter = require('./adapters/xhr');
+    else if (typeof process !== 'undefined' && Object.prototype.toString.call(process) === '[object process]') // For node use HTTP adapter
+    adapter = require('./adapters/http');
+    return adapter;
+}
+var defaults = {
+    adapter: getDefaultAdapter(),
+    transformRequest: [
+        function transformRequest(data, headers) {
+            normalizeHeaderName(headers, 'Accept');
+            normalizeHeaderName(headers, 'Content-Type');
+            if (utils.isFormData(data) || utils.isArrayBuffer(data) || utils.isBuffer(data) || utils.isStream(data) || utils.isFile(data) || utils.isBlob(data)) return data;
+            if (utils.isArrayBufferView(data)) return data.buffer;
+            if (utils.isURLSearchParams(data)) {
+                setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+                return data.toString();
+            }
+            if (utils.isObject(data)) {
+                setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+                return JSON.stringify(data);
+            }
+            return data;
+        }
+    ],
+    transformResponse: [
+        function transformResponse(data) {
+            /*eslint no-param-reassign:0*/ if (typeof data === 'string') try {
+                data = JSON.parse(data);
+            } catch (e) {
+            }
+            return data;
+        }
+    ],
+    /**
+   * A timeout in milliseconds to abort a request. If set to 0 (default) a
+   * timeout is not created.
+   */ timeout: 0,
+    xsrfCookieName: 'XSRF-TOKEN',
+    xsrfHeaderName: 'X-XSRF-TOKEN',
+    maxContentLength: -1,
+    maxBodyLength: -1,
+    validateStatus: function validateStatus(status) {
+        return status >= 200 && status < 300;
+    }
+};
+defaults.headers = {
+    common: {
+        'Accept': 'application/json, text/plain, */*'
+    }
+};
+utils.forEach([
+    'delete',
+    'get',
+    'head'
+], function forEachMethodNoData(method) {
+    defaults.headers[method] = {
+    };
+});
+utils.forEach([
+    'post',
+    'put',
+    'patch'
+], function forEachMethodWithData(method) {
+    defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+module.exports = defaults;
+
+},{"process":"7AgFc","./utils":"7J9rV","./helpers/normalizeHeaderName":"5yMqL","./adapters/xhr":"6pJqL","./adapters/http":"6pJqL"}],"7AgFc":[function(require,module,exports) {
+// shim for using process in browser
+var process = module.exports = {
+};
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+var cachedSetTimeout;
+var cachedClearTimeout;
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout() {
+    throw new Error('clearTimeout has not been defined');
+}
+(function() {
+    try {
+        if (typeof setTimeout === 'function') cachedSetTimeout = setTimeout;
+        else cachedSetTimeout = defaultSetTimout;
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') cachedClearTimeout = clearTimeout;
+        else cachedClearTimeout = defaultClearTimeout;
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+})();
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) //normal enviroments in sane situations
+    return setTimeout(fun, 0);
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch (e) {
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch (e1) {
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) //normal enviroments in sane situations
+    return clearTimeout(marker);
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e) {
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e1) {
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) return;
+    draining = false;
+    if (currentQueue.length) queue = currentQueue.concat(queue);
+    else queueIndex = -1;
+    if (queue.length) drainQueue();
+}
+function drainQueue() {
+    if (draining) return;
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+    var len = queue.length;
+    while(len){
+        currentQueue = queue;
+        queue = [];
+        while((++queueIndex) < len)if (currentQueue) currentQueue[queueIndex].run();
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+}
+process.nextTick = function(fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) for(var i = 1; i < arguments.length; i++)args[i - 1] = arguments[i];
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) runTimeout(drainQueue);
+};
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function() {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {
+};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {
+};
+function noop() {
+}
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+process.listeners = function(name) {
+    return [];
+};
+process.binding = function(name) {
+    throw new Error('process.binding is not supported');
+};
+process.cwd = function() {
+    return '/';
+};
+process.chdir = function(dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() {
+    return 0;
+};
+
+},{}],"5yMqL":[function(require,module,exports) {
+'use strict';
+var utils = require('../utils');
+module.exports = function normalizeHeaderName(headers, normalizedName) {
+    utils.forEach(headers, function processHeader(value, name) {
+        if (name !== normalizedName && name.toUpperCase() === normalizedName.toUpperCase()) {
+            headers[normalizedName] = value;
+            delete headers[name];
+        }
+    });
+};
+
+},{"../utils":"7J9rV"}],"6pJqL":[function(require,module,exports) {
+'use strict';
+var utils = require('./../utils');
+var settle = require('./../core/settle');
+var cookies = require('./../helpers/cookies');
+var buildURL = require('./../helpers/buildURL');
+var buildFullPath = require('../core/buildFullPath');
+var parseHeaders = require('./../helpers/parseHeaders');
+var isURLSameOrigin = require('./../helpers/isURLSameOrigin');
+var createError = require('../core/createError');
+module.exports = function xhrAdapter(config) {
+    return new Promise(function dispatchXhrRequest(resolve, reject) {
+        var requestData = config.data;
+        var requestHeaders = config.headers;
+        if (utils.isFormData(requestData)) delete requestHeaders['Content-Type']; // Let the browser set it
+        var request = new XMLHttpRequest();
+        // HTTP basic authentication
+        if (config.auth) {
+            var username = config.auth.username || '';
+            var password = config.auth.password ? unescape(encodeURIComponent(config.auth.password)) : '';
+            requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
+        }
+        var fullPath = buildFullPath(config.baseURL, config.url);
+        request.open(config.method.toUpperCase(), buildURL(fullPath, config.params, config.paramsSerializer), true);
+        // Set the request timeout in MS
+        request.timeout = config.timeout;
+        // Listen for ready state
+        request.onreadystatechange = function handleLoad() {
+            if (!request || request.readyState !== 4) return;
+            // The request errored out and we didn't get a response, this will be
+            // handled by onerror instead
+            // With one exception: request that using file: protocol, most browsers
+            // will return status as 0 even though it's a successful request
+            if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) return;
+            // Prepare the response
+            var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
+            var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
+            var response = {
+                data: responseData,
+                status: request.status,
+                statusText: request.statusText,
+                headers: responseHeaders,
+                config: config,
+                request: request
+            };
+            settle(resolve, reject, response);
+            // Clean up request
+            request = null;
+        };
+        // Handle browser request cancellation (as opposed to a manual cancellation)
+        request.onabort = function handleAbort() {
+            if (!request) return;
+            reject(createError('Request aborted', config, 'ECONNABORTED', request));
+            // Clean up request
+            request = null;
+        };
+        // Handle low level network errors
+        request.onerror = function handleError() {
+            // Real errors are hidden from us by the browser
+            // onerror should only fire if it's a network error
+            reject(createError('Network Error', config, null, request));
+            // Clean up request
+            request = null;
+        };
+        // Handle timeout
+        request.ontimeout = function handleTimeout() {
+            var timeoutErrorMessage = 'timeout of ' + config.timeout + 'ms exceeded';
+            if (config.timeoutErrorMessage) timeoutErrorMessage = config.timeoutErrorMessage;
+            reject(createError(timeoutErrorMessage, config, 'ECONNABORTED', request));
+            // Clean up request
+            request = null;
+        };
+        // Add xsrf header
+        // This is only done if running in a standard browser environment.
+        // Specifically not if we're in a web worker, or react-native.
+        if (utils.isStandardBrowserEnv()) {
+            // Add xsrf header
+            var xsrfValue = (config.withCredentials || isURLSameOrigin(fullPath)) && config.xsrfCookieName ? cookies.read(config.xsrfCookieName) : undefined;
+            if (xsrfValue) requestHeaders[config.xsrfHeaderName] = xsrfValue;
+        }
+        // Add headers to the request
+        if ('setRequestHeader' in request) utils.forEach(requestHeaders, function setRequestHeader(val, key) {
+            if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') // Remove Content-Type if data is undefined
+            delete requestHeaders[key];
+            else // Otherwise add header to the request
+            request.setRequestHeader(key, val);
+        });
+        // Add withCredentials to request if needed
+        if (!utils.isUndefined(config.withCredentials)) request.withCredentials = !!config.withCredentials;
+        // Add responseType to request if needed
+        if (config.responseType) try {
+            request.responseType = config.responseType;
+        } catch (e) {
+            // Expected DOMException thrown by browsers not compatible XMLHttpRequest Level 2.
+            // But, this can be suppressed for 'json' type as it can be parsed by default 'transformResponse' function.
+            if (config.responseType !== 'json') throw e;
+        }
+        // Handle progress if needed
+        if (typeof config.onDownloadProgress === 'function') request.addEventListener('progress', config.onDownloadProgress);
+        // Not all browsers support upload events
+        if (typeof config.onUploadProgress === 'function' && request.upload) request.upload.addEventListener('progress', config.onUploadProgress);
+        if (config.cancelToken) // Handle cancellation
+        config.cancelToken.promise.then(function onCanceled(cancel) {
+            if (!request) return;
+            request.abort();
+            reject(cancel);
+            // Clean up request
+            request = null;
+        });
+        if (!requestData) requestData = null;
+        // Send the request
+        request.send(requestData);
+    });
+};
+
+},{"./../utils":"7J9rV","./../core/settle":"72M6J","./../helpers/cookies":"1m0F1","./../helpers/buildURL":"25KfR","../core/buildFullPath":"5fWja","./../helpers/parseHeaders":"1KizL","./../helpers/isURLSameOrigin":"6Gtz3","../core/createError":"7ETv1"}],"72M6J":[function(require,module,exports) {
+'use strict';
+var createError = require('./createError');
+/**
+ * Resolve or reject a Promise based on response status.
+ *
+ * @param {Function} resolve A function that resolves the promise.
+ * @param {Function} reject A function that rejects the promise.
+ * @param {object} response The response.
+ */ module.exports = function settle(resolve, reject, response) {
+    var validateStatus = response.config.validateStatus;
+    if (!response.status || !validateStatus || validateStatus(response.status)) resolve(response);
+    else reject(createError('Request failed with status code ' + response.status, response.config, null, response.request, response));
+};
+
+},{"./createError":"7ETv1"}],"7ETv1":[function(require,module,exports) {
+'use strict';
+var enhanceError = require('./enhanceError');
+/**
+ * Create an Error with the specified message, config, error code, request and response.
+ *
+ * @param {string} message The error message.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
+ * @returns {Error} The created error.
+ */ module.exports = function createError(message, config, code, request, response) {
+    var error = new Error(message);
+    return enhanceError(error, config, code, request, response);
+};
+
+},{"./enhanceError":"2O2Ud"}],"2O2Ud":[function(require,module,exports) {
+'use strict';
+/**
+ * Update an Error with the specified config, error code, and response.
+ *
+ * @param {Error} error The error to update.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
+ * @returns {Error} The error.
+ */ module.exports = function enhanceError(error, config, code, request, response) {
+    error.config = config;
+    if (code) error.code = code;
+    error.request = request;
+    error.response = response;
+    error.isAxiosError = true;
+    error.toJSON = function toJSON() {
+        return {
+            // Standard
+            message: this.message,
+            name: this.name,
+            // Microsoft
+            description: this.description,
+            number: this.number,
+            // Mozilla
+            fileName: this.fileName,
+            lineNumber: this.lineNumber,
+            columnNumber: this.columnNumber,
+            stack: this.stack,
+            // Axios
+            config: this.config,
+            code: this.code
+        };
+    };
+    return error;
+};
+
+},{}],"1m0F1":[function(require,module,exports) {
+'use strict';
+var utils = require('./../utils');
+module.exports = utils.isStandardBrowserEnv() ? // Standard browser envs support document.cookie
+(function standardBrowserEnv() {
+    return {
+        write: function write(name, value, expires, path, domain, secure) {
+            var cookie = [];
+            cookie.push(name + '=' + encodeURIComponent(value));
+            if (utils.isNumber(expires)) cookie.push('expires=' + new Date(expires).toGMTString());
+            if (utils.isString(path)) cookie.push('path=' + path);
+            if (utils.isString(domain)) cookie.push('domain=' + domain);
+            if (secure === true) cookie.push('secure');
+            document.cookie = cookie.join('; ');
+        },
+        read: function read(name) {
+            var match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
+            return match ? decodeURIComponent(match[3]) : null;
+        },
+        remove: function remove(name) {
+            this.write(name, '', Date.now() - 86400000);
+        }
+    };
+})() : // Non standard browser env (web workers, react-native) lack needed support.
+(function nonStandardBrowserEnv() {
+    return {
+        write: function write() {
+        },
+        read: function read() {
+            return null;
+        },
+        remove: function remove() {
+        }
+    };
+})();
+
+},{"./../utils":"7J9rV"}],"5fWja":[function(require,module,exports) {
+'use strict';
+var isAbsoluteURL = require('../helpers/isAbsoluteURL');
+var combineURLs = require('../helpers/combineURLs');
+/**
+ * Creates a new URL by combining the baseURL with the requestedURL,
+ * only when the requestedURL is not already an absolute URL.
+ * If the requestURL is absolute, this function returns the requestedURL untouched.
+ *
+ * @param {string} baseURL The base URL
+ * @param {string} requestedURL Absolute or relative URL to combine
+ * @returns {string} The combined full path
+ */ module.exports = function buildFullPath(baseURL, requestedURL) {
+    if (baseURL && !isAbsoluteURL(requestedURL)) return combineURLs(baseURL, requestedURL);
+    return requestedURL;
+};
+
+},{"../helpers/isAbsoluteURL":"4FcN1","../helpers/combineURLs":"qMap4"}],"4FcN1":[function(require,module,exports) {
+'use strict';
+/**
+ * Determines whether the specified URL is absolute
+ *
+ * @param {string} url The URL to test
+ * @returns {boolean} True if the specified URL is absolute, otherwise false
+ */ module.exports = function isAbsoluteURL(url) {
+    // A URL is considered absolute if it begins with "<scheme>://" or "//" (protocol-relative URL).
+    // RFC 3986 defines scheme name as a sequence of characters beginning with a letter and followed
+    // by any combination of letters, digits, plus, period, or hyphen.
+    return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
+};
+
+},{}],"qMap4":[function(require,module,exports) {
+'use strict';
+/**
+ * Creates a new URL by combining the specified URLs
+ *
+ * @param {string} baseURL The base URL
+ * @param {string} relativeURL The relative URL
+ * @returns {string} The combined URL
+ */ module.exports = function combineURLs(baseURL, relativeURL) {
+    return relativeURL ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '') : baseURL;
+};
+
+},{}],"1KizL":[function(require,module,exports) {
+'use strict';
+var utils = require('./../utils');
+// Headers whose duplicates are ignored by node
+// c.f. https://nodejs.org/api/http.html#http_message_headers
+var ignoreDuplicateOf = [
+    'age',
+    'authorization',
+    'content-length',
+    'content-type',
+    'etag',
+    'expires',
+    'from',
+    'host',
+    'if-modified-since',
+    'if-unmodified-since',
+    'last-modified',
+    'location',
+    'max-forwards',
+    'proxy-authorization',
+    'referer',
+    'retry-after',
+    'user-agent'
+];
+/**
+ * Parse headers into an object
+ *
+ * ```
+ * Date: Wed, 27 Aug 2014 08:58:49 GMT
+ * Content-Type: application/json
+ * Connection: keep-alive
+ * Transfer-Encoding: chunked
+ * ```
+ *
+ * @param {String} headers Headers needing to be parsed
+ * @returns {Object} Headers parsed into an object
+ */ module.exports = function parseHeaders(headers) {
+    var parsed = {
+    };
+    var key;
+    var val;
+    var i;
+    if (!headers) return parsed;
+    utils.forEach(headers.split('\n'), function parser(line) {
+        i = line.indexOf(':');
+        key = utils.trim(line.substr(0, i)).toLowerCase();
+        val = utils.trim(line.substr(i + 1));
+        if (key) {
+            if (parsed[key] && ignoreDuplicateOf.indexOf(key) >= 0) return;
+            if (key === 'set-cookie') parsed[key] = (parsed[key] ? parsed[key] : []).concat([
+                val
+            ]);
+            else parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
+        }
+    });
+    return parsed;
+};
+
+},{"./../utils":"7J9rV"}],"6Gtz3":[function(require,module,exports) {
+'use strict';
+var utils = require('./../utils');
+module.exports = utils.isStandardBrowserEnv() ? // Standard browser envs have full support of the APIs needed to test
+// whether the request URL is of the same origin as current location.
+(function standardBrowserEnv() {
+    var msie = /(msie|trident)/i.test(navigator.userAgent);
+    var urlParsingNode = document.createElement('a');
+    var originURL;
+    /**
+    * Parse a URL to discover it's components
+    *
+    * @param {String} url The URL to be parsed
+    * @returns {Object}
+    */ function resolveURL(url) {
+        var href = url;
+        if (msie) {
+            // IE needs attribute set twice to normalize properties
+            urlParsingNode.setAttribute('href', href);
+            href = urlParsingNode.href;
+        }
+        urlParsingNode.setAttribute('href', href);
+        // urlParsingNode provides the UrlUtils interface - http://url.spec.whatwg.org/#urlutils
+        return {
+            href: urlParsingNode.href,
+            protocol: urlParsingNode.protocol ? urlParsingNode.protocol.replace(/:$/, '') : '',
+            host: urlParsingNode.host,
+            search: urlParsingNode.search ? urlParsingNode.search.replace(/^\?/, '') : '',
+            hash: urlParsingNode.hash ? urlParsingNode.hash.replace(/^#/, '') : '',
+            hostname: urlParsingNode.hostname,
+            port: urlParsingNode.port,
+            pathname: urlParsingNode.pathname.charAt(0) === '/' ? urlParsingNode.pathname : '/' + urlParsingNode.pathname
+        };
+    }
+    originURL = resolveURL(window.location.href);
+    /**
+    * Determine if a URL shares the same origin as the current location
+    *
+    * @param {String} requestURL The URL to test
+    * @returns {boolean} True if URL shares the same origin, otherwise false
+    */ return function isURLSameOrigin(requestURL) {
+        var parsed = utils.isString(requestURL) ? resolveURL(requestURL) : requestURL;
+        return parsed.protocol === originURL.protocol && parsed.host === originURL.host;
+    };
+})() : // Non standard browser envs (web workers, react-native) lack needed support.
+(function nonStandardBrowserEnv() {
+    return function isURLSameOrigin() {
+        return true;
+    };
+})();
+
+},{"./../utils":"7J9rV"}],"42z1a":[function(require,module,exports) {
+'use strict';
+var utils = require('../utils');
+/**
+ * Config-specific merge-function which creates a new config-object
+ * by merging two configuration objects together.
+ *
+ * @param {Object} config1
+ * @param {Object} config2
+ * @returns {Object} New object resulting from merging config2 to config1
+ */ module.exports = function mergeConfig(config1, config2) {
+    // eslint-disable-next-line no-param-reassign
+    config2 = config2 || {
+    };
+    var config = {
+    };
+    var valueFromConfig2Keys = [
+        'url',
+        'method',
+        'data'
+    ];
+    var mergeDeepPropertiesKeys = [
+        'headers',
+        'auth',
+        'proxy',
+        'params'
+    ];
+    var defaultToConfig2Keys = [
+        'baseURL',
+        'transformRequest',
+        'transformResponse',
+        'paramsSerializer',
+        'timeout',
+        'timeoutMessage',
+        'withCredentials',
+        'adapter',
+        'responseType',
+        'xsrfCookieName',
+        'xsrfHeaderName',
+        'onUploadProgress',
+        'onDownloadProgress',
+        'decompress',
+        'maxContentLength',
+        'maxBodyLength',
+        'maxRedirects',
+        'transport',
+        'httpAgent',
+        'httpsAgent',
+        'cancelToken',
+        'socketPath',
+        'responseEncoding'
+    ];
+    var directMergeKeys = [
+        'validateStatus'
+    ];
+    function getMergedValue(target, source) {
+        if (utils.isPlainObject(target) && utils.isPlainObject(source)) return utils.merge(target, source);
+        else if (utils.isPlainObject(source)) return utils.merge({
+        }, source);
+        else if (utils.isArray(source)) return source.slice();
+        return source;
+    }
+    function mergeDeepProperties(prop) {
+        if (!utils.isUndefined(config2[prop])) config[prop] = getMergedValue(config1[prop], config2[prop]);
+        else if (!utils.isUndefined(config1[prop])) config[prop] = getMergedValue(undefined, config1[prop]);
+    }
+    utils.forEach(valueFromConfig2Keys, function valueFromConfig2(prop) {
+        if (!utils.isUndefined(config2[prop])) config[prop] = getMergedValue(undefined, config2[prop]);
+    });
+    utils.forEach(mergeDeepPropertiesKeys, mergeDeepProperties);
+    utils.forEach(defaultToConfig2Keys, function defaultToConfig2(prop) {
+        if (!utils.isUndefined(config2[prop])) config[prop] = getMergedValue(undefined, config2[prop]);
+        else if (!utils.isUndefined(config1[prop])) config[prop] = getMergedValue(undefined, config1[prop]);
+    });
+    utils.forEach(directMergeKeys, function merge(prop) {
+        if (prop in config2) config[prop] = getMergedValue(config1[prop], config2[prop]);
+        else if (prop in config1) config[prop] = getMergedValue(undefined, config1[prop]);
+    });
+    var axiosKeys = valueFromConfig2Keys.concat(mergeDeepPropertiesKeys).concat(defaultToConfig2Keys).concat(directMergeKeys);
+    var otherKeys = Object.keys(config1).concat(Object.keys(config2)).filter(function filterAxiosKeys(key) {
+        return axiosKeys.indexOf(key) === -1;
+    });
+    utils.forEach(otherKeys, mergeDeepProperties);
+    return config;
+};
+
+},{"../utils":"7J9rV"}],"1Ql7i":[function(require,module,exports) {
+'use strict';
+/**
+ * A `Cancel` is an object that is thrown when an operation is canceled.
+ *
+ * @class
+ * @param {string=} message The message.
+ */ function Cancel(message) {
+    this.message = message;
+}
+Cancel.prototype.toString = function toString() {
+    return 'Cancel' + (this.message ? ': ' + this.message : '');
+};
+Cancel.prototype.__CANCEL__ = true;
+module.exports = Cancel;
+
+},{}],"hHamf":[function(require,module,exports) {
+'use strict';
+var Cancel = require('./Cancel');
+/**
+ * A `CancelToken` is an object that can be used to request cancellation of an operation.
+ *
+ * @class
+ * @param {Function} executor The executor function.
+ */ function CancelToken(executor) {
+    if (typeof executor !== 'function') throw new TypeError('executor must be a function.');
+    var resolvePromise;
+    this.promise = new Promise(function promiseExecutor(resolve) {
+        resolvePromise = resolve;
+    });
+    var token = this;
+    executor(function cancel(message) {
+        if (token.reason) // Cancellation has already been requested
+        return;
+        token.reason = new Cancel(message);
+        resolvePromise(token.reason);
     });
 }
-module.exports = exports["default"];
-
-},{}],"27J3S":[function(require,module,exports) {
-"use strict";
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-exports.__esModule = true;
-exports.default = void 0;
-var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
-var _react = _interopRequireDefault(require("react"));
-var _classnames = _interopRequireDefault(require("classnames"));
-var _default = function _default1(className) {
-    return(/*#__PURE__*/ _react.default.forwardRef(function(p, ref) {
-        return(/*#__PURE__*/ _react.default.createElement("div", _extends2.default({
-        }, p, {
-            ref: ref,
-            className: _classnames.default(p.className, className)
-        })));
-    }));
+/**
+ * Throws a `Cancel` if cancellation has been requested.
+ */ CancelToken.prototype.throwIfRequested = function throwIfRequested() {
+    if (this.reason) throw this.reason;
 };
-exports.default = _default;
-module.exports = exports["default"];
-
-},{"@babel/runtime/helpers/interopRequireDefault":"4ttVj","@babel/runtime/helpers/extends":"3krLJ","react":"3b2NM","classnames":"5aJRc"}],"71yot":[function(require,module,exports) {
-"use strict";
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-exports.__esModule = true;
-exports.default = void 0;
-var _react = _interopRequireDefault(require("react"));
-var context = /*#__PURE__*/ _react.default.createContext(null);
-context.displayName = 'CardContext';
-var _default = context;
-exports.default = _default;
-module.exports = exports["default"];
-
-},{"@babel/runtime/helpers/interopRequireDefault":"4ttVj","react":"3b2NM"}],"68LPL":[function(require,module,exports) {
-"use strict";
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-exports.__esModule = true;
-exports.default = void 0;
-var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
-var _objectWithoutPropertiesLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutPropertiesLoose"));
-var _classnames = _interopRequireDefault(require("classnames"));
-var _react = _interopRequireDefault(require("react"));
-var _ThemeProvider = require("./ThemeProvider");
-var _excluded = [
-    "bsPrefix",
-    "className",
-    "variant",
-    "as"
-];
-var defaultProps = {
-    variant: null
+/**
+ * Returns an object that contains a new `CancelToken` and a function that, when called,
+ * cancels the `CancelToken`.
+ */ CancelToken.source = function source() {
+    var cancel;
+    var token = new CancelToken(function executor(c) {
+        cancel = c;
+    });
+    return {
+        token: token,
+        cancel: cancel
+    };
 };
-var CardImg = /*#__PURE__*/ _react.default.forwardRef(function(_ref, ref) {
-    var bsPrefix = _ref.bsPrefix, className = _ref.className, variant = _ref.variant, _ref$as = _ref.as, Component = _ref$as === void 0 ? 'img' : _ref$as, props = _objectWithoutPropertiesLoose2.default(_ref, _excluded);
-    var prefix = _ThemeProvider.useBootstrapPrefix(bsPrefix, 'card-img');
-    return(/*#__PURE__*/ _react.default.createElement(Component, _extends2.default({
-        ref: ref,
-        className: _classnames.default(variant ? prefix + "-" + variant : prefix, className)
-    }, props)));
-});
-CardImg.displayName = 'CardImg';
-CardImg.defaultProps = defaultProps;
-var _default = CardImg;
-exports.default = _default;
-module.exports = exports["default"];
+module.exports = CancelToken;
 
-},{"@babel/runtime/helpers/interopRequireDefault":"4ttVj","@babel/runtime/helpers/extends":"3krLJ","@babel/runtime/helpers/objectWithoutPropertiesLoose":"3Yx9V","classnames":"5aJRc","react":"3b2NM","./ThemeProvider":"4rz1S"}],"6vKcg":[function() {},{}],"1PMSK":[function(require,module,exports) {
+},{"./Cancel":"1Ql7i"}],"9FoXt":[function(require,module,exports) {
+'use strict';
+/**
+ * Syntactic sugar for invoking a function and expanding an array for arguments.
+ *
+ * Common use case would be to use `Function.prototype.apply`.
+ *
+ *  ```js
+ *  function f(x, y, z) {}
+ *  var args = [1, 2, 3];
+ *  f.apply(null, args);
+ *  ```
+ *
+ * With `spread` this example can be re-written.
+ *
+ *  ```js
+ *  spread(function(x, y, z) {})([1, 2, 3]);
+ *  ```
+ *
+ * @param {Function} callback
+ * @returns {Function}
+ */ module.exports = function spread(callback) {
+    return function wrap(arr) {
+        return callback.apply(null, arr);
+    };
+};
+
+},{}],"1bzv8":[function(require,module,exports) {
+'use strict';
+/**
+ * Determines whether the payload is an error thrown by Axios
+ *
+ * @param {*} payload The value to test
+ * @returns {boolean} True if the payload is an error thrown by Axios, otherwise false
+ */ module.exports = function isAxiosError(payload) {
+    return typeof payload === 'object' && payload.isAxiosError === true;
+};
+
+},{}],"5yJJr":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+const Config = {
+    API_URL: 'https://borchers-movie-api.herokuapp.com'
+};
+exports.default = Config;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"367CR"}],"1PMSK":[function(require,module,exports) {
 "use strict";
 module.exports = require("./cjs/react-router-dom.js");
 
@@ -26068,1599 +27365,7 @@ function registerExportsForReactRefresh(module) {
     }
 }
 
-},{"react-refresh/runtime":"592mh"}],"1rdX8":[function(require,module,exports) {
-var helpers = require("../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
-var prevRefreshReg = window.$RefreshReg$;
-var prevRefreshSig = window.$RefreshSig$;
-helpers.prelude(module);
-
-try {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-// import './movie-view.scss';
-parcelHelpers.export(exports, "MovieView", ()=>MovieView
-);
-var _react = require("react");
-var _reactDefault = parcelHelpers.interopDefault(_react);
-var _propTypes = require("prop-types");
-var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
-var _button = require("react-bootstrap/Button");
-var _buttonDefault = parcelHelpers.interopDefault(_button);
-var _axios = require("axios");
-var _axiosDefault = parcelHelpers.interopDefault(_axios);
-var _configJs = require("../../config.js");
-var _configJsDefault = parcelHelpers.interopDefault(_configJs);
-var _reactRouterDom = require("react-router-dom");
-class MovieView extends _reactDefault.default.Component {
-    keypressCallback(event) {
-        console.log(event.key);
-    }
-    addFavorite(movie) {
-        let token = localStorage.getItem('token');
-        let user = localStorage.getItem('user');
-        _axiosDefault.default.post(`${_configJsDefault.default.API_URL}/users/${user}/movies/${movie._id}`, null, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }).then((response)=>{
-            console.log(response);
-            alert('This movie has been added to your favorites list!');
-        }).then(// reloads page after click
-        window.location.reload(false)).catch(function(error) {
-            console.log(error);
-            alert('There was an error.');
-        });
-    }
-    componentDidMount() {
-        document.addEventListener('keypress', (event)=>{
-            console.log(event.key);
-        });
-    }
-    render() {
-        const { movie , onBackClick  } = this.props;
-        return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
-            className: "movie-view",
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 46
-            },
-            __self: this
-        }, /*#__PURE__*/ _reactDefault.default.createElement("div", {
-            className: "movie-poster",
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 47
-            },
-            __self: this
-        }, /*#__PURE__*/ _reactDefault.default.createElement("img", {
-            src: movie.ImagePath,
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 48
-            },
-            __self: this
-        })), /*#__PURE__*/ _reactDefault.default.createElement("div", {
-            className: "movie-info",
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 50
-            },
-            __self: this
-        }, /*#__PURE__*/ _reactDefault.default.createElement("h1", {
-            className: "movie-title",
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 51
-            },
-            __self: this
-        }, /*#__PURE__*/ _reactDefault.default.createElement("span", {
-            className: "value display-4 text-white",
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 53
-            },
-            __self: this
-        }, movie.Title)), /*#__PURE__*/ _reactDefault.default.createElement("h4", {
-            className: "movie-description",
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 55
-            },
-            __self: this
-        }, /*#__PURE__*/ _reactDefault.default.createElement("span", {
-            className: "value",
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 57
-            },
-            __self: this
-        }, movie.ReleaseDate)), /*#__PURE__*/ _reactDefault.default.createElement("h4", {
-            className: "movie-description",
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 59
-            },
-            __self: this
-        }, /*#__PURE__*/ _reactDefault.default.createElement("span", {
-            className: "label",
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 60
-            },
-            __self: this
-        }, "Description: "), /*#__PURE__*/ _reactDefault.default.createElement("span", {
-            className: "value",
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 61
-            },
-            __self: this
-        }, movie.Description)), /*#__PURE__*/ _reactDefault.default.createElement("h4", {
-            className: "movie-description",
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 63
-            },
-            __self: this
-        }, /*#__PURE__*/ _reactDefault.default.createElement("span", {
-            className: "label",
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 64
-            },
-            __self: this
-        }, "Director: "), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Link, {
-            className: "link",
-            to: `/directors/${movie.Director.Name}`,
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 65
-            },
-            __self: this
-        }, /*#__PURE__*/ _reactDefault.default.createElement("span", {
-            className: "value",
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 66
-            },
-            __self: this
-        }, movie.Director.Name))), /*#__PURE__*/ _reactDefault.default.createElement("h4", {
-            className: "movie-description",
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 69
-            },
-            __self: this
-        }, /*#__PURE__*/ _reactDefault.default.createElement("span", {
-            className: "label",
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 70
-            },
-            __self: this
-        }, "Genre: "), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Link, {
-            className: "link",
-            to: `/genre/${movie.Genre.Name}`,
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 71
-            },
-            __self: this
-        }, /*#__PURE__*/ _reactDefault.default.createElement("span", {
-            className: "value",
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 72
-            },
-            __self: this
-        }, movie.Genre.Name))), /*#__PURE__*/ _reactDefault.default.createElement("div", {
-            className: "",
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 75
-            },
-            __self: this
-        }, /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
-            variant: "info",
-            onClick: ()=>this.addFavorite(movie)
-            ,
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 76
-            },
-            __self: this
-        }, "Add to Favorites")), /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
-            variant: "info",
-            onClick: onBackClick,
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 78
-            },
-            __self: this
-        }, "Back"))));
-    }
-}
-
-  helpers.postlude(module);
-} finally {
-  window.$RefreshReg$ = prevRefreshReg;
-  window.$RefreshSig$ = prevRefreshSig;
-}
-},{"react":"3b2NM","@parcel/transformer-js/src/esmodule-helpers.js":"367CR","prop-types":"4dfy5","react-bootstrap/Button":"1ru0l","axios":"7rA65","../../config.js":"5yJJr","react-router-dom":"1PMSK","../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"4Jj4f"}],"7rA65":[function(require,module,exports) {
-module.exports = require('./lib/axios');
-
-},{"./lib/axios":"4qfhW"}],"4qfhW":[function(require,module,exports) {
-'use strict';
-var utils = require('./utils');
-var bind = require('./helpers/bind');
-var Axios = require('./core/Axios');
-var mergeConfig = require('./core/mergeConfig');
-var defaults = require('./defaults');
-/**
- * Create an instance of Axios
- *
- * @param {Object} defaultConfig The default config for the instance
- * @return {Axios} A new instance of Axios
- */ function createInstance(defaultConfig) {
-    var context = new Axios(defaultConfig);
-    var instance = bind(Axios.prototype.request, context);
-    // Copy axios.prototype to instance
-    utils.extend(instance, Axios.prototype, context);
-    // Copy context to instance
-    utils.extend(instance, context);
-    return instance;
-}
-// Create the default instance to be exported
-var axios = createInstance(defaults);
-// Expose Axios class to allow class inheritance
-axios.Axios = Axios;
-// Factory for creating new instances
-axios.create = function create(instanceConfig) {
-    return createInstance(mergeConfig(axios.defaults, instanceConfig));
-};
-// Expose Cancel & CancelToken
-axios.Cancel = require('./cancel/Cancel');
-axios.CancelToken = require('./cancel/CancelToken');
-axios.isCancel = require('./cancel/isCancel');
-// Expose all/spread
-axios.all = function all(promises) {
-    return Promise.all(promises);
-};
-axios.spread = require('./helpers/spread');
-// Expose isAxiosError
-axios.isAxiosError = require('./helpers/isAxiosError');
-module.exports = axios;
-// Allow use of default import syntax in TypeScript
-module.exports.default = axios;
-
-},{"./utils":"7J9rV","./helpers/bind":"78Fwk","./core/Axios":"26bz2","./core/mergeConfig":"42z1a","./defaults":"5j10E","./cancel/Cancel":"1Ql7i","./cancel/CancelToken":"hHamf","./cancel/isCancel":"3MAgn","./helpers/spread":"9FoXt","./helpers/isAxiosError":"1bzv8"}],"7J9rV":[function(require,module,exports) {
-'use strict';
-var bind = require('./helpers/bind');
-/*global toString:true*/ // utils is a library of generic helper functions non-specific to axios
-var toString = Object.prototype.toString;
-/**
- * Determine if a value is an Array
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is an Array, otherwise false
- */ function isArray(val) {
-    return toString.call(val) === '[object Array]';
-}
-/**
- * Determine if a value is undefined
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if the value is undefined, otherwise false
- */ function isUndefined(val) {
-    return typeof val === 'undefined';
-}
-/**
- * Determine if a value is a Buffer
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Buffer, otherwise false
- */ function isBuffer(val) {
-    return val !== null && !isUndefined(val) && val.constructor !== null && !isUndefined(val.constructor) && typeof val.constructor.isBuffer === 'function' && val.constructor.isBuffer(val);
-}
-/**
- * Determine if a value is an ArrayBuffer
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is an ArrayBuffer, otherwise false
- */ function isArrayBuffer(val) {
-    return toString.call(val) === '[object ArrayBuffer]';
-}
-/**
- * Determine if a value is a FormData
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is an FormData, otherwise false
- */ function isFormData(val) {
-    return typeof FormData !== 'undefined' && val instanceof FormData;
-}
-/**
- * Determine if a value is a view on an ArrayBuffer
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a view on an ArrayBuffer, otherwise false
- */ function isArrayBufferView(val) {
-    var result;
-    if (typeof ArrayBuffer !== 'undefined' && ArrayBuffer.isView) result = ArrayBuffer.isView(val);
-    else result = val && val.buffer && val.buffer instanceof ArrayBuffer;
-    return result;
-}
-/**
- * Determine if a value is a String
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a String, otherwise false
- */ function isString(val) {
-    return typeof val === 'string';
-}
-/**
- * Determine if a value is a Number
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Number, otherwise false
- */ function isNumber(val) {
-    return typeof val === 'number';
-}
-/**
- * Determine if a value is an Object
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is an Object, otherwise false
- */ function isObject(val) {
-    return val !== null && typeof val === 'object';
-}
-/**
- * Determine if a value is a plain Object
- *
- * @param {Object} val The value to test
- * @return {boolean} True if value is a plain Object, otherwise false
- */ function isPlainObject(val) {
-    if (toString.call(val) !== '[object Object]') return false;
-    var prototype = Object.getPrototypeOf(val);
-    return prototype === null || prototype === Object.prototype;
-}
-/**
- * Determine if a value is a Date
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Date, otherwise false
- */ function isDate(val) {
-    return toString.call(val) === '[object Date]';
-}
-/**
- * Determine if a value is a File
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a File, otherwise false
- */ function isFile(val) {
-    return toString.call(val) === '[object File]';
-}
-/**
- * Determine if a value is a Blob
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Blob, otherwise false
- */ function isBlob(val) {
-    return toString.call(val) === '[object Blob]';
-}
-/**
- * Determine if a value is a Function
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Function, otherwise false
- */ function isFunction(val) {
-    return toString.call(val) === '[object Function]';
-}
-/**
- * Determine if a value is a Stream
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Stream, otherwise false
- */ function isStream(val) {
-    return isObject(val) && isFunction(val.pipe);
-}
-/**
- * Determine if a value is a URLSearchParams object
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a URLSearchParams object, otherwise false
- */ function isURLSearchParams(val) {
-    return typeof URLSearchParams !== 'undefined' && val instanceof URLSearchParams;
-}
-/**
- * Trim excess whitespace off the beginning and end of a string
- *
- * @param {String} str The String to trim
- * @returns {String} The String freed of excess whitespace
- */ function trim(str) {
-    return str.replace(/^\s*/, '').replace(/\s*$/, '');
-}
-/**
- * Determine if we're running in a standard browser environment
- *
- * This allows axios to run in a web worker, and react-native.
- * Both environments support XMLHttpRequest, but not fully standard globals.
- *
- * web workers:
- *  typeof window -> undefined
- *  typeof document -> undefined
- *
- * react-native:
- *  navigator.product -> 'ReactNative'
- * nativescript
- *  navigator.product -> 'NativeScript' or 'NS'
- */ function isStandardBrowserEnv() {
-    if (typeof navigator !== 'undefined' && (navigator.product === 'ReactNative' || navigator.product === 'NativeScript' || navigator.product === 'NS')) return false;
-    return typeof window !== 'undefined' && typeof document !== 'undefined';
-}
-/**
- * Iterate over an Array or an Object invoking a function for each item.
- *
- * If `obj` is an Array callback will be called passing
- * the value, index, and complete array for each item.
- *
- * If 'obj' is an Object callback will be called passing
- * the value, key, and complete object for each property.
- *
- * @param {Object|Array} obj The object to iterate
- * @param {Function} fn The callback to invoke for each item
- */ function forEach(obj, fn) {
-    // Don't bother if no value provided
-    if (obj === null || typeof obj === 'undefined') return;
-    // Force an array if not already something iterable
-    if (typeof obj !== 'object') /*eslint no-param-reassign:0*/ obj = [
-        obj
-    ];
-    if (isArray(obj)) // Iterate over array values
-    for(var i = 0, l = obj.length; i < l; i++)fn.call(null, obj[i], i, obj);
-    else {
-        // Iterate over object keys
-        for(var key in obj)if (Object.prototype.hasOwnProperty.call(obj, key)) fn.call(null, obj[key], key, obj);
-    }
-}
-/**
- * Accepts varargs expecting each argument to be an object, then
- * immutably merges the properties of each object and returns result.
- *
- * When multiple objects contain the same key the later object in
- * the arguments list will take precedence.
- *
- * Example:
- *
- * ```js
- * var result = merge({foo: 123}, {foo: 456});
- * console.log(result.foo); // outputs 456
- * ```
- *
- * @param {Object} obj1 Object to merge
- * @returns {Object} Result of all merge properties
- */ function merge() {
-    var result = {
-    };
-    function assignValue(val, key) {
-        if (isPlainObject(result[key]) && isPlainObject(val)) result[key] = merge(result[key], val);
-        else if (isPlainObject(val)) result[key] = merge({
-        }, val);
-        else if (isArray(val)) result[key] = val.slice();
-        else result[key] = val;
-    }
-    for(var i = 0, l = arguments.length; i < l; i++)forEach(arguments[i], assignValue);
-    return result;
-}
-/**
- * Extends object a by mutably adding to it the properties of object b.
- *
- * @param {Object} a The object to be extended
- * @param {Object} b The object to copy properties from
- * @param {Object} thisArg The object to bind function to
- * @return {Object} The resulting value of object a
- */ function extend(a, b, thisArg) {
-    forEach(b, function assignValue(val, key) {
-        if (thisArg && typeof val === 'function') a[key] = bind(val, thisArg);
-        else a[key] = val;
-    });
-    return a;
-}
-/**
- * Remove byte order marker. This catches EF BB BF (the UTF-8 BOM)
- *
- * @param {string} content with BOM
- * @return {string} content value without BOM
- */ function stripBOM(content) {
-    if (content.charCodeAt(0) === 65279) content = content.slice(1);
-    return content;
-}
-module.exports = {
-    isArray: isArray,
-    isArrayBuffer: isArrayBuffer,
-    isBuffer: isBuffer,
-    isFormData: isFormData,
-    isArrayBufferView: isArrayBufferView,
-    isString: isString,
-    isNumber: isNumber,
-    isObject: isObject,
-    isPlainObject: isPlainObject,
-    isUndefined: isUndefined,
-    isDate: isDate,
-    isFile: isFile,
-    isBlob: isBlob,
-    isFunction: isFunction,
-    isStream: isStream,
-    isURLSearchParams: isURLSearchParams,
-    isStandardBrowserEnv: isStandardBrowserEnv,
-    forEach: forEach,
-    merge: merge,
-    extend: extend,
-    trim: trim,
-    stripBOM: stripBOM
-};
-
-},{"./helpers/bind":"78Fwk"}],"78Fwk":[function(require,module,exports) {
-'use strict';
-module.exports = function bind(fn, thisArg) {
-    return function wrap() {
-        var args = new Array(arguments.length);
-        for(var i = 0; i < args.length; i++)args[i] = arguments[i];
-        return fn.apply(thisArg, args);
-    };
-};
-
-},{}],"26bz2":[function(require,module,exports) {
-'use strict';
-var utils = require('./../utils');
-var buildURL = require('../helpers/buildURL');
-var InterceptorManager = require('./InterceptorManager');
-var dispatchRequest = require('./dispatchRequest');
-var mergeConfig = require('./mergeConfig');
-/**
- * Create a new instance of Axios
- *
- * @param {Object} instanceConfig The default config for the instance
- */ function Axios(instanceConfig) {
-    this.defaults = instanceConfig;
-    this.interceptors = {
-        request: new InterceptorManager(),
-        response: new InterceptorManager()
-    };
-}
-/**
- * Dispatch a request
- *
- * @param {Object} config The config specific for this request (merged with this.defaults)
- */ Axios.prototype.request = function request(config) {
-    /*eslint no-param-reassign:0*/ // Allow for axios('example/url'[, config]) a la fetch API
-    if (typeof config === 'string') {
-        config = arguments[1] || {
-        };
-        config.url = arguments[0];
-    } else config = config || {
-    };
-    config = mergeConfig(this.defaults, config);
-    // Set config.method
-    if (config.method) config.method = config.method.toLowerCase();
-    else if (this.defaults.method) config.method = this.defaults.method.toLowerCase();
-    else config.method = 'get';
-    // Hook up interceptors middleware
-    var chain = [
-        dispatchRequest,
-        undefined
-    ];
-    var promise = Promise.resolve(config);
-    this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {
-        chain.unshift(interceptor.fulfilled, interceptor.rejected);
-    });
-    this.interceptors.response.forEach(function pushResponseInterceptors(interceptor) {
-        chain.push(interceptor.fulfilled, interceptor.rejected);
-    });
-    while(chain.length)promise = promise.then(chain.shift(), chain.shift());
-    return promise;
-};
-Axios.prototype.getUri = function getUri(config) {
-    config = mergeConfig(this.defaults, config);
-    return buildURL(config.url, config.params, config.paramsSerializer).replace(/^\?/, '');
-};
-// Provide aliases for supported request methods
-utils.forEach([
-    'delete',
-    'get',
-    'head',
-    'options'
-], function forEachMethodNoData(method) {
-    /*eslint func-names:0*/ Axios.prototype[method] = function(url, config) {
-        return this.request(mergeConfig(config || {
-        }, {
-            method: method,
-            url: url,
-            data: (config || {
-            }).data
-        }));
-    };
-});
-utils.forEach([
-    'post',
-    'put',
-    'patch'
-], function forEachMethodWithData(method) {
-    /*eslint func-names:0*/ Axios.prototype[method] = function(url, data, config) {
-        return this.request(mergeConfig(config || {
-        }, {
-            method: method,
-            url: url,
-            data: data
-        }));
-    };
-});
-module.exports = Axios;
-
-},{"./../utils":"7J9rV","../helpers/buildURL":"25KfR","./InterceptorManager":"33sRR","./dispatchRequest":"1mCjo","./mergeConfig":"42z1a"}],"25KfR":[function(require,module,exports) {
-'use strict';
-var utils = require('./../utils');
-function encode(val) {
-    return encodeURIComponent(val).replace(/%3A/gi, ':').replace(/%24/g, '$').replace(/%2C/gi, ',').replace(/%20/g, '+').replace(/%5B/gi, '[').replace(/%5D/gi, ']');
-}
-/**
- * Build a URL by appending params to the end
- *
- * @param {string} url The base of the url (e.g., http://www.google.com)
- * @param {object} [params] The params to be appended
- * @returns {string} The formatted url
- */ module.exports = function buildURL(url, params, paramsSerializer) {
-    /*eslint no-param-reassign:0*/ if (!params) return url;
-    var serializedParams;
-    if (paramsSerializer) serializedParams = paramsSerializer(params);
-    else if (utils.isURLSearchParams(params)) serializedParams = params.toString();
-    else {
-        var parts = [];
-        utils.forEach(params, function serialize(val, key) {
-            if (val === null || typeof val === 'undefined') return;
-            if (utils.isArray(val)) key = key + '[]';
-            else val = [
-                val
-            ];
-            utils.forEach(val, function parseValue(v) {
-                if (utils.isDate(v)) v = v.toISOString();
-                else if (utils.isObject(v)) v = JSON.stringify(v);
-                parts.push(encode(key) + '=' + encode(v));
-            });
-        });
-        serializedParams = parts.join('&');
-    }
-    if (serializedParams) {
-        var hashmarkIndex = url.indexOf('#');
-        if (hashmarkIndex !== -1) url = url.slice(0, hashmarkIndex);
-        url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams;
-    }
-    return url;
-};
-
-},{"./../utils":"7J9rV"}],"33sRR":[function(require,module,exports) {
-'use strict';
-var utils = require('./../utils');
-function InterceptorManager() {
-    this.handlers = [];
-}
-/**
- * Add a new interceptor to the stack
- *
- * @param {Function} fulfilled The function to handle `then` for a `Promise`
- * @param {Function} rejected The function to handle `reject` for a `Promise`
- *
- * @return {Number} An ID used to remove interceptor later
- */ InterceptorManager.prototype.use = function use(fulfilled, rejected) {
-    this.handlers.push({
-        fulfilled: fulfilled,
-        rejected: rejected
-    });
-    return this.handlers.length - 1;
-};
-/**
- * Remove an interceptor from the stack
- *
- * @param {Number} id The ID that was returned by `use`
- */ InterceptorManager.prototype.eject = function eject(id) {
-    if (this.handlers[id]) this.handlers[id] = null;
-};
-/**
- * Iterate over all the registered interceptors
- *
- * This method is particularly useful for skipping over any
- * interceptors that may have become `null` calling `eject`.
- *
- * @param {Function} fn The function to call for each interceptor
- */ InterceptorManager.prototype.forEach = function forEach(fn) {
-    utils.forEach(this.handlers, function forEachHandler(h) {
-        if (h !== null) fn(h);
-    });
-};
-module.exports = InterceptorManager;
-
-},{"./../utils":"7J9rV"}],"1mCjo":[function(require,module,exports) {
-'use strict';
-var utils = require('./../utils');
-var transformData = require('./transformData');
-var isCancel = require('../cancel/isCancel');
-var defaults = require('../defaults');
-/**
- * Throws a `Cancel` if cancellation has been requested.
- */ function throwIfCancellationRequested(config) {
-    if (config.cancelToken) config.cancelToken.throwIfRequested();
-}
-/**
- * Dispatch a request to the server using the configured adapter.
- *
- * @param {object} config The config that is to be used for the request
- * @returns {Promise} The Promise to be fulfilled
- */ module.exports = function dispatchRequest(config) {
-    throwIfCancellationRequested(config);
-    // Ensure headers exist
-    config.headers = config.headers || {
-    };
-    // Transform request data
-    config.data = transformData(config.data, config.headers, config.transformRequest);
-    // Flatten headers
-    config.headers = utils.merge(config.headers.common || {
-    }, config.headers[config.method] || {
-    }, config.headers);
-    utils.forEach([
-        'delete',
-        'get',
-        'head',
-        'post',
-        'put',
-        'patch',
-        'common'
-    ], function cleanHeaderConfig(method) {
-        delete config.headers[method];
-    });
-    var adapter = config.adapter || defaults.adapter;
-    return adapter(config).then(function onAdapterResolution(response) {
-        throwIfCancellationRequested(config);
-        // Transform response data
-        response.data = transformData(response.data, response.headers, config.transformResponse);
-        return response;
-    }, function onAdapterRejection(reason) {
-        if (!isCancel(reason)) {
-            throwIfCancellationRequested(config);
-            // Transform response data
-            if (reason && reason.response) reason.response.data = transformData(reason.response.data, reason.response.headers, config.transformResponse);
-        }
-        return Promise.reject(reason);
-    });
-};
-
-},{"./../utils":"7J9rV","./transformData":"1ueU6","../cancel/isCancel":"3MAgn","../defaults":"5j10E"}],"1ueU6":[function(require,module,exports) {
-'use strict';
-var utils = require('./../utils');
-/**
- * Transform the data for a request or a response
- *
- * @param {Object|String} data The data to be transformed
- * @param {Array} headers The headers for the request or response
- * @param {Array|Function} fns A single function or Array of functions
- * @returns {*} The resulting transformed data
- */ module.exports = function transformData(data, headers, fns) {
-    /*eslint no-param-reassign:0*/ utils.forEach(fns, function transform(fn) {
-        data = fn(data, headers);
-    });
-    return data;
-};
-
-},{"./../utils":"7J9rV"}],"3MAgn":[function(require,module,exports) {
-'use strict';
-module.exports = function isCancel(value) {
-    return !!(value && value.__CANCEL__);
-};
-
-},{}],"5j10E":[function(require,module,exports) {
-var process = require("process");
-'use strict';
-var utils = require('./utils');
-var normalizeHeaderName = require('./helpers/normalizeHeaderName');
-var DEFAULT_CONTENT_TYPE = {
-    'Content-Type': 'application/x-www-form-urlencoded'
-};
-function setContentTypeIfUnset(headers, value) {
-    if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) headers['Content-Type'] = value;
-}
-function getDefaultAdapter() {
-    var adapter;
-    if (typeof XMLHttpRequest !== 'undefined') // For browsers use XHR adapter
-    adapter = require('./adapters/xhr');
-    else if (typeof process !== 'undefined' && Object.prototype.toString.call(process) === '[object process]') // For node use HTTP adapter
-    adapter = require('./adapters/http');
-    return adapter;
-}
-var defaults = {
-    adapter: getDefaultAdapter(),
-    transformRequest: [
-        function transformRequest(data, headers) {
-            normalizeHeaderName(headers, 'Accept');
-            normalizeHeaderName(headers, 'Content-Type');
-            if (utils.isFormData(data) || utils.isArrayBuffer(data) || utils.isBuffer(data) || utils.isStream(data) || utils.isFile(data) || utils.isBlob(data)) return data;
-            if (utils.isArrayBufferView(data)) return data.buffer;
-            if (utils.isURLSearchParams(data)) {
-                setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
-                return data.toString();
-            }
-            if (utils.isObject(data)) {
-                setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
-                return JSON.stringify(data);
-            }
-            return data;
-        }
-    ],
-    transformResponse: [
-        function transformResponse(data) {
-            /*eslint no-param-reassign:0*/ if (typeof data === 'string') try {
-                data = JSON.parse(data);
-            } catch (e) {
-            }
-            return data;
-        }
-    ],
-    /**
-   * A timeout in milliseconds to abort a request. If set to 0 (default) a
-   * timeout is not created.
-   */ timeout: 0,
-    xsrfCookieName: 'XSRF-TOKEN',
-    xsrfHeaderName: 'X-XSRF-TOKEN',
-    maxContentLength: -1,
-    maxBodyLength: -1,
-    validateStatus: function validateStatus(status) {
-        return status >= 200 && status < 300;
-    }
-};
-defaults.headers = {
-    common: {
-        'Accept': 'application/json, text/plain, */*'
-    }
-};
-utils.forEach([
-    'delete',
-    'get',
-    'head'
-], function forEachMethodNoData(method) {
-    defaults.headers[method] = {
-    };
-});
-utils.forEach([
-    'post',
-    'put',
-    'patch'
-], function forEachMethodWithData(method) {
-    defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
-});
-module.exports = defaults;
-
-},{"process":"7AgFc","./utils":"7J9rV","./helpers/normalizeHeaderName":"5yMqL","./adapters/xhr":"6pJqL","./adapters/http":"6pJqL"}],"7AgFc":[function(require,module,exports) {
-// shim for using process in browser
-var process = module.exports = {
-};
-// cached from whatever global is present so that test runners that stub it
-// don't break things.  But we need to wrap it in a try catch in case it is
-// wrapped in strict mode code which doesn't define any globals.  It's inside a
-// function because try/catches deoptimize in certain engines.
-var cachedSetTimeout;
-var cachedClearTimeout;
-function defaultSetTimout() {
-    throw new Error('setTimeout has not been defined');
-}
-function defaultClearTimeout() {
-    throw new Error('clearTimeout has not been defined');
-}
-(function() {
-    try {
-        if (typeof setTimeout === 'function') cachedSetTimeout = setTimeout;
-        else cachedSetTimeout = defaultSetTimout;
-    } catch (e) {
-        cachedSetTimeout = defaultSetTimout;
-    }
-    try {
-        if (typeof clearTimeout === 'function') cachedClearTimeout = clearTimeout;
-        else cachedClearTimeout = defaultClearTimeout;
-    } catch (e) {
-        cachedClearTimeout = defaultClearTimeout;
-    }
-})();
-function runTimeout(fun) {
-    if (cachedSetTimeout === setTimeout) //normal enviroments in sane situations
-    return setTimeout(fun, 0);
-    // if setTimeout wasn't available but was latter defined
-    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-        cachedSetTimeout = setTimeout;
-        return setTimeout(fun, 0);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedSetTimeout(fun, 0);
-    } catch (e) {
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return cachedSetTimeout.call(null, fun, 0);
-        } catch (e1) {
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return cachedSetTimeout.call(this, fun, 0);
-        }
-    }
-}
-function runClearTimeout(marker) {
-    if (cachedClearTimeout === clearTimeout) //normal enviroments in sane situations
-    return clearTimeout(marker);
-    // if clearTimeout wasn't available but was latter defined
-    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-        cachedClearTimeout = clearTimeout;
-        return clearTimeout(marker);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedClearTimeout(marker);
-    } catch (e) {
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return cachedClearTimeout.call(null, marker);
-        } catch (e1) {
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return cachedClearTimeout.call(this, marker);
-        }
-    }
-}
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-function cleanUpNextTick() {
-    if (!draining || !currentQueue) return;
-    draining = false;
-    if (currentQueue.length) queue = currentQueue.concat(queue);
-    else queueIndex = -1;
-    if (queue.length) drainQueue();
-}
-function drainQueue() {
-    if (draining) return;
-    var timeout = runTimeout(cleanUpNextTick);
-    draining = true;
-    var len = queue.length;
-    while(len){
-        currentQueue = queue;
-        queue = [];
-        while((++queueIndex) < len)if (currentQueue) currentQueue[queueIndex].run();
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    runClearTimeout(timeout);
-}
-process.nextTick = function(fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) for(var i = 1; i < arguments.length; i++)args[i - 1] = arguments[i];
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) runTimeout(drainQueue);
-};
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function() {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {
-};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {
-};
-function noop() {
-}
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-process.prependListener = noop;
-process.prependOnceListener = noop;
-process.listeners = function(name) {
-    return [];
-};
-process.binding = function(name) {
-    throw new Error('process.binding is not supported');
-};
-process.cwd = function() {
-    return '/';
-};
-process.chdir = function(dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() {
-    return 0;
-};
-
-},{}],"5yMqL":[function(require,module,exports) {
-'use strict';
-var utils = require('../utils');
-module.exports = function normalizeHeaderName(headers, normalizedName) {
-    utils.forEach(headers, function processHeader(value, name) {
-        if (name !== normalizedName && name.toUpperCase() === normalizedName.toUpperCase()) {
-            headers[normalizedName] = value;
-            delete headers[name];
-        }
-    });
-};
-
-},{"../utils":"7J9rV"}],"6pJqL":[function(require,module,exports) {
-'use strict';
-var utils = require('./../utils');
-var settle = require('./../core/settle');
-var cookies = require('./../helpers/cookies');
-var buildURL = require('./../helpers/buildURL');
-var buildFullPath = require('../core/buildFullPath');
-var parseHeaders = require('./../helpers/parseHeaders');
-var isURLSameOrigin = require('./../helpers/isURLSameOrigin');
-var createError = require('../core/createError');
-module.exports = function xhrAdapter(config) {
-    return new Promise(function dispatchXhrRequest(resolve, reject) {
-        var requestData = config.data;
-        var requestHeaders = config.headers;
-        if (utils.isFormData(requestData)) delete requestHeaders['Content-Type']; // Let the browser set it
-        var request = new XMLHttpRequest();
-        // HTTP basic authentication
-        if (config.auth) {
-            var username = config.auth.username || '';
-            var password = config.auth.password ? unescape(encodeURIComponent(config.auth.password)) : '';
-            requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
-        }
-        var fullPath = buildFullPath(config.baseURL, config.url);
-        request.open(config.method.toUpperCase(), buildURL(fullPath, config.params, config.paramsSerializer), true);
-        // Set the request timeout in MS
-        request.timeout = config.timeout;
-        // Listen for ready state
-        request.onreadystatechange = function handleLoad() {
-            if (!request || request.readyState !== 4) return;
-            // The request errored out and we didn't get a response, this will be
-            // handled by onerror instead
-            // With one exception: request that using file: protocol, most browsers
-            // will return status as 0 even though it's a successful request
-            if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) return;
-            // Prepare the response
-            var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
-            var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
-            var response = {
-                data: responseData,
-                status: request.status,
-                statusText: request.statusText,
-                headers: responseHeaders,
-                config: config,
-                request: request
-            };
-            settle(resolve, reject, response);
-            // Clean up request
-            request = null;
-        };
-        // Handle browser request cancellation (as opposed to a manual cancellation)
-        request.onabort = function handleAbort() {
-            if (!request) return;
-            reject(createError('Request aborted', config, 'ECONNABORTED', request));
-            // Clean up request
-            request = null;
-        };
-        // Handle low level network errors
-        request.onerror = function handleError() {
-            // Real errors are hidden from us by the browser
-            // onerror should only fire if it's a network error
-            reject(createError('Network Error', config, null, request));
-            // Clean up request
-            request = null;
-        };
-        // Handle timeout
-        request.ontimeout = function handleTimeout() {
-            var timeoutErrorMessage = 'timeout of ' + config.timeout + 'ms exceeded';
-            if (config.timeoutErrorMessage) timeoutErrorMessage = config.timeoutErrorMessage;
-            reject(createError(timeoutErrorMessage, config, 'ECONNABORTED', request));
-            // Clean up request
-            request = null;
-        };
-        // Add xsrf header
-        // This is only done if running in a standard browser environment.
-        // Specifically not if we're in a web worker, or react-native.
-        if (utils.isStandardBrowserEnv()) {
-            // Add xsrf header
-            var xsrfValue = (config.withCredentials || isURLSameOrigin(fullPath)) && config.xsrfCookieName ? cookies.read(config.xsrfCookieName) : undefined;
-            if (xsrfValue) requestHeaders[config.xsrfHeaderName] = xsrfValue;
-        }
-        // Add headers to the request
-        if ('setRequestHeader' in request) utils.forEach(requestHeaders, function setRequestHeader(val, key) {
-            if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') // Remove Content-Type if data is undefined
-            delete requestHeaders[key];
-            else // Otherwise add header to the request
-            request.setRequestHeader(key, val);
-        });
-        // Add withCredentials to request if needed
-        if (!utils.isUndefined(config.withCredentials)) request.withCredentials = !!config.withCredentials;
-        // Add responseType to request if needed
-        if (config.responseType) try {
-            request.responseType = config.responseType;
-        } catch (e) {
-            // Expected DOMException thrown by browsers not compatible XMLHttpRequest Level 2.
-            // But, this can be suppressed for 'json' type as it can be parsed by default 'transformResponse' function.
-            if (config.responseType !== 'json') throw e;
-        }
-        // Handle progress if needed
-        if (typeof config.onDownloadProgress === 'function') request.addEventListener('progress', config.onDownloadProgress);
-        // Not all browsers support upload events
-        if (typeof config.onUploadProgress === 'function' && request.upload) request.upload.addEventListener('progress', config.onUploadProgress);
-        if (config.cancelToken) // Handle cancellation
-        config.cancelToken.promise.then(function onCanceled(cancel) {
-            if (!request) return;
-            request.abort();
-            reject(cancel);
-            // Clean up request
-            request = null;
-        });
-        if (!requestData) requestData = null;
-        // Send the request
-        request.send(requestData);
-    });
-};
-
-},{"./../utils":"7J9rV","./../core/settle":"72M6J","./../helpers/cookies":"1m0F1","./../helpers/buildURL":"25KfR","../core/buildFullPath":"5fWja","./../helpers/parseHeaders":"1KizL","./../helpers/isURLSameOrigin":"6Gtz3","../core/createError":"7ETv1"}],"72M6J":[function(require,module,exports) {
-'use strict';
-var createError = require('./createError');
-/**
- * Resolve or reject a Promise based on response status.
- *
- * @param {Function} resolve A function that resolves the promise.
- * @param {Function} reject A function that rejects the promise.
- * @param {object} response The response.
- */ module.exports = function settle(resolve, reject, response) {
-    var validateStatus = response.config.validateStatus;
-    if (!response.status || !validateStatus || validateStatus(response.status)) resolve(response);
-    else reject(createError('Request failed with status code ' + response.status, response.config, null, response.request, response));
-};
-
-},{"./createError":"7ETv1"}],"7ETv1":[function(require,module,exports) {
-'use strict';
-var enhanceError = require('./enhanceError');
-/**
- * Create an Error with the specified message, config, error code, request and response.
- *
- * @param {string} message The error message.
- * @param {Object} config The config.
- * @param {string} [code] The error code (for example, 'ECONNABORTED').
- * @param {Object} [request] The request.
- * @param {Object} [response] The response.
- * @returns {Error} The created error.
- */ module.exports = function createError(message, config, code, request, response) {
-    var error = new Error(message);
-    return enhanceError(error, config, code, request, response);
-};
-
-},{"./enhanceError":"2O2Ud"}],"2O2Ud":[function(require,module,exports) {
-'use strict';
-/**
- * Update an Error with the specified config, error code, and response.
- *
- * @param {Error} error The error to update.
- * @param {Object} config The config.
- * @param {string} [code] The error code (for example, 'ECONNABORTED').
- * @param {Object} [request] The request.
- * @param {Object} [response] The response.
- * @returns {Error} The error.
- */ module.exports = function enhanceError(error, config, code, request, response) {
-    error.config = config;
-    if (code) error.code = code;
-    error.request = request;
-    error.response = response;
-    error.isAxiosError = true;
-    error.toJSON = function toJSON() {
-        return {
-            // Standard
-            message: this.message,
-            name: this.name,
-            // Microsoft
-            description: this.description,
-            number: this.number,
-            // Mozilla
-            fileName: this.fileName,
-            lineNumber: this.lineNumber,
-            columnNumber: this.columnNumber,
-            stack: this.stack,
-            // Axios
-            config: this.config,
-            code: this.code
-        };
-    };
-    return error;
-};
-
-},{}],"1m0F1":[function(require,module,exports) {
-'use strict';
-var utils = require('./../utils');
-module.exports = utils.isStandardBrowserEnv() ? // Standard browser envs support document.cookie
-(function standardBrowserEnv() {
-    return {
-        write: function write(name, value, expires, path, domain, secure) {
-            var cookie = [];
-            cookie.push(name + '=' + encodeURIComponent(value));
-            if (utils.isNumber(expires)) cookie.push('expires=' + new Date(expires).toGMTString());
-            if (utils.isString(path)) cookie.push('path=' + path);
-            if (utils.isString(domain)) cookie.push('domain=' + domain);
-            if (secure === true) cookie.push('secure');
-            document.cookie = cookie.join('; ');
-        },
-        read: function read(name) {
-            var match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
-            return match ? decodeURIComponent(match[3]) : null;
-        },
-        remove: function remove(name) {
-            this.write(name, '', Date.now() - 86400000);
-        }
-    };
-})() : // Non standard browser env (web workers, react-native) lack needed support.
-(function nonStandardBrowserEnv() {
-    return {
-        write: function write() {
-        },
-        read: function read() {
-            return null;
-        },
-        remove: function remove() {
-        }
-    };
-})();
-
-},{"./../utils":"7J9rV"}],"5fWja":[function(require,module,exports) {
-'use strict';
-var isAbsoluteURL = require('../helpers/isAbsoluteURL');
-var combineURLs = require('../helpers/combineURLs');
-/**
- * Creates a new URL by combining the baseURL with the requestedURL,
- * only when the requestedURL is not already an absolute URL.
- * If the requestURL is absolute, this function returns the requestedURL untouched.
- *
- * @param {string} baseURL The base URL
- * @param {string} requestedURL Absolute or relative URL to combine
- * @returns {string} The combined full path
- */ module.exports = function buildFullPath(baseURL, requestedURL) {
-    if (baseURL && !isAbsoluteURL(requestedURL)) return combineURLs(baseURL, requestedURL);
-    return requestedURL;
-};
-
-},{"../helpers/isAbsoluteURL":"4FcN1","../helpers/combineURLs":"qMap4"}],"4FcN1":[function(require,module,exports) {
-'use strict';
-/**
- * Determines whether the specified URL is absolute
- *
- * @param {string} url The URL to test
- * @returns {boolean} True if the specified URL is absolute, otherwise false
- */ module.exports = function isAbsoluteURL(url) {
-    // A URL is considered absolute if it begins with "<scheme>://" or "//" (protocol-relative URL).
-    // RFC 3986 defines scheme name as a sequence of characters beginning with a letter and followed
-    // by any combination of letters, digits, plus, period, or hyphen.
-    return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
-};
-
-},{}],"qMap4":[function(require,module,exports) {
-'use strict';
-/**
- * Creates a new URL by combining the specified URLs
- *
- * @param {string} baseURL The base URL
- * @param {string} relativeURL The relative URL
- * @returns {string} The combined URL
- */ module.exports = function combineURLs(baseURL, relativeURL) {
-    return relativeURL ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '') : baseURL;
-};
-
-},{}],"1KizL":[function(require,module,exports) {
-'use strict';
-var utils = require('./../utils');
-// Headers whose duplicates are ignored by node
-// c.f. https://nodejs.org/api/http.html#http_message_headers
-var ignoreDuplicateOf = [
-    'age',
-    'authorization',
-    'content-length',
-    'content-type',
-    'etag',
-    'expires',
-    'from',
-    'host',
-    'if-modified-since',
-    'if-unmodified-since',
-    'last-modified',
-    'location',
-    'max-forwards',
-    'proxy-authorization',
-    'referer',
-    'retry-after',
-    'user-agent'
-];
-/**
- * Parse headers into an object
- *
- * ```
- * Date: Wed, 27 Aug 2014 08:58:49 GMT
- * Content-Type: application/json
- * Connection: keep-alive
- * Transfer-Encoding: chunked
- * ```
- *
- * @param {String} headers Headers needing to be parsed
- * @returns {Object} Headers parsed into an object
- */ module.exports = function parseHeaders(headers) {
-    var parsed = {
-    };
-    var key;
-    var val;
-    var i;
-    if (!headers) return parsed;
-    utils.forEach(headers.split('\n'), function parser(line) {
-        i = line.indexOf(':');
-        key = utils.trim(line.substr(0, i)).toLowerCase();
-        val = utils.trim(line.substr(i + 1));
-        if (key) {
-            if (parsed[key] && ignoreDuplicateOf.indexOf(key) >= 0) return;
-            if (key === 'set-cookie') parsed[key] = (parsed[key] ? parsed[key] : []).concat([
-                val
-            ]);
-            else parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
-        }
-    });
-    return parsed;
-};
-
-},{"./../utils":"7J9rV"}],"6Gtz3":[function(require,module,exports) {
-'use strict';
-var utils = require('./../utils');
-module.exports = utils.isStandardBrowserEnv() ? // Standard browser envs have full support of the APIs needed to test
-// whether the request URL is of the same origin as current location.
-(function standardBrowserEnv() {
-    var msie = /(msie|trident)/i.test(navigator.userAgent);
-    var urlParsingNode = document.createElement('a');
-    var originURL;
-    /**
-    * Parse a URL to discover it's components
-    *
-    * @param {String} url The URL to be parsed
-    * @returns {Object}
-    */ function resolveURL(url) {
-        var href = url;
-        if (msie) {
-            // IE needs attribute set twice to normalize properties
-            urlParsingNode.setAttribute('href', href);
-            href = urlParsingNode.href;
-        }
-        urlParsingNode.setAttribute('href', href);
-        // urlParsingNode provides the UrlUtils interface - http://url.spec.whatwg.org/#urlutils
-        return {
-            href: urlParsingNode.href,
-            protocol: urlParsingNode.protocol ? urlParsingNode.protocol.replace(/:$/, '') : '',
-            host: urlParsingNode.host,
-            search: urlParsingNode.search ? urlParsingNode.search.replace(/^\?/, '') : '',
-            hash: urlParsingNode.hash ? urlParsingNode.hash.replace(/^#/, '') : '',
-            hostname: urlParsingNode.hostname,
-            port: urlParsingNode.port,
-            pathname: urlParsingNode.pathname.charAt(0) === '/' ? urlParsingNode.pathname : '/' + urlParsingNode.pathname
-        };
-    }
-    originURL = resolveURL(window.location.href);
-    /**
-    * Determine if a URL shares the same origin as the current location
-    *
-    * @param {String} requestURL The URL to test
-    * @returns {boolean} True if URL shares the same origin, otherwise false
-    */ return function isURLSameOrigin(requestURL) {
-        var parsed = utils.isString(requestURL) ? resolveURL(requestURL) : requestURL;
-        return parsed.protocol === originURL.protocol && parsed.host === originURL.host;
-    };
-})() : // Non standard browser envs (web workers, react-native) lack needed support.
-(function nonStandardBrowserEnv() {
-    return function isURLSameOrigin() {
-        return true;
-    };
-})();
-
-},{"./../utils":"7J9rV"}],"42z1a":[function(require,module,exports) {
-'use strict';
-var utils = require('../utils');
-/**
- * Config-specific merge-function which creates a new config-object
- * by merging two configuration objects together.
- *
- * @param {Object} config1
- * @param {Object} config2
- * @returns {Object} New object resulting from merging config2 to config1
- */ module.exports = function mergeConfig(config1, config2) {
-    // eslint-disable-next-line no-param-reassign
-    config2 = config2 || {
-    };
-    var config = {
-    };
-    var valueFromConfig2Keys = [
-        'url',
-        'method',
-        'data'
-    ];
-    var mergeDeepPropertiesKeys = [
-        'headers',
-        'auth',
-        'proxy',
-        'params'
-    ];
-    var defaultToConfig2Keys = [
-        'baseURL',
-        'transformRequest',
-        'transformResponse',
-        'paramsSerializer',
-        'timeout',
-        'timeoutMessage',
-        'withCredentials',
-        'adapter',
-        'responseType',
-        'xsrfCookieName',
-        'xsrfHeaderName',
-        'onUploadProgress',
-        'onDownloadProgress',
-        'decompress',
-        'maxContentLength',
-        'maxBodyLength',
-        'maxRedirects',
-        'transport',
-        'httpAgent',
-        'httpsAgent',
-        'cancelToken',
-        'socketPath',
-        'responseEncoding'
-    ];
-    var directMergeKeys = [
-        'validateStatus'
-    ];
-    function getMergedValue(target, source) {
-        if (utils.isPlainObject(target) && utils.isPlainObject(source)) return utils.merge(target, source);
-        else if (utils.isPlainObject(source)) return utils.merge({
-        }, source);
-        else if (utils.isArray(source)) return source.slice();
-        return source;
-    }
-    function mergeDeepProperties(prop) {
-        if (!utils.isUndefined(config2[prop])) config[prop] = getMergedValue(config1[prop], config2[prop]);
-        else if (!utils.isUndefined(config1[prop])) config[prop] = getMergedValue(undefined, config1[prop]);
-    }
-    utils.forEach(valueFromConfig2Keys, function valueFromConfig2(prop) {
-        if (!utils.isUndefined(config2[prop])) config[prop] = getMergedValue(undefined, config2[prop]);
-    });
-    utils.forEach(mergeDeepPropertiesKeys, mergeDeepProperties);
-    utils.forEach(defaultToConfig2Keys, function defaultToConfig2(prop) {
-        if (!utils.isUndefined(config2[prop])) config[prop] = getMergedValue(undefined, config2[prop]);
-        else if (!utils.isUndefined(config1[prop])) config[prop] = getMergedValue(undefined, config1[prop]);
-    });
-    utils.forEach(directMergeKeys, function merge(prop) {
-        if (prop in config2) config[prop] = getMergedValue(config1[prop], config2[prop]);
-        else if (prop in config1) config[prop] = getMergedValue(undefined, config1[prop]);
-    });
-    var axiosKeys = valueFromConfig2Keys.concat(mergeDeepPropertiesKeys).concat(defaultToConfig2Keys).concat(directMergeKeys);
-    var otherKeys = Object.keys(config1).concat(Object.keys(config2)).filter(function filterAxiosKeys(key) {
-        return axiosKeys.indexOf(key) === -1;
-    });
-    utils.forEach(otherKeys, mergeDeepProperties);
-    return config;
-};
-
-},{"../utils":"7J9rV"}],"1Ql7i":[function(require,module,exports) {
-'use strict';
-/**
- * A `Cancel` is an object that is thrown when an operation is canceled.
- *
- * @class
- * @param {string=} message The message.
- */ function Cancel(message) {
-    this.message = message;
-}
-Cancel.prototype.toString = function toString() {
-    return 'Cancel' + (this.message ? ': ' + this.message : '');
-};
-Cancel.prototype.__CANCEL__ = true;
-module.exports = Cancel;
-
-},{}],"hHamf":[function(require,module,exports) {
-'use strict';
-var Cancel = require('./Cancel');
-/**
- * A `CancelToken` is an object that can be used to request cancellation of an operation.
- *
- * @class
- * @param {Function} executor The executor function.
- */ function CancelToken(executor) {
-    if (typeof executor !== 'function') throw new TypeError('executor must be a function.');
-    var resolvePromise;
-    this.promise = new Promise(function promiseExecutor(resolve) {
-        resolvePromise = resolve;
-    });
-    var token = this;
-    executor(function cancel(message) {
-        if (token.reason) // Cancellation has already been requested
-        return;
-        token.reason = new Cancel(message);
-        resolvePromise(token.reason);
-    });
-}
-/**
- * Throws a `Cancel` if cancellation has been requested.
- */ CancelToken.prototype.throwIfRequested = function throwIfRequested() {
-    if (this.reason) throw this.reason;
-};
-/**
- * Returns an object that contains a new `CancelToken` and a function that, when called,
- * cancels the `CancelToken`.
- */ CancelToken.source = function source() {
-    var cancel;
-    var token = new CancelToken(function executor(c) {
-        cancel = c;
-    });
-    return {
-        token: token,
-        cancel: cancel
-    };
-};
-module.exports = CancelToken;
-
-},{"./Cancel":"1Ql7i"}],"9FoXt":[function(require,module,exports) {
-'use strict';
-/**
- * Syntactic sugar for invoking a function and expanding an array for arguments.
- *
- * Common use case would be to use `Function.prototype.apply`.
- *
- *  ```js
- *  function f(x, y, z) {}
- *  var args = [1, 2, 3];
- *  f.apply(null, args);
- *  ```
- *
- * With `spread` this example can be re-written.
- *
- *  ```js
- *  spread(function(x, y, z) {})([1, 2, 3]);
- *  ```
- *
- * @param {Function} callback
- * @returns {Function}
- */ module.exports = function spread(callback) {
-    return function wrap(arr) {
-        return callback.apply(null, arr);
-    };
-};
-
-},{}],"1bzv8":[function(require,module,exports) {
-'use strict';
-/**
- * Determines whether the payload is an error thrown by Axios
- *
- * @param {*} payload The value to test
- * @returns {boolean} True if the payload is an error thrown by Axios, otherwise false
- */ module.exports = function isAxiosError(payload) {
-    return typeof payload === 'object' && payload.isAxiosError === true;
-};
-
-},{}],"5yJJr":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-const Config = {
-    API_URL: 'https://borchers-movie-api.herokuapp.com'
-};
-exports.default = Config;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"367CR"}],"45yj8":[function(require,module,exports) {
+},{"react-refresh/runtime":"592mh"}],"45yj8":[function(require,module,exports) {
 var helpers = require("../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -29991,7 +29696,76 @@ var _default = CloseButton;
 exports.default = _default;
 module.exports = exports["default"];
 
-},{"@babel/runtime/helpers/interopRequireDefault":"4ttVj","@babel/runtime/helpers/extends":"3krLJ","@babel/runtime/helpers/objectWithoutPropertiesLoose":"3Yx9V","prop-types":"4dfy5","react":"3b2NM","classnames":"5aJRc"}],"2aFSj":[function(require,module,exports) {
+},{"@babel/runtime/helpers/interopRequireDefault":"4ttVj","@babel/runtime/helpers/extends":"3krLJ","@babel/runtime/helpers/objectWithoutPropertiesLoose":"3Yx9V","prop-types":"4dfy5","react":"3b2NM","classnames":"5aJRc"}],"27J3S":[function(require,module,exports) {
+"use strict";
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports.default = void 0;
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+var _react = _interopRequireDefault(require("react"));
+var _classnames = _interopRequireDefault(require("classnames"));
+var _default = function _default1(className) {
+    return(/*#__PURE__*/ _react.default.forwardRef(function(p, ref) {
+        return(/*#__PURE__*/ _react.default.createElement("div", _extends2.default({
+        }, p, {
+            ref: ref,
+            className: _classnames.default(p.className, className)
+        })));
+    }));
+};
+exports.default = _default;
+module.exports = exports["default"];
+
+},{"@babel/runtime/helpers/interopRequireDefault":"4ttVj","@babel/runtime/helpers/extends":"3krLJ","react":"3b2NM","classnames":"5aJRc"}],"2oVVc":[function(require,module,exports) {
+"use strict";
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports.default = createWithBsPrefix;
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+var _objectWithoutPropertiesLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutPropertiesLoose"));
+var _classnames = _interopRequireDefault(require("classnames"));
+var _camelize = _interopRequireDefault(require("dom-helpers/camelize"));
+var _react = _interopRequireDefault(require("react"));
+var _ThemeProvider = require("./ThemeProvider");
+var _excluded = [
+    "className",
+    "bsPrefix",
+    "as"
+];
+var pascalCase = function pascalCase1(str) {
+    return str[0].toUpperCase() + _camelize.default(str).slice(1);
+};
+// TODO: emstricten & fix the typing here! `createWithBsPrefix<TElementType>...`
+function createWithBsPrefix(prefix, _temp) {
+    var _ref = _temp === void 0 ? {
+    } : _temp, _ref$displayName = _ref.displayName, displayName = _ref$displayName === void 0 ? pascalCase(prefix) : _ref$displayName, Component = _ref.Component, defaultProps = _ref.defaultProps;
+    var BsComponent = /*#__PURE__*/ _react.default.forwardRef(function(_ref2, ref) {
+        var className = _ref2.className, bsPrefix = _ref2.bsPrefix, _ref2$as = _ref2.as, Tag = _ref2$as === void 0 ? Component || 'div' : _ref2$as, props = _objectWithoutPropertiesLoose2.default(_ref2, _excluded);
+        var resolvedPrefix = _ThemeProvider.useBootstrapPrefix(bsPrefix, prefix);
+        return(/*#__PURE__*/ _react.default.createElement(Tag, _extends2.default({
+            ref: ref,
+            className: _classnames.default(className, resolvedPrefix)
+        }, props)));
+    });
+    BsComponent.defaultProps = defaultProps;
+    BsComponent.displayName = displayName;
+    return BsComponent;
+}
+module.exports = exports["default"];
+
+},{"@babel/runtime/helpers/interopRequireDefault":"4ttVj","@babel/runtime/helpers/extends":"3krLJ","@babel/runtime/helpers/objectWithoutPropertiesLoose":"3Yx9V","classnames":"5aJRc","dom-helpers/camelize":"7AXwA","react":"3b2NM","./ThemeProvider":"4rz1S"}],"7AXwA":[function(require,module,exports) {
+"use strict";
+exports.__esModule = true;
+exports.default = camelize;
+var rHyphen = /-(.)/g;
+function camelize(string) {
+    return string.replace(rHyphen, function(_, chr) {
+        return chr.toUpperCase();
+    });
+}
+module.exports = exports["default"];
+
+},{}],"2aFSj":[function(require,module,exports) {
 "use strict";
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 exports.__esModule = true;
@@ -30189,6 +29963,157 @@ var ButtonToolbar = /*#__PURE__*/ _react.default.forwardRef(function(_ref, ref) 
 ButtonToolbar.displayName = 'ButtonToolbar';
 ButtonToolbar.defaultProps = defaultProps;
 var _default = ButtonToolbar;
+exports.default = _default;
+module.exports = exports["default"];
+
+},{"@babel/runtime/helpers/interopRequireDefault":"4ttVj","@babel/runtime/helpers/extends":"3krLJ","@babel/runtime/helpers/objectWithoutPropertiesLoose":"3Yx9V","classnames":"5aJRc","react":"3b2NM","./ThemeProvider":"4rz1S"}],"1CZWQ":[function(require,module,exports) {
+"use strict";
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports.default = void 0;
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+var _objectWithoutPropertiesLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutPropertiesLoose"));
+var _classnames = _interopRequireDefault(require("classnames"));
+var _react = _interopRequireWildcard(require("react"));
+var _ThemeProvider = require("./ThemeProvider");
+var _createWithBsPrefix = _interopRequireDefault(require("./createWithBsPrefix"));
+var _divWithClassName = _interopRequireDefault(require("./divWithClassName"));
+var _CardContext = _interopRequireDefault(require("./CardContext"));
+var _CardImg = _interopRequireDefault(require("./CardImg"));
+var _excluded = [
+    "bsPrefix",
+    "className",
+    "bg",
+    "text",
+    "border",
+    "body",
+    "children",
+    "as"
+];
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache1(nodeInterop1) {
+        return nodeInterop1 ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || typeof obj !== "object" && typeof obj !== "function") return {
+        default: obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {
+    };
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj.default = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
+var DivStyledAsH5 = _divWithClassName.default('h5');
+var DivStyledAsH6 = _divWithClassName.default('h6');
+var CardBody = _createWithBsPrefix.default('card-body');
+var CardTitle = _createWithBsPrefix.default('card-title', {
+    Component: DivStyledAsH5
+});
+var CardSubtitle = _createWithBsPrefix.default('card-subtitle', {
+    Component: DivStyledAsH6
+});
+var CardLink = _createWithBsPrefix.default('card-link', {
+    Component: 'a'
+});
+var CardText = _createWithBsPrefix.default('card-text', {
+    Component: 'p'
+});
+var CardHeader = _createWithBsPrefix.default('card-header');
+var CardFooter = _createWithBsPrefix.default('card-footer');
+var CardImgOverlay = _createWithBsPrefix.default('card-img-overlay');
+var defaultProps = {
+    body: false
+};
+var Card = /*#__PURE__*/ _react.default.forwardRef(function(_ref, ref) {
+    var bsPrefix = _ref.bsPrefix, className = _ref.className, bg = _ref.bg, text = _ref.text, border = _ref.border, body = _ref.body, children = _ref.children, _ref$as = _ref.as, Component = _ref$as === void 0 ? 'div' : _ref$as, props = _objectWithoutPropertiesLoose2.default(_ref, _excluded);
+    var prefix = _ThemeProvider.useBootstrapPrefix(bsPrefix, 'card');
+    var cardContext = _react.useMemo(function() {
+        return {
+            cardHeaderBsPrefix: prefix + "-header"
+        };
+    }, [
+        prefix
+    ]);
+    return(/*#__PURE__*/ _react.default.createElement(_CardContext.default.Provider, {
+        value: cardContext
+    }, /*#__PURE__*/ _react.default.createElement(Component, _extends2.default({
+        ref: ref
+    }, props, {
+        className: _classnames.default(className, prefix, bg && "bg-" + bg, text && "text-" + text, border && "border-" + border)
+    }), body ? /*#__PURE__*/ // @ts-ignore
+    _react.default.createElement(CardBody, null, children) : children)));
+});
+Card.displayName = 'Card';
+Card.defaultProps = defaultProps;
+Card.Img = _CardImg.default;
+Card.Title = CardTitle;
+Card.Subtitle = CardSubtitle;
+Card.Body = CardBody;
+Card.Link = CardLink;
+Card.Text = CardText;
+Card.Header = CardHeader;
+Card.Footer = CardFooter;
+Card.ImgOverlay = CardImgOverlay;
+var _default = Card;
+exports.default = _default;
+module.exports = exports["default"];
+
+},{"@babel/runtime/helpers/interopRequireDefault":"4ttVj","@babel/runtime/helpers/extends":"3krLJ","@babel/runtime/helpers/objectWithoutPropertiesLoose":"3Yx9V","classnames":"5aJRc","react":"3b2NM","./ThemeProvider":"4rz1S","./createWithBsPrefix":"2oVVc","./divWithClassName":"27J3S","./CardContext":"71yot","./CardImg":"68LPL"}],"71yot":[function(require,module,exports) {
+"use strict";
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports.default = void 0;
+var _react = _interopRequireDefault(require("react"));
+var context = /*#__PURE__*/ _react.default.createContext(null);
+context.displayName = 'CardContext';
+var _default = context;
+exports.default = _default;
+module.exports = exports["default"];
+
+},{"@babel/runtime/helpers/interopRequireDefault":"4ttVj","react":"3b2NM"}],"68LPL":[function(require,module,exports) {
+"use strict";
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports.default = void 0;
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+var _objectWithoutPropertiesLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutPropertiesLoose"));
+var _classnames = _interopRequireDefault(require("classnames"));
+var _react = _interopRequireDefault(require("react"));
+var _ThemeProvider = require("./ThemeProvider");
+var _excluded = [
+    "bsPrefix",
+    "className",
+    "variant",
+    "as"
+];
+var defaultProps = {
+    variant: null
+};
+var CardImg = /*#__PURE__*/ _react.default.forwardRef(function(_ref, ref) {
+    var bsPrefix = _ref.bsPrefix, className = _ref.className, variant = _ref.variant, _ref$as = _ref.as, Component = _ref$as === void 0 ? 'img' : _ref$as, props = _objectWithoutPropertiesLoose2.default(_ref, _excluded);
+    var prefix = _ThemeProvider.useBootstrapPrefix(bsPrefix, 'card-img');
+    return(/*#__PURE__*/ _react.default.createElement(Component, _extends2.default({
+        ref: ref,
+        className: _classnames.default(variant ? prefix + "-" + variant : prefix, className)
+    }, props)));
+});
+CardImg.displayName = 'CardImg';
+CardImg.defaultProps = defaultProps;
+var _default = CardImg;
 exports.default = _default;
 module.exports = exports["default"];
 
@@ -39825,6 +39750,7 @@ helpers.prelude(module);
 try {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+// class DirectorView extends React.Component {
 parcelHelpers.export(exports, "DirectorView", ()=>DirectorView
 );
 var _react = require("react");
@@ -39834,6 +39760,7 @@ var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
 var _reactBootstrap = require("react-bootstrap");
 var _directorViewScss = require("./director-view.scss");
 var _movieCard = require("../movie-card/movie-card");
+var _reactRedux = require("react-redux");
 class DirectorView extends _reactDefault.default.Component {
     render() {
         const { director , onBackClick , movie , directorsMovies  } = this.props;
@@ -39842,82 +39769,82 @@ class DirectorView extends _reactDefault.default.Component {
             className: "director-view",
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
-                lineNumber: 14
+                lineNumber: 18
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement("h1", {
             className: "director-name",
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
-                lineNumber: 15
+                lineNumber: 19
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement("h1", {
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
-                lineNumber: 17
+                lineNumber: 21
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement("span", {
             className: "value display-4 text-white",
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
-                lineNumber: 17
+                lineNumber: 21
             },
             __self: this
         }, director.Name))), /*#__PURE__*/ _reactDefault.default.createElement("h4", {
             className: "director-bio",
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
-                lineNumber: 19
-            },
-            __self: this
-        }, /*#__PURE__*/ _reactDefault.default.createElement("span", {
-            className: "value",
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
-                lineNumber: 21
-            },
-            __self: this
-        }, director.Bio)), /*#__PURE__*/ _reactDefault.default.createElement("h4", {
-            className: "director-birth",
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
                 lineNumber: 23
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement("span", {
-            className: "label",
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
-                lineNumber: 24
-            },
-            __self: this
-        }, "Born: "), /*#__PURE__*/ _reactDefault.default.createElement("span", {
             className: "value",
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
                 lineNumber: 25
             },
             __self: this
-        }, director.Birth)), /*#__PURE__*/ _reactDefault.default.createElement("h4", {
+        }, director.Bio)), /*#__PURE__*/ _reactDefault.default.createElement("h4", {
+            className: "director-birth",
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
                 lineNumber: 27
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement("span", {
+            className: "label",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
+                lineNumber: 28
+            },
+            __self: this
+        }, "Born: "), /*#__PURE__*/ _reactDefault.default.createElement("span", {
+            className: "value",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
+                lineNumber: 29
+            },
+            __self: this
+        }, director.Birth)), /*#__PURE__*/ _reactDefault.default.createElement("h4", {
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
+                lineNumber: 31
             },
             __self: this
         }, "Featured Movies:"), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Col, {
             md: 6,
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
-                lineNumber: 29
+                lineNumber: 33
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement("div", {
             id: "directorsMovies",
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
-                lineNumber: 30
+                lineNumber: 34
             },
             __self: this
         }, directorsMovies.map((m)=>{
@@ -39926,14 +39853,14 @@ class DirectorView extends _reactDefault.default.Component {
                 key: m._id,
                 __source: {
                     fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
-                    lineNumber: 35
+                    lineNumber: 39
                 },
                 __self: this
             }, /*#__PURE__*/ _reactDefault.default.createElement(_movieCard.MovieCard, {
                 movie: m,
                 __source: {
                     fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
-                    lineNumber: 36
+                    lineNumber: 40
                 },
                 __self: this
             })));
@@ -39945,7 +39872,7 @@ class DirectorView extends _reactDefault.default.Component {
             },
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\director-view\\director-view.jsx",
-                lineNumber: 54
+                lineNumber: 58
             },
             __self: this
         }, "Back")));
@@ -39958,14 +39885,14 @@ DirectorView.propTypes = {
         Birth: _propTypesDefault.default.string.isRequired
     }),
     onBackClick: _propTypesDefault.default.func.isRequired
-};
+}; // export default connect(mapStateToProps)(DirectorView)
 
   helpers.postlude(module);
 } finally {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"3b2NM","prop-types":"4dfy5","./director-view.scss":"28aVH","@parcel/transformer-js/src/esmodule-helpers.js":"367CR","react-bootstrap":"4n7hB","../movie-card/movie-card":"9069x","../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"4Jj4f"}],"28aVH":[function() {},{}],"2qQol":[function(require,module,exports) {
+},{"react":"3b2NM","prop-types":"4dfy5","./director-view.scss":"28aVH","@parcel/transformer-js/src/esmodule-helpers.js":"367CR","react-bootstrap":"4n7hB","../movie-card/movie-card":"9069x","../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"4Jj4f","react-redux":"7GDa4"}],"28aVH":[function() {},{}],"9069x":[function(require,module,exports) {
 var helpers = require("../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -39974,618 +39901,88 @@ helpers.prelude(module);
 try {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "GenreView", ()=>GenreView
-);
-var _react = require("react");
-var _reactDefault = parcelHelpers.interopDefault(_react);
-var _button = require("react-bootstrap/Button");
-var _buttonDefault = parcelHelpers.interopDefault(_button);
-var _col = require("react-bootstrap/Col");
-var _colDefault = parcelHelpers.interopDefault(_col);
-var _genreViewScss = require("./genre-view.scss");
-var _movieCard = require("../movie-card/movie-card");
-class GenreView extends _reactDefault.default.Component {
-    render() {
-        const { genre , onBackClick , movies , genresMovies  } = this.props;
-        return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
-            className: "genre-view",
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\genre-view\\genre-view.jsx",
-                lineNumber: 14
-            },
-            __self: this
-        }, /*#__PURE__*/ _reactDefault.default.createElement("div", {
-            className: "genre-name",
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\genre-view\\genre-view.jsx",
-                lineNumber: 15
-            },
-            __self: this
-        }, /*#__PURE__*/ _reactDefault.default.createElement("h1", {
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\genre-view\\genre-view.jsx",
-                lineNumber: 16
-            },
-            __self: this
-        }, /*#__PURE__*/ _reactDefault.default.createElement("span", {
-            className: "value display-4 text-white",
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\genre-view\\genre-view.jsx",
-                lineNumber: 16
-            },
-            __self: this
-        }, genre.Name, " Films "))), /*#__PURE__*/ _reactDefault.default.createElement("h4", {
-            className: "genre-description",
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\genre-view\\genre-view.jsx",
-                lineNumber: 19
-            },
-            __self: this
-        }, /*#__PURE__*/ _reactDefault.default.createElement("span", {
-            className: "value",
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\genre-view\\genre-view.jsx",
-                lineNumber: 21
-            },
-            __self: this
-        }, genre.Description)), /*#__PURE__*/ _reactDefault.default.createElement("p", {
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\genre-view\\genre-view.jsx",
-                lineNumber: 23
-            },
-            __self: this
-        }, " "), /*#__PURE__*/ _reactDefault.default.createElement("h4", {
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\genre-view\\genre-view.jsx",
-                lineNumber: 24
-            },
-            __self: this
-        }, "Featured movies in this genre:"), /*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, {
-            md: 6,
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\genre-view\\genre-view.jsx",
-                lineNumber: 25
-            },
-            __self: this
-        }, /*#__PURE__*/ _reactDefault.default.createElement("div", {
-            id: "genresMovies",
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\genre-view\\genre-view.jsx",
-                lineNumber: 26
-            },
-            __self: this
-        }, genresMovies.map((m)=>{
-            return(/*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, {
-                md: 12,
-                key: m._id,
-                __source: {
-                    fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\genre-view\\genre-view.jsx",
-                    lineNumber: 31
-                },
-                __self: this
-            }, /*#__PURE__*/ _reactDefault.default.createElement(_movieCard.MovieCard, {
-                movie: m,
-                __source: {
-                    fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\genre-view\\genre-view.jsx",
-                    lineNumber: 32
-                },
-                __self: this
-            })));
-        }))), /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
-            variant: "secondary",
-            size: "sm",
-            onClick: ()=>{
-                onBackClick(null);
-            },
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\genre-view\\genre-view.jsx",
-                lineNumber: 38
-            },
-            __self: this
-        }, "Back")));
-    }
-}
-
-  helpers.postlude(module);
-} finally {
-  window.$RefreshReg$ = prevRefreshReg;
-  window.$RefreshSig$ = prevRefreshSig;
-}
-},{"react":"3b2NM","react-bootstrap/Button":"1ru0l","./genre-view.scss":"7kHxn","@parcel/transformer-js/src/esmodule-helpers.js":"367CR","react-bootstrap/Col":"2D0r8","../movie-card/movie-card":"9069x","../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"4Jj4f"}],"7kHxn":[function() {},{}],"4tSeG":[function(require,module,exports) {
-var helpers = require("../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
-var prevRefreshReg = window.$RefreshReg$;
-var prevRefreshSig = window.$RefreshSig$;
-helpers.prelude(module);
-
-try {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "ProfileView", ()=>ProfileView
+parcelHelpers.export(exports, "MovieCard", ()=>MovieCard
 );
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
 var _propTypes = require("prop-types");
 var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
-var _reactBootstrap = require("react-bootstrap");
-var _axios = require("axios");
-var _axiosDefault = parcelHelpers.interopDefault(_axios);
-var _container = require("react-bootstrap/Container");
-var _containerDefault = parcelHelpers.interopDefault(_container);
+var _button = require("react-bootstrap/Button");
+var _buttonDefault = parcelHelpers.interopDefault(_button);
+var _card = require("react-bootstrap/Card");
+var _cardDefault = parcelHelpers.interopDefault(_card);
+var _movieCardScss = require("./movie-card.scss");
 var _reactRouterDom = require("react-router-dom");
-var _configJs = require("../../config.js");
-var _configJsDefault = parcelHelpers.interopDefault(_configJs);
-var _profileViewScss = require("./profile-view.scss");
-var _s = $RefreshSig$();
-function ProfileView(props) {
-    _s();
-    const [username, setUsername] = _react.useState('');
-    const [password, setPassword] = _react.useState('');
-    const [email, setEmail] = _react.useState('');
-    const [birthdate, setBirthdate] = _react.useState('');
-    const [usernameError, setUsernameError] = _react.useState({
-    });
-    const [emailError, setEmailError] = _react.useState({
-    });
-    const [passwordError, setPasswordError] = _react.useState({
-    });
-    // constructor(props) {
-    //   super(props);
-    //   this.state = {
-    //     Username: "",
-    //     Password: "",
-    //     Email: "",
-    //     Birthdate: "",
-    //     FavoriteMovies: [],
-    //     UsernameError: "",
-    //     EmailError: "",
-    //     PasswordError: "",
-    //     BirthdateError: "",
-    //   };
-    // }
-    // const { birthdate } = userData;
-    // componentDidMount() {
-    //   let accessToken = localStorage.getItem('token')
-    //   return getUsers(accessToken);
-    // }
-    function getUsers(token) {
-        let url = `${_configJsDefault.default.API_URL}/users/` + localStorage.getItem('user');
-        _axiosDefault.default.get(url, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }).then((response)=>{
-            // window.location.reload(false);
-            // this.setState({
-            //   Username: response.data.Username,
-            //   Password: response.data.Password,
-            //   Email: response.data.Email,
-            //   Birthday: response.data.Birthday,
-            //   FavoriteMovies: response.data.FavoriteMovies,
-            // });
-            console.log(response);
-        }).catch(function(error) {
-            console.log(error);
-        });
-    }
-    // setUsername(input) {
-    //   this.setState({
-    //     username: input
-    //   });
-    // }
-    // update user info
-    function handleUpdate(e) {
-        e.preventDefault();
-        let token = localStorage.getItem("token");
-        // console.log({ token });
-        let user = localStorage.getItem("user");
-        let isValid = formValidation();
-        if (isValid) // console.log(this.state);
-        // let setisValid = this.formValidation();
-        // if (setisValid) {
-        _axiosDefault.default.put(`${_configJsDefault.default.API_URL}/users/${user}`, {
-            Username: username,
-            Password: password,
-            Email: email,
-            Birthdate: birthdate
-        }, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }).then((response)=>{
-            const data = response.data;
-            localStorage.setItem('user', data.Username);
-            console.log(data);
-            alert(user + " has been updated.");
-            console.log(response);
-        }).catch(function(error) {
-            console.log(error.response.data);
-        });
-    }
-    // remove favorite movie
-    function removeFavorite(movie) {
-        const token = localStorage.getItem('token');
-        const user = localStorage.getItem('user');
-        const url = // or movie.id?
-        `${_configJsDefault.default.API_URL}/users/${movie._id}` + localStorage.getItem("user") + "/movies/" + movie._id;
-        _axiosDefault.default.delete(url, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }).then((response)=>{
-            alert(movie.Title + " has been removed from your Favorites.");
-            // localStorage.removeItem("");
-            props.removeFavoriteMovie(movie._id);
-            console.log(response);
-        // this.componentDidMount();
-        // location.reload();
-        });
-    }
-    // delete account
-    function handleDeregister() {
-        const token = localStorage.getItem("token");
-        const user = localStorage.getItem("user");
-        _axiosDefault.default.delete(`${_configJsDefault.default.API_URL}/users/${user}`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }).then(()=>{
-            alert(user + ", you have deregistered.");
-            localStorage.removeItem("user");
-            localStorage.removeItem("token");
-            window.location.pathname = "/";
-        }).catch(function(error) {
-            console.log(error);
-        });
-    }
-    const formValidation = ()=>{
-        const usernameError1 = {
-        };
-        const emailError1 = {
-        };
-        const passwordError1 = {
-        };
-        const birhdateError = {
-        };
-        let isValid = true;
-        if (username.trim().length < 5) {
-            usernameError1.usernameShort = "Must be alphanumeric and contains at least 5 characters";
-            isValid = false;
-        } else if (password.trim().length < 4) {
-            passwordError1.passwordMissing = "You must enter a password.(minimum 4 characters) ";
-            isValid = false;
-        } else if (!email.includes(".") || !email.includes("@")) {
-            emailError1.emailNotEmail = "invalid email";
-            isValid = false;
-        } else if (birthdate === '') {
-            birhdateError.noBirthdate = "Please enter a birthdate";
-            isValid = false;
-        }
-        setUsernameError(usernameError1);
-        setPasswordError(passwordError1);
-        setEmailError(emailError1);
-        return isValid;
-    };
-    // render() {
-    const { user , movies , favoriteMovies  } = props;
-    // const { UsernameError, EmailError, PasswordError, BirthdateError } = this.state;
-    // const favoriteMovies = movies.filter(m => {
-    //   return favoriteMoviesList.indexOf(m._id) >= 0;
-    // });
-    console.log(props.userData);
-    return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
-        className: "userProfile",
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 197
-        },
-        __self: this
-    }, /*#__PURE__*/ _reactDefault.default.createElement(_containerDefault.default, {
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 198
-        },
-        __self: this
-    }, /*#__PURE__*/ _reactDefault.default.createElement("h1", {
-        className: "display-4 text-white",
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 199
-        },
-        __self: this
-    }, "Your Profile"), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Col, {
-        md: 9,
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 210
-        },
-        __self: this
-    }, /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Form, {
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 212
-        },
-        __self: this
-    }, /*#__PURE__*/ _reactDefault.default.createElement("div", {
-        className: "form-group",
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 213
-        },
-        __self: this
-    }, /*#__PURE__*/ _reactDefault.default.createElement("label", {
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 214
-        },
-        __self: this
-    }, /*#__PURE__*/ _reactDefault.default.createElement("h3", {
-        className: "text-white",
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 214
-        },
-        __self: this
-    }, "Username:")), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Form.Control, {
-        type: "text",
-        defaultValue: props.userData.Username,
-        onChange: (e)=>setUsername(e.target.value)
-        ,
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 215
-        },
-        __self: this
-    }), Object.keys(usernameError).map((key)=>{
-        return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
-            key: key,
-            style: {
-                color: "red"
-            },
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-                lineNumber: 218
-            },
-            __self: this
-        }, usernameError[key]));
-    })), /*#__PURE__*/ _reactDefault.default.createElement("div", {
-        className: "form-group",
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 225
-        },
-        __self: this
-    }, /*#__PURE__*/ _reactDefault.default.createElement("label", {
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 226
-        },
-        __self: this
-    }, /*#__PURE__*/ _reactDefault.default.createElement("h3", {
-        className: "text-white",
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 226
-        },
-        __self: this
-    }, "Email:")), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Form.Control, {
-        type: "email",
-        defaultValue: props.userData.Email,
-        onChange: (e)=>setEmail(e.target.value)
-        ,
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 227
-        },
-        __self: this
-    }), Object.keys(emailError).map((key)=>{
-        return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
-            key: key,
-            style: {
-                color: "red"
-            },
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-                lineNumber: 231
-            },
-            __self: this
-        }, emailError[key]));
-    })), /*#__PURE__*/ _reactDefault.default.createElement("div", {
-        className: "form-group",
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 238
-        },
-        __self: this
-    }, /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Form.Label, {
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 239
-        },
-        __self: this
-    }, /*#__PURE__*/ _reactDefault.default.createElement("h3", {
-        className: "text-white",
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 239
-        },
-        __self: this
-    }, "Birthday")), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Form.Control, {
-        type: "date",
-        defaultValue: props.userData.Birthdate,
-        onChange: (e)=>setBirthdate(e.target.value)
-        ,
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 240
-        },
-        __self: this
-    })), /*#__PURE__*/ _reactDefault.default.createElement("div", {
-        className: "form-group",
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 243
-        },
-        __self: this
-    }, /*#__PURE__*/ _reactDefault.default.createElement("label", {
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 244
-        },
-        __self: this
-    }, /*#__PURE__*/ _reactDefault.default.createElement("h3", {
-        className: "text-white",
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 244
-        },
-        __self: this
-    }, "Password")), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Form.Control, {
-        type: "password",
-        value: password,
-        placeholder: "Enter a new password",
-        onChange: (e)=>setPassword(e.target.value)
-        ,
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 245
-        },
-        __self: this
-    }), Object.keys(passwordError).map((key)=>{
-        return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
-            key: key,
-            style: {
-                color: "red"
-            },
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-                lineNumber: 249
-            },
-            __self: this
-        }, passwordError[key]));
-    })), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Button, {
-        type: "submit",
-        className: "button",
-        variant: "info",
-        onClick: handleUpdate,
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 257
-        },
-        __self: this
-    }, "Update your information"), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Button, {
-        className: "button",
-        variant: "danger",
-        onClick: handleDeregister,
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 258
-        },
-        __self: this
-    }, "Click Here to Deregister")), /*#__PURE__*/ _reactDefault.default.createElement("h1", {
-        className: "display-4 text-white",
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 264
-        },
-        __self: this
-    }, "MyFlix Favorites:"), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Col, {
-        className: "col-6 col-md-6",
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 265
-        },
-        __self: this
-    }, /*#__PURE__*/ _reactDefault.default.createElement("div", {
-        id: "favoriteMovies",
-        __source: {
-            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-            lineNumber: 266
-        },
-        __self: this
-    }, favoriteMovies.map((movie, i)=>{
-        return(/*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Card, {
+class MovieCard extends _reactDefault.default.Component {
+    render() {
+        // 'movie' is the name of the prop used in <MovieCard … />
+        const { movie  } = this.props;
+        return(/*#__PURE__*/ _reactDefault.default.createElement(_cardDefault.default, {
             className: "shadow p-3 mb-5 bg-white rounded",
-            key: i,
             __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-                lineNumber: 271
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-card\\movie-card.jsx",
+                lineNumber: 16
             },
             __self: this
-        }, /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Card.Img, {
+        }, /*#__PURE__*/ _reactDefault.default.createElement(_cardDefault.default.Img, {
             variant: "top",
             src: movie.ImagePath,
             __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-                lineNumber: 272
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-card\\movie-card.jsx",
+                lineNumber: 17
             },
             __self: this
-        }), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Card.Body, {
+        }), /*#__PURE__*/ _reactDefault.default.createElement(_cardDefault.default.Body, {
             __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-                lineNumber: 273
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-card\\movie-card.jsx",
+                lineNumber: 18
             },
             __self: this
-        }, /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Card.Title, {
+        }, /*#__PURE__*/ _reactDefault.default.createElement(_cardDefault.default.Title, {
             __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-                lineNumber: 274
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-card\\movie-card.jsx",
+                lineNumber: 19
             },
             __self: this
-        }, movie.Title), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Card.Text, {
+        }, movie.Title), /*#__PURE__*/ _reactDefault.default.createElement(_cardDefault.default.Text, {
             __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-                lineNumber: 276
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-card\\movie-card.jsx",
+                lineNumber: 21
             },
             __self: this
         }, movie.ReleaseDate), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Link, {
             to: `/movies/${movie._id}`,
             __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-                lineNumber: 277
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-card\\movie-card.jsx",
+                lineNumber: 22
             },
             __self: this
-        }, /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Button, {
+        }, /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
             variant: "info",
             __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-                lineNumber: 278
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-card\\movie-card.jsx",
+                lineNumber: 23
             },
             __self: this
-        }, "Open")), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Button, {
-            variant: "danger",
-            onClick: ()=>removeFavorite(movie)
-            ,
-            __source: {
-                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
-                lineNumber: 280
-            },
-            __self: this
-        }, "Remove"))));
-    })))))));
+        }, "Open")))));
+    }
 }
-_s(ProfileView, "YoKWQTTn2fkiq3jz1qv5D0+dQEg=");
-_c = ProfileView;
-// ProfileView.propTypes = {
-//   movies: PropTypes.array.isRequired
-// };
-ProfileView.propTypes = {
-    users: _propTypesDefault.default.shape({
-        Username: _propTypesDefault.default.string.isRequired,
-        Email: _propTypesDefault.default.string.isRequired,
-        Birthdate: _propTypesDefault.default.string,
-        FavoriteMovies: _propTypesDefault.default.array
-    }),
-    movies: _propTypesDefault.default.array.isRequired
+MovieCard.propTypes = {
+    // must contain a movie object
+    movie: _propTypesDefault.default.shape({
+        Title: _propTypesDefault.default.string.isRequired,
+        Description: _propTypesDefault.default.string.isRequired,
+        ImagePath: _propTypesDefault.default.string.isRequired,
+        ReleaseDate: _propTypesDefault.default.string.isRequired
+    }).isRequired
 };
-var _c;
-$RefreshReg$(_c, "ProfileView");
 
   helpers.postlude(module);
 } finally {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"3b2NM","prop-types":"4dfy5","react-bootstrap":"4n7hB","axios":"7rA65","react-bootstrap/Container":"3Mt3t","react-router-dom":"1PMSK","../../config.js":"5yJJr","@parcel/transformer-js/src/esmodule-helpers.js":"367CR","./profile-view.scss":"2MikN","../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"4Jj4f"}],"2MikN":[function() {},{}],"7GDa4":[function(require,module,exports) {
+},{"react":"3b2NM","@parcel/transformer-js/src/esmodule-helpers.js":"367CR","prop-types":"4dfy5","react-bootstrap/Button":"1ru0l","react-bootstrap/Card":"1CZWQ","./movie-card.scss":"6vKcg","react-router-dom":"1PMSK","../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"4Jj4f"}],"6vKcg":[function() {},{}],"7GDa4":[function(require,module,exports) {
 "use strict";
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 exports.__esModule = true;
@@ -41820,7 +41217,638 @@ exports.unstable_batchedUpdates = void 0;
 var _reactDom = require("react-dom");
 exports.unstable_batchedUpdates = _reactDom.unstable_batchedUpdates;
 
-},{"react-dom":"2sg1U"}],"5S6cN":[function(require,module,exports) {
+},{"react-dom":"2sg1U"}],"2qQol":[function(require,module,exports) {
+var helpers = require("../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+helpers.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "GenreView", ()=>GenreView
+);
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _button = require("react-bootstrap/Button");
+var _buttonDefault = parcelHelpers.interopDefault(_button);
+var _col = require("react-bootstrap/Col");
+var _colDefault = parcelHelpers.interopDefault(_col);
+var _genreViewScss = require("./genre-view.scss");
+var _movieCard = require("../movie-card/movie-card");
+class GenreView extends _reactDefault.default.Component {
+    render() {
+        const { genre , onBackClick , movies , genresMovies  } = this.props;
+        return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
+            className: "genre-view",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\genre-view\\genre-view.jsx",
+                lineNumber: 14
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement("div", {
+            className: "genre-name",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\genre-view\\genre-view.jsx",
+                lineNumber: 15
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement("h1", {
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\genre-view\\genre-view.jsx",
+                lineNumber: 16
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement("span", {
+            className: "value display-4 text-white",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\genre-view\\genre-view.jsx",
+                lineNumber: 16
+            },
+            __self: this
+        }, genre.Name, " Films "))), /*#__PURE__*/ _reactDefault.default.createElement("h4", {
+            className: "genre-description",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\genre-view\\genre-view.jsx",
+                lineNumber: 19
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement("span", {
+            className: "value",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\genre-view\\genre-view.jsx",
+                lineNumber: 21
+            },
+            __self: this
+        }, genre.Description)), /*#__PURE__*/ _reactDefault.default.createElement("p", {
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\genre-view\\genre-view.jsx",
+                lineNumber: 23
+            },
+            __self: this
+        }, " "), /*#__PURE__*/ _reactDefault.default.createElement("h4", {
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\genre-view\\genre-view.jsx",
+                lineNumber: 24
+            },
+            __self: this
+        }, "Featured movies in this genre:"), /*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, {
+            md: 6,
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\genre-view\\genre-view.jsx",
+                lineNumber: 25
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement("div", {
+            id: "genresMovies",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\genre-view\\genre-view.jsx",
+                lineNumber: 26
+            },
+            __self: this
+        }, genresMovies.map((m)=>{
+            return(/*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, {
+                md: 12,
+                key: m._id,
+                __source: {
+                    fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\genre-view\\genre-view.jsx",
+                    lineNumber: 31
+                },
+                __self: this
+            }, /*#__PURE__*/ _reactDefault.default.createElement(_movieCard.MovieCard, {
+                movie: m,
+                __source: {
+                    fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\genre-view\\genre-view.jsx",
+                    lineNumber: 32
+                },
+                __self: this
+            })));
+        }))), /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
+            variant: "secondary",
+            size: "sm",
+            onClick: ()=>{
+                onBackClick(null);
+            },
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\genre-view\\genre-view.jsx",
+                lineNumber: 38
+            },
+            __self: this
+        }, "Back")));
+    }
+}
+
+  helpers.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react":"3b2NM","react-bootstrap/Button":"1ru0l","./genre-view.scss":"7kHxn","@parcel/transformer-js/src/esmodule-helpers.js":"367CR","react-bootstrap/Col":"2D0r8","../movie-card/movie-card":"9069x","../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"4Jj4f"}],"7kHxn":[function() {},{}],"4tSeG":[function(require,module,exports) {
+var helpers = require("../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+helpers.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "ProfileView", ()=>ProfileView
+);
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _propTypes = require("prop-types");
+var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
+var _reactBootstrap = require("react-bootstrap");
+var _axios = require("axios");
+var _axiosDefault = parcelHelpers.interopDefault(_axios);
+var _container = require("react-bootstrap/Container");
+var _containerDefault = parcelHelpers.interopDefault(_container);
+var _reactRouterDom = require("react-router-dom");
+var _configJs = require("../../config.js");
+var _configJsDefault = parcelHelpers.interopDefault(_configJs);
+var _reactRedux = require("react-redux");
+var _actions = require("../../actions/actions");
+var _profileViewScss = require("./profile-view.scss");
+var _s = $RefreshSig$();
+function ProfileView(props) {
+    _s();
+    const [username, setUsername] = _react.useState('');
+    const [password, setPassword] = _react.useState('');
+    const [email, setEmail] = _react.useState('');
+    const [birthdate, setBirthdate] = _react.useState('');
+    const [usernameError, setUsernameError] = _react.useState({
+    });
+    const [emailError, setEmailError] = _react.useState({
+    });
+    const [passwordError, setPasswordError] = _react.useState({
+    });
+    // constructor(props) {
+    //   super(props);
+    //   this.state = {
+    //     Username: "",
+    //     Password: "",
+    //     Email: "",
+    //     Birthdate: "",
+    //     FavoriteMovies: [],
+    //     UsernameError: "",
+    //     EmailError: "",
+    //     PasswordError: "",
+    //     BirthdateError: "",
+    //   };
+    // }
+    // const { birthdate } = userData;
+    // componentDidMount() {
+    //   let accessToken = localStorage.getItem('token')
+    //   return getUsers(accessToken);
+    // }
+    function getUsers(token) {
+        let url = `${_configJsDefault.default.API_URL}/users/` + localStorage.getItem('user');
+        _axiosDefault.default.get(url, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>{
+            // window.location.reload(false);
+            // this.setState({
+            //   Username: response.data.Username,
+            //   Password: response.data.Password,
+            //   Email: response.data.Email,
+            //   Birthday: response.data.Birthday,
+            //   FavoriteMovies: response.data.FavoriteMovies,
+            // });
+            console.log(response);
+        }).catch(function(error) {
+            console.log(error);
+        });
+    }
+    // setUsername(input) {
+    //   this.setState({
+    //     username: input
+    //   });
+    // }
+    // update user info
+    function handleUpdate(e) {
+        e.preventDefault();
+        let token = localStorage.getItem("token");
+        // console.log({ token });
+        let user = localStorage.getItem("user");
+        let isValid = formValidation();
+        if (isValid) // console.log(this.state);
+        // let setisValid = this.formValidation();
+        // if (setisValid) {
+        _axiosDefault.default.put(`${_configJsDefault.default.API_URL}/users/${user}`, {
+            Username: username,
+            Password: password,
+            Email: email,
+            Birthdate: birthdate
+        }, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>{
+            const data = response.data;
+            localStorage.setItem('user', data.Username);
+            console.log(data);
+            alert(user + " has been updated.");
+            console.log(response);
+        }).catch(function(error) {
+            console.log(error.response.data);
+        });
+    }
+    // remove favorite movie
+    function removeFavorite(movie) {
+        const token = localStorage.getItem('token');
+        const user = localStorage.getItem('user');
+        const url = // or movie.id?
+        `${_configJsDefault.default.API_URL}/users/${movie._id}` + localStorage.getItem("user") + "/movies/" + movie._id;
+        _axiosDefault.default.delete(url, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>{
+            alert(movie.Title + " has been removed from your Favorites.");
+            // localStorage.removeItem("");
+            props.removeFavoriteMovie(movie._id);
+            console.log(response);
+        // this.componentDidMount();
+        // location.reload();
+        });
+    }
+    // delete account
+    function handleDeregister() {
+        const token = localStorage.getItem("token");
+        const user = localStorage.getItem("user");
+        _axiosDefault.default.delete(`${_configJsDefault.default.API_URL}/users/${user}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then(()=>{
+            alert(user + ", you have deregistered.");
+            localStorage.removeItem("user");
+            localStorage.removeItem("token");
+            window.location.pathname = "/";
+        }).catch(function(error) {
+            console.log(error);
+        });
+    }
+    const formValidation = ()=>{
+        const usernameError1 = {
+        };
+        const emailError1 = {
+        };
+        const passwordError1 = {
+        };
+        const birhdateError = {
+        };
+        let isValid = true;
+        if (username.trim().length < 5) {
+            usernameError1.usernameShort = "Must be alphanumeric and contains at least 5 characters";
+            isValid = false;
+        } else if (password.trim().length < 4) {
+            passwordError1.passwordMissing = "You must enter a password.(minimum 4 characters) ";
+            isValid = false;
+        } else if (!email.includes(".") || !email.includes("@")) {
+            emailError1.emailNotEmail = "invalid email";
+            isValid = false;
+        } else if (birthdate === '') {
+            birhdateError.noBirthdate = "Please enter a birthdate";
+            isValid = false;
+        }
+        setUsernameError(usernameError1);
+        setPasswordError(passwordError1);
+        setEmailError(emailError1);
+        return isValid;
+    };
+    // render() {
+    const { user , movies , favoriteMovies  } = props;
+    // const { UsernameError, EmailError, PasswordError, BirthdateError } = this.state;
+    // const favoriteMovies = movies.filter(m => {
+    //   return favoriteMoviesList.indexOf(m._id) >= 0;
+    // });
+    console.log(props.userData);
+    return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
+        className: "userProfile",
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+            lineNumber: 200
+        },
+        __self: this
+    }, /*#__PURE__*/ _reactDefault.default.createElement(_containerDefault.default, {
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+            lineNumber: 201
+        },
+        __self: this
+    }, /*#__PURE__*/ _reactDefault.default.createElement("h1", {
+        className: "display-4 text-white",
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+            lineNumber: 202
+        },
+        __self: this
+    }, "Your Profile"), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Col, {
+        md: 9,
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+            lineNumber: 213
+        },
+        __self: this
+    }, /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Form, {
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+            lineNumber: 215
+        },
+        __self: this
+    }, /*#__PURE__*/ _reactDefault.default.createElement("div", {
+        className: "form-group",
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+            lineNumber: 216
+        },
+        __self: this
+    }, /*#__PURE__*/ _reactDefault.default.createElement("label", {
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+            lineNumber: 217
+        },
+        __self: this
+    }, /*#__PURE__*/ _reactDefault.default.createElement("h3", {
+        className: "text-white",
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+            lineNumber: 217
+        },
+        __self: this
+    }, "Username:")), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Form.Control, {
+        type: "text",
+        defaultValue: props.userData.Username,
+        onChange: (e)=>setUsername(e.target.value)
+        ,
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+            lineNumber: 218
+        },
+        __self: this
+    }), Object.keys(usernameError).map((key)=>{
+        return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
+            key: key,
+            style: {
+                color: "red"
+            },
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+                lineNumber: 221
+            },
+            __self: this
+        }, usernameError[key]));
+    })), /*#__PURE__*/ _reactDefault.default.createElement("div", {
+        className: "form-group",
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+            lineNumber: 228
+        },
+        __self: this
+    }, /*#__PURE__*/ _reactDefault.default.createElement("label", {
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+            lineNumber: 229
+        },
+        __self: this
+    }, /*#__PURE__*/ _reactDefault.default.createElement("h3", {
+        className: "text-white",
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+            lineNumber: 229
+        },
+        __self: this
+    }, "Email:")), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Form.Control, {
+        type: "email",
+        defaultValue: props.userData.Email,
+        onChange: (e)=>setEmail(e.target.value)
+        ,
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+            lineNumber: 230
+        },
+        __self: this
+    }), Object.keys(emailError).map((key)=>{
+        return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
+            key: key,
+            style: {
+                color: "red"
+            },
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+                lineNumber: 234
+            },
+            __self: this
+        }, emailError[key]));
+    })), /*#__PURE__*/ _reactDefault.default.createElement("div", {
+        className: "form-group",
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+            lineNumber: 241
+        },
+        __self: this
+    }, /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Form.Label, {
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+            lineNumber: 242
+        },
+        __self: this
+    }, /*#__PURE__*/ _reactDefault.default.createElement("h3", {
+        className: "text-white",
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+            lineNumber: 242
+        },
+        __self: this
+    }, "Birthday")), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Form.Control, {
+        type: "date",
+        defaultValue: props.userData.Birthdate,
+        onChange: (e)=>setBirthdate(e.target.value)
+        ,
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+            lineNumber: 243
+        },
+        __self: this
+    })), /*#__PURE__*/ _reactDefault.default.createElement("div", {
+        className: "form-group",
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+            lineNumber: 246
+        },
+        __self: this
+    }, /*#__PURE__*/ _reactDefault.default.createElement("label", {
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+            lineNumber: 247
+        },
+        __self: this
+    }, /*#__PURE__*/ _reactDefault.default.createElement("h3", {
+        className: "text-white",
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+            lineNumber: 247
+        },
+        __self: this
+    }, "Password")), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Form.Control, {
+        type: "password",
+        value: password,
+        placeholder: "Enter a new password",
+        onChange: (e)=>setPassword(e.target.value)
+        ,
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+            lineNumber: 248
+        },
+        __self: this
+    }), Object.keys(passwordError).map((key)=>{
+        return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
+            key: key,
+            style: {
+                color: "red"
+            },
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+                lineNumber: 252
+            },
+            __self: this
+        }, passwordError[key]));
+    })), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Button, {
+        type: "submit",
+        className: "button",
+        variant: "info",
+        onClick: handleUpdate,
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+            lineNumber: 260
+        },
+        __self: this
+    }, "Update your information"), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Button, {
+        className: "button",
+        variant: "danger",
+        onClick: handleDeregister,
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+            lineNumber: 261
+        },
+        __self: this
+    }, "Click Here to Deregister")), /*#__PURE__*/ _reactDefault.default.createElement("h1", {
+        className: "display-4 text-white",
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+            lineNumber: 267
+        },
+        __self: this
+    }, "MyFlix Favorites:"), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Col, {
+        className: "col-6 col-md-6",
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+            lineNumber: 268
+        },
+        __self: this
+    }, /*#__PURE__*/ _reactDefault.default.createElement("div", {
+        id: "favoriteMovies",
+        __source: {
+            fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+            lineNumber: 269
+        },
+        __self: this
+    }, favoriteMovies.map((movie, i)=>{
+        return(/*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Card, {
+            className: "shadow p-3 mb-5 bg-white rounded",
+            key: i,
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+                lineNumber: 274
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Card.Img, {
+            variant: "top",
+            src: movie.ImagePath,
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+                lineNumber: 275
+            },
+            __self: this
+        }), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Card.Body, {
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+                lineNumber: 276
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Card.Title, {
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+                lineNumber: 277
+            },
+            __self: this
+        }, movie.Title), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Card.Text, {
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+                lineNumber: 279
+            },
+            __self: this
+        }, movie.ReleaseDate), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Link, {
+            to: `/movies/${movie._id}`,
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+                lineNumber: 280
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Button, {
+            variant: "info",
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+                lineNumber: 281
+            },
+            __self: this
+        }, "Open")), /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Button, {
+            variant: "danger",
+            onClick: ()=>removeFavorite(movie)
+            ,
+            __source: {
+                fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\profile-view\\profile-view.jsx",
+                lineNumber: 283
+            },
+            __self: this
+        }, "Remove"))));
+    })))))));
+}
+_s(ProfileView, "YoKWQTTn2fkiq3jz1qv5D0+dQEg=");
+_c = ProfileView;
+// ProfileView.propTypes = {
+//   movies: PropTypes.array.isRequired
+// };
+ProfileView.propTypes = {
+    users: _propTypesDefault.default.shape({
+        Username: _propTypesDefault.default.string.isRequired,
+        Email: _propTypesDefault.default.string.isRequired,
+        Birthdate: _propTypesDefault.default.string,
+        FavoriteMovies: _propTypesDefault.default.array
+    }),
+    movies: _propTypesDefault.default.array.isRequired
+};
+let mapStateToProps = (state)=>{
+    return {
+        user: state.user,
+        movies: state.movies
+    };
+};
+exports.default = _reactRedux.connect(mapStateToProps, {
+    setUser: _actions.setUser
+})(ProfileView);
+var _c;
+$RefreshReg$(_c, "ProfileView");
+
+  helpers.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react":"3b2NM","prop-types":"4dfy5","react-bootstrap":"4n7hB","axios":"7rA65","react-bootstrap/Container":"3Mt3t","react-router-dom":"1PMSK","../../config.js":"5yJJr","@parcel/transformer-js/src/esmodule-helpers.js":"367CR","./profile-view.scss":"2MikN","../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"4Jj4f","react-redux":"7GDa4","../../actions/actions":"5S6cN"}],"2MikN":[function() {},{}],"5S6cN":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "SET_MOVIES", ()=>SET_MOVIES
@@ -41831,6 +41859,8 @@ parcelHelpers.export(exports, "DELETE_MOVIE", ()=>DELETE_MOVIE
 );
 parcelHelpers.export(exports, "SET_FILTER", ()=>SET_FILTER
 );
+parcelHelpers.export(exports, "SET_USER", ()=>SET_USER
+);
 parcelHelpers.export(exports, "setMovies", ()=>setMovies
 );
 parcelHelpers.export(exports, "addMovie", ()=>addMovie
@@ -41839,10 +41869,13 @@ parcelHelpers.export(exports, "deleteMovie", ()=>deleteMovie
 );
 parcelHelpers.export(exports, "setFilter", ()=>setFilter
 );
+parcelHelpers.export(exports, "setUser", ()=>setUser
+);
 const SET_MOVIES = 'SET_MOVIES';
 const ADD_MOVIE = 'ADD_MOVIE';
 const DELETE_MOVIE = 'DELETE_MOVIE';
 const SET_FILTER = 'SET_FILTER';
+const SET_USER = 'SET_USER';
 function setMovies(value) {
     return {
         type: SET_MOVIES,
@@ -41864,6 +41897,12 @@ function deleteMovie(value) {
 function setFilter(value) {
     return {
         type: SET_FILTER,
+        value
+    };
+}
+function setUser(value) {
+    return {
+        type: SET_USER,
         value
     };
 }
@@ -42558,23 +42597,26 @@ function movies(state = [], action) {
     switch(action.type){
         case _actions.SET_MOVIES:
             return action.value;
-        // case ADD_MOVIE:
-        //   return action.value;
-        // case DELETE_MOVIE:
-        //   return action.value;
+        case _actions.ADD_MOVIE:
+            return action.value;
+        case _actions.DELETE_MOVIE:
+            return action.value;
         default:
             return state;
     }
 }
-// function moviesApp(state = {}, action) {
-//   return {
-//     visibilityFilter: visibilityFilter(state.visibilityFilter, action),
-//     movies: movies(state.movies, action)
-//   }
-// }
+function user(state = '', action) {
+    switch(action.type){
+        case _actions.SET_USER:
+            return action.value;
+        default:
+            return state;
+    }
+}
 const moviesApp = _redux.combineReducers({
     visibilityFilter,
-    movies
+    movies,
+    user
 });
 exports.default = moviesApp;
 

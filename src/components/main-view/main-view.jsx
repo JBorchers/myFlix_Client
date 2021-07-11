@@ -6,13 +6,13 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-import { setMovies } from '../../actions/actions';
+import { setMovies, setUser } from '../../actions/actions';
 
 import MoviesList from '../movies-list/movies-list';
 
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
-import { MovieCard } from '../movie-card/movie-card';
+// import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
@@ -35,7 +35,7 @@ class MainView extends React.Component {
     super();
     this.state = {
       // movies: [],
-      user: null,
+      // user: null,
       userData: {}
     }
   }
@@ -65,18 +65,34 @@ class MainView extends React.Component {
     axios.get(`${Config.API_URL}/users/${user}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
-      .then(response => {
-        // Assign the result to the state
+      .then((response) => {
+        this.props.setUser(response.data)
         this.setState({
-          userData: response.data
+          user: response.data
         });
-        // this.forceUpdate();
-        console.log(response)
+        console.log('getUser response', response.data)
       })
       .catch(function (error) {
         console.log(error);
       });
+    console.log('getUser reached')
   }
+  // getUsers(token, user) {
+  //   axios.get(`${Config.API_URL}/users/${user}`, {
+  //     headers: { Authorization: `Bearer ${token}` }
+  //   })
+  //     .then(response => {
+  //       // Assign the result to the state
+  //       this.setState({
+  //         userData: response.data
+  //       });
+  //       // this.forceUpdate();
+  //       console.log(response)
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  // }
 
   componentDidMount() {
     let accessToken = localStorage.getItem('token');
@@ -86,7 +102,7 @@ class MainView extends React.Component {
         user: user
       });
       this.getMovies(accessToken);
-      this.getUsers(accessToken, user)
+      this.props.setUser(accessToken, user)
     }
   }
 
@@ -102,9 +118,10 @@ class MainView extends React.Component {
   // when a user successfully logs in, this function updates the `user` property in state to that particular user
   onLoggedIn(authData) {
     console.log(authData);
+    this.props.setUser(authData.user);
     this.setState({
-      user: authData.user.Username,
-      userData: authData.user
+      username: authData.user.username,
+      token: authData.token,
     });
 
     // stores logged in user and token - saved in user state
@@ -117,9 +134,7 @@ class MainView extends React.Component {
 
   onRegister(register) {
     console.log(register);
-    this.setState({
-      register,
-    });
+    this.props.setUser(register);
   }
 
 
@@ -232,9 +247,9 @@ class MainView extends React.Component {
               <ProfileView onLoggedIn={user => this.onLoggedIn(user)}
                 movies={movies} user={user}
                 userData={userData}
-                removeFavoriteMovie={this.removeFavoriteMovie}
+                // removeFavoriteMovie={this.removeFavoriteMovie}
                 // // displays movies
-                favoriteMovies={movies.filter(movie => userData.FavoriteMovies.includes(movie._id))}
+                // favoriteMovies={movies.filter(movie => userData.FavoriteMovies.includes(movie._id))}
                 onBackClick={() => history.goBack()} />
               {/* <Row className="mt-5" md={8}>
                 <FavoritesView userData={userData} movies={movies} history={history} />
@@ -256,4 +271,4 @@ let mapStateToProps = state => {
 // wraps any stateful component to connect to a store
 // follows this syntax:
 // function connect(mapStateToProps?, mapDispatchToProps?, mergeProps?, options?)
-export default connect(mapStateToProps, { setMovies })(MainView);
+export default connect(mapStateToProps, { setMovies, setUser })(MainView);
