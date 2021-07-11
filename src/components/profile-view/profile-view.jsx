@@ -7,6 +7,9 @@ import { Button, Form, Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Config from '../../config.js';
 
+import { connect } from 'react-redux';
+import { setUser } from '../../actions/actions';
+
 import './profile-view.scss';
 
 
@@ -313,3 +316,12 @@ ProfileView.propTypes = {
   movies: PropTypes.array.isRequired,
 
 };
+
+let mapStateToProps = state => {
+  return {
+    user: state.user,
+    movies: state.movies
+  }
+}
+
+export default connect(mapStateToProps, { setUser })(ProfileView);
