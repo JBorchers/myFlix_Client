@@ -18,17 +18,17 @@ export class DirectorView extends React.Component {
       <div className="director-view">
         <h1 className="director-name">
           {/* <h5><span className="label">Director: </span> */}
-          <h1><span className="value display-4 text-white">{director.Name}</span></h1>
+          <h1><span className="text-white">{director.Name}</span></h1>
         </h1>
-        <h4 className="director-bio">
+        <h4 className="director-bio text-white">
           {/* <span className="label">Bio: </span> */}
           <span className="value">{director.Bio}</span>
         </h4>
-        <h4 className="director-birth">
+        <h4 className="director-birth text-white">
           <span className="label">Born: </span>
           <span className="value">{director.Birth}</span>
         </h4>
-        <h4>Featured Movies:</h4>
+        <h4 className="text-white">Featured Movies:</h4>
 
         <Col md={6}>
           <div id="directorsMovies">

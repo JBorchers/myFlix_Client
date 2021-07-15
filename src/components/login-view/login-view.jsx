@@ -41,7 +41,7 @@ export function LoginView(props) {
   return (
     <Container>
       <Col md={6}>
-        <h1 className="display-4 text-white">Welcome to MyFlix!</h1>
+        <h1 className="text-white">Welcome to MyFlix!</h1>
         <Form>
           <Form.Group controlId="formUsername">
             {/* <Form.Label>
