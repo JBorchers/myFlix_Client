@@ -10,6 +10,8 @@ import Config from '../../config.js';
 import { connect } from 'react-redux';
 import { setUser } from '../../actions/actions';
 
+import MoviesList from '../movies-list/movies-list';
+
 import './profile-view.scss';
 
 
@@ -199,7 +201,7 @@ export function ProfileView(props) {
   return (
     <div className="userProfile">
       <Container>
-        <h1 className="display-4 text-white">Your Profile</h1>
+        <h1 className="text-white">Your Profile</h1>
         {/* <Row>
           <Col md={3}>
             <p>Update your information</p>
@@ -214,7 +216,7 @@ export function ProfileView(props) {
           {/* <h5 className="justify-content-md-center mb-30" md={9}><span className="glyphicon glyphicon-user"></span>Update Profile</h5> */}
           <Form>
             <div className="form-group">
-              <label><h3 className="text-white">Username:</h3></label>
+              <label><h4 className="text-white">Username:</h4></label>
               <Form.Control type="text" defaultValue={props.userData.Username} onChange={e => setUsername(e.target.value)} />
               {Object.keys(usernameError).map((key) => {
                 return (
@@ -226,7 +228,7 @@ export function ProfileView(props) {
             </div>
 
             <div className="form-group">
-              <label><h3 className="text-white">Email:</h3></label>
+              <label><h4 className="text-white">Email:</h4></label>
               <Form.Control type="email" defaultValue={props.userData.Email} onChange={e => setEmail(e.target.value)}
               />
               {Object.keys(emailError).map((key) => {
@@ -239,12 +241,12 @@ export function ProfileView(props) {
             </div>
 
             <div className="form-group">
-              <Form.Label><h3 className="text-white">Birthday</h3></Form.Label>
+              <Form.Label><h4 className="text-white">Birthday</h4></Form.Label>
               <Form.Control type="date" defaultValue={props.userData.Birthdate} onChange={e => setBirthdate(e.target.value)} />
             </div>
 
             <div className="form-group">
-              <label><h3 className="text-white">Password</h3></label>
+              <label><h4 className="text-white">Password</h4></label>
               <Form.Control type="password" value={password} placeholder="Enter a new password" onChange={e => setPassword(e.target.value)}
               />
               {Object.keys(passwordError).map((key) => {
@@ -264,31 +266,33 @@ export function ProfileView(props) {
 
           </Form>
 
-          <h1 className="display-4 text-white">MyFlix Favorites:</h1>
-          <Col className="col-6 col-md-6">
-            <div id="favoriteMovies">
+          <h1 className="text-white">MyFlix Favorites:</h1>
+          <Row>
+            <Col className="d-flex flex-row mb-3">
+              <div id="favoriteMovies">
 
 
-              {favoriteMovies.map((movie, i) => {
-                return (
-                  <Card className="shadow p-3 mb-5 bg-white rounded" key={i}>
-                    <Card.Img variant="top" src={movie.ImagePath} />
-                    <Card.Body>
-                      <Card.Title>{movie.Title}</Card.Title>
-                      {/* <Card.Text>{movie.Description}</Card.Text> */}
-                      <Card.Text>{movie.ReleaseDate}</Card.Text>
-                      <Link to={`/movies/${movie._id}`}>
-                        <Button variant="info">Open</Button>
-                      </Link>
-                      <Button variant="danger" onClick={() => removeFavorite(movie)} >Remove</Button>
-                    </Card.Body>
-                  </Card>
-                );
+                {favoriteMovies.map((movie, i) => {
+                  return (
+                    <Card className="shadow p-3 mb-5 bg-white rounded" key={i}>
+                      <Card.Img variant="top" src={movie.ImagePath} />
+                      <Card.Body>
+                        <Card.Title>{movie.Title}</Card.Title>
+                        {/* <Card.Text>{movie.Description}</Card.Text> */}
+                        <Card.Text>{movie.ReleaseDate}</Card.Text>
+                        <Link to={`/movies/${movie._id}`}>
+                          <Button variant="info">Open</Button>
+                        </Link>
+                        <Button variant="danger" onClick={() => removeFavorite(movie)} >Remove</Button>
+                      </Card.Body>
+                    </Card>
+                  );
 
-              })}
+                })}
 
-            </div>
-          </Col>
+              </div>
+            </Col>
+          </Row>
 
 
         </Col>
