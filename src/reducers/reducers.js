@@ -20,9 +20,10 @@ function movies(state = [], action) {
     case SET_MOVIES:
       return action.value;
     case ADD_MOVIE:
-      return action.value;
+      // returns all movies plus new movie
+      return [...state, action.value];
     case DELETE_MOVIE:
-      return action.value;
+      return state.filter(movie => movie._id !== action.value);
     default:
       return state;
   }
