@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { setMovies, setUser } from '../../actions/actions';
 
 import MoviesList from '../movies-list/movies-list';
+import ScrollToTop from '../scroll-to-top/scroll-to-top';
 
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
@@ -36,7 +37,7 @@ class MainView extends React.Component {
     this.state = {
       // movies: [],
       // user: null,
-      userData: {}
+      userData: { FavoriteMovies: [] }
     }
   }
 
@@ -66,9 +67,10 @@ class MainView extends React.Component {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then((response) => {
-        this.props.setUser(response.data)
+        this.props.setUser(response.data.Username)
         this.setState({
-          user: response.data
+          userData: response.data
+          // user: response.data
         });
         console.log('getUser response', response.data)
       })
@@ -102,7 +104,8 @@ class MainView extends React.Component {
         user: user
       });
       this.getMovies(accessToken);
-      this.props.setUser(accessToken, user)
+      this.getUsers(accessToken, user)
+      // this.props.setUser(accessToken, user)
     }
   }
 
@@ -118,10 +121,12 @@ class MainView extends React.Component {
   // when a user successfully logs in, this function updates the `user` property in state to that particular user
   onLoggedIn(authData) {
     console.log(authData);
-    this.props.setUser(authData.user);
+    // this.props.setUser(authData.user);
     this.setState({
-      username: authData.user.username,
-      token: authData.token,
+      user: authData.user.Username,
+      userData: authData.user
+      // username: authData.user.username,
+      // token: authData.token,
     });
 
     // stores logged in user and token - saved in user state
@@ -134,7 +139,10 @@ class MainView extends React.Component {
 
   onRegister(register) {
     console.log(register);
-    this.props.setUser(register);
+    this.setState({
+      register,
+    });
+    // this.props.setUser(register);
   }
 
 
@@ -161,6 +169,7 @@ class MainView extends React.Component {
 
     return (
       <Router>
+        <ScrollToTop />
         <Row className="main-view justify-content-md-center">
           <Container>
             <Navbar bg="dark" variant="dark" fixed="top" className="shadow">
@@ -186,7 +195,7 @@ class MainView extends React.Component {
               <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
             </Col>
             if (movies.length === 0) return <div className="main-view" />;
-            return <MoviesList movies={movies} />;
+            return <MoviesList />;
           }} />
 
           {/* main view */}
@@ -247,9 +256,9 @@ class MainView extends React.Component {
               <ProfileView onLoggedIn={user => this.onLoggedIn(user)}
                 movies={movies} user={user}
                 userData={userData}
-                // removeFavoriteMovie={this.removeFavoriteMovie}
-                // // displays movies
-                // favoriteMovies={movies.filter(movie => userData.FavoriteMovies.includes(movie._id))}
+                removeFavoriteMovie={this.removeFavoriteMovie}
+                // displays movies
+                favoriteMovies={movies.filter(movie => userData.FavoriteMovies.includes(movie._id))}
                 onBackClick={() => history.goBack()} />
               {/* <Row className="mt-5" md={8}>
                 <FavoritesView userData={userData} movies={movies} history={history} />
