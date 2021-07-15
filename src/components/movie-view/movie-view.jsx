@@ -48,27 +48,27 @@ export class MovieView extends React.Component {
           <img src={movie.ImagePath} />
         </div>
         <div className="movie-info">
-          <h1 className="movie-title">
+          <h1 className="movie-title"><font size="+10">
             {/* <span className="label">Title: </span> */}
-            <span className="value display-4 text-white">{movie.Title}</span>
+            <span className="text-white">{movie.Title}</span></font>
           </h1>
-          <h4 className="movie-description">
+          <h4 className="movie-description text-white">
             {/* <span className="label">Released in </span> */}
             <span className="value">{movie.ReleaseDate}</span>
           </h4>
-          <h4 className="movie-description">
+          <h4 className="movie-description text-white">
             <span className="label">Description: </span>
             <span className="value">{movie.Description}</span>
           </h4>
-          <h4 className="movie-description">
+          <h4 className="movie-description text-white">
             <span className="label">Director: </span>
-            <Link className="link" to={`/directors/${movie.Director.Name}`}>
+            <Link className="text-white font-italic" to={`/directors/${movie.Director.Name}`}>
               <span className="value">{movie.Director.Name}</span>
             </Link>
           </h4>
-          <h4 className="movie-description">
+          <h4 className="movie-description text-white">
             <span className="label">Genre: </span>
-            <Link className="link" to={`/genre/${movie.Genre.Name}`}>
+            <Link className="text-white font-italic" to={`/genre/${movie.Genre.Name}`}>
               <span className="value">{movie.Genre.Name}</span>
             </Link>
           </h4>

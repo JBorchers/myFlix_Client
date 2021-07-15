@@ -79,7 +79,7 @@ export function RegistrationView(props) {
   return (
     <Container>
       <Col md={6}>
-        <h1 className="display-4 text-white">Sign Up for MyFlix!</h1>
+        <h1 className="text-white">Sign Up for MyFlix!</h1>
         <Form handleSubmit={handleSubmit}>
           {/* <Form onClick={handleSubmit}> */}
           <div className="form-group">
