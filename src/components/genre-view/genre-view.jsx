@@ -21,7 +21,7 @@ export class GenreView extends React.Component {
           <span className="value">{genre.Description}</span>
         </h4>
         <p> </p>
-        <h4 className="text-white">Featured movies in this Genre:</h4>
+        <h4 className="text-white">Featured movies in this genre:</h4>
         <Col md={6}>
           <div id="genresMovies">
 

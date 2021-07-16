@@ -39930,21 +39930,21 @@ class MovieCard extends _reactDefault.default.Component {
         }, movie.Title), /*#__PURE__*/ _reactDefault.default.createElement(_cardDefault.default.Text, {
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-card\\movie-card.jsx",
-                lineNumber: 21
+                lineNumber: 20
             },
             __self: this
         }, movie.ReleaseDate), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Link, {
             to: `/movies/${movie._id}`,
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-card\\movie-card.jsx",
-                lineNumber: 22
+                lineNumber: 21
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
             variant: "info",
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\movie-card\\movie-card.jsx",
-                lineNumber: 23
+                lineNumber: 22
             },
             __self: this
         }, "Open")))));
@@ -41277,7 +41277,7 @@ class GenreView extends _reactDefault.default.Component {
                 lineNumber: 24
             },
             __self: this
-        }, "Featured movies in this Genre:"), /*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, {
+        }, "Featured movies in this genre:"), /*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, {
             md: 6,
             __source: {
                 fileName: "C:\\Users\\Jordan\\Desktop\\myFlix_Client\\src\\components\\genre-view\\genre-view.jsx",
