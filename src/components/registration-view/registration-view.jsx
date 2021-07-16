@@ -72,7 +72,6 @@ export function RegistrationView(props) {
           console.log('error registering the user')
         });
       console.log(username, password, email, birthdate);
-      // props.onRegister(username, password, email, birthdate);
     };
   }
 
@@ -81,9 +80,7 @@ export function RegistrationView(props) {
       <Col md={6}>
         <h1 className="text-white">Sign Up for MyFlix!</h1>
         <Form handleSubmit={handleSubmit}>
-          {/* <Form onClick={handleSubmit}> */}
           <div className="form-group">
-            {/* <label>Username:</label> */}
             <Form.Control type="text" value={username} className="shadow p-3 bg-white rounded" placeholder="Enter a unique username" onChange={e => setUsername(e.target.value)} />
             {Object.keys(usernameError).map((key) => {
               return (
@@ -94,7 +91,6 @@ export function RegistrationView(props) {
             })}
           </div>
           <div className="form-group">
-            {/* <label><p>Password:</p></label> */}
             <Form.Control type="password" value={password} placeholder="Enter a Password" className="shadow p-3 bg-white rounded" onChange={e => setPassword(e.target.value)}
             />
             {Object.keys(passwordError).map((key) => {
@@ -106,7 +102,6 @@ export function RegistrationView(props) {
             })}
           </div>
           <div className="form-group">
-            {/* <label><p>Email:</p></label> */}
             <Form.Control type="email" value={email} className="shadow p-3 bg-white rounded" placeholder="Enter a valid Email (ex. user@email.com)" onChange={e => setEmail(e.target.value)}
             />
             {Object.keys(emailError).map((key) => {
@@ -120,13 +115,6 @@ export function RegistrationView(props) {
           <div className="form-group">
             <Form.Label>Birthday:</Form.Label>
             <Form.Control type="date" value={birthdate} className="shadow p-3 bg-white rounded" onChange={e => setBirthdate(e.target.value)} />
-            {/* {Object.keys(birthdateError).map((key) => { */}
-            {/* return (
-            <div key={key} style={{ color: "red" }}>
-              {birthdateError[key]}
-            </div>
-          );
-        })} */}
           </div>
           <Button type="submit" variant="info" className="shadow" onClick={handleSubmit}>Submit</Button>
         </Form>
@@ -141,6 +129,5 @@ RegistrationView.propTypes = {
     username: PropTypes.string.isRequired,
     password: PropTypes.string.isRequired,
     birthdate: PropTypes.instanceOf(Date),
-  }),
-  // onRegister: PropTypes.func,
+  })
 };

@@ -35,8 +35,6 @@ class MainView extends React.Component {
   constructor() {
     super();
     this.state = {
-      // movies: [],
-      // user: null,
       userData: { FavoriteMovies: [] }
     }
   }
@@ -52,15 +50,6 @@ class MainView extends React.Component {
         console.log(error);
       });
   }
-  // Assign the result to the state
-  //       this.setState({
-  //         movies: response.data
-  //       });
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
-  // }
 
   getUsers(token, user) {
     axios.get(`${Config.API_URL}/users/${user}`, {
@@ -70,7 +59,6 @@ class MainView extends React.Component {
         this.props.setUser(response.data.Username)
         this.setState({
           userData: response.data
-          // user: response.data
         });
         console.log('getUser response', response.data)
       })
@@ -79,22 +67,6 @@ class MainView extends React.Component {
       });
     console.log('getUser reached')
   }
-  // getUsers(token, user) {
-  //   axios.get(`${Config.API_URL}/users/${user}`, {
-  //     headers: { Authorization: `Bearer ${token}` }
-  //   })
-  //     .then(response => {
-  //       // Assign the result to the state
-  //       this.setState({
-  //         userData: response.data
-  //       });
-  //       // this.forceUpdate();
-  //       console.log(response)
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
-  // }
 
   componentDidMount() {
     let accessToken = localStorage.getItem('token');
@@ -105,28 +77,16 @@ class MainView extends React.Component {
       });
       this.getMovies(accessToken);
       this.getUsers(accessToken, user)
-      // this.props.setUser(accessToken, user)
     }
   }
-
-  // // When a movie is clicked, this function is invoked and updates the state of the `selectedMovie` property to that movie
-  // setSelectedMovie(movie) {
-  //   this.setState({
-  //     selectedMovie: movie
-  //   });
-  // }
-
 
   // a method passed as a prop
   // when a user successfully logs in, this function updates the `user` property in state to that particular user
   onLoggedIn(authData) {
     console.log(authData);
-    // this.props.setUser(authData.user);
     this.setState({
       user: authData.user.Username,
       userData: authData.user
-      // username: authData.user.username,
-      // token: authData.token,
     });
 
     // stores logged in user and token - saved in user state
@@ -142,7 +102,6 @@ class MainView extends React.Component {
     this.setState({
       register,
     });
-    // this.props.setUser(register);
   }
 
 
@@ -163,7 +122,6 @@ class MainView extends React.Component {
 
 
   render() {
-    // const { movies, user, history, userData } = this.state;
     const { user, history, userData } = this.state;
     const { movies } = this.props;
 
@@ -197,18 +155,6 @@ class MainView extends React.Component {
             if (movies.length === 0) return <div className="main-view" />;
             return <MoviesList />;
           }} />
-
-          {/* main view */}
-          {/* <Route exact path="/" render={() => {
-            if (!user) return <Col>
-              <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
-            </Col>
-            return movies.map(m => (
-              <Col md={3} key={m._id}>
-                <MovieCard movie={m} />
-              </Col>
-            ))
-          }} /> */}
 
           {/* registration view */}
           <Route path="/register" render={() => {
@@ -260,9 +206,6 @@ class MainView extends React.Component {
                 // displays movies
                 favoriteMovies={movies.filter(movie => userData.FavoriteMovies.includes(movie._id))}
                 onBackClick={() => history.goBack()} />
-              {/* <Row className="mt-5" md={8}>
-                <FavoritesView userData={userData} movies={movies} history={history} />
-              </Row> */}
             </Col>
 
           }} />

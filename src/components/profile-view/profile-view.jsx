@@ -26,30 +26,6 @@ export function ProfileView(props) {
   const [passwordError, setPasswordError] = useState({});
 
 
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     Username: "",
-  //     Password: "",
-  //     Email: "",
-  //     Birthdate: "",
-  //     FavoriteMovies: [],
-  //     UsernameError: "",
-  //     EmailError: "",
-  //     PasswordError: "",
-  //     BirthdateError: "",
-  //   };
-  // }
-
-  // const { birthdate } = userData;
-
-
-  // componentDidMount() {
-  //   let accessToken = localStorage.getItem('token')
-  //   return getUsers(accessToken);
-  // }
-
-
   function getUsers(token) {
     let url = `${Config.API_URL}/users/` +
       localStorage.getItem('user');
@@ -58,14 +34,6 @@ export function ProfileView(props) {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        // window.location.reload(false);
-        // this.setState({
-        //   Username: response.data.Username,
-        //   Password: response.data.Password,
-        //   Email: response.data.Email,
-        //   Birthday: response.data.Birthday,
-        //   FavoriteMovies: response.data.FavoriteMovies,
-        // });
         console.log(response)
       })
       .catch(function (error) {
@@ -73,23 +41,13 @@ export function ProfileView(props) {
       });
   }
 
-  // setUsername(input) {
-  //   this.setState({
-  //     username: input
-  //   });
-  // }
-
   // update user info
   function handleUpdate(e) {
     e.preventDefault()
     let token = localStorage.getItem("token");
-    // console.log({ token });
     let user = localStorage.getItem("user");
     let isValid = formValidation();
     if (isValid) {
-      // console.log(this.state);
-      // let setisValid = this.formValidation();
-      // if (setisValid) {
       axios.put(`${Config.API_URL}/users/${user}`,
         {
           Username: username,
@@ -118,7 +76,6 @@ export function ProfileView(props) {
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
     const url =
-      // or movie.id?
       `${Config.API_URL}/users/${movie._id}` +
       localStorage.getItem("user") +
       "/movies/" +
@@ -129,12 +86,8 @@ export function ProfileView(props) {
       })
       .then((response) => {
         alert(movie.Title + " has been removed from your Favorites.");
-        // localStorage.removeItem("");
         props.removeFavoriteMovie(movie._id);
         console.log(response);
-        // this.componentDidMount();
-        // location.reload();
-
       });
   }
 
@@ -191,10 +144,6 @@ export function ProfileView(props) {
 
   // render() {
   const { user, movies, favoriteMovies } = props;
-  // const { UsernameError, EmailError, PasswordError, BirthdateError } = this.state;
-  // const favoriteMovies = movies.filter(m => {
-  //   return favoriteMoviesList.indexOf(m._id) >= 0;
-  // });
 
   console.log(props.userData);
 
@@ -202,18 +151,8 @@ export function ProfileView(props) {
     <div className="userProfile">
       <Container>
         <h1 className="text-white">Your Profile</h1>
-        {/* <Row>
-          <Col md={3}>
-            <p>Update your information</p>
-            {/* <p>Username: {`${username}`}</p>
-            <p>Email: {`${email}`}</p>*/}
-
-        {/* <p>Favorite Movies: {`${favoriteMovies}`}</p> */}
-        {/* </Col>
-        </Row> */}
 
         <Col md={9}>
-          {/* <h5 className="justify-content-md-center mb-30" md={9}><span className="glyphicon glyphicon-user"></span>Update Profile</h5> */}
           <Form>
             <div className="form-group">
               <label><h4 className="text-white">Username:</h4></label>
@@ -278,7 +217,6 @@ export function ProfileView(props) {
                       <Card.Img variant="top" src={movie.ImagePath} />
                       <Card.Body>
                         <Card.Title>{movie.Title}</Card.Title>
-                        {/* <Card.Text>{movie.Description}</Card.Text> */}
                         <Card.Text>{movie.ReleaseDate}</Card.Text>
                         <Link to={`/movies/${movie._id}`}>
                           <Button variant="info">Open</Button>
@@ -304,11 +242,6 @@ export function ProfileView(props) {
 
 
 };
-
-
-// ProfileView.propTypes = {
-//   movies: PropTypes.array.isRequired
-// };
 
 ProfileView.propTypes = {
   users: PropTypes.shape({

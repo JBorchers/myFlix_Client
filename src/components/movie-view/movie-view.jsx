@@ -49,11 +49,9 @@ export class MovieView extends React.Component {
         </div>
         <div className="movie-info">
           <h1 className="movie-title"><font size="+10">
-            {/* <span className="label">Title: </span> */}
             <span className="text-white">{movie.Title}</span></font>
           </h1>
           <h4 className="movie-description text-white">
-            {/* <span className="label">Released in </span> */}
             <span className="value">{movie.ReleaseDate}</span>
           </h4>
           <h4 className="movie-description text-white">
@@ -83,12 +81,12 @@ export class MovieView extends React.Component {
   }
 };
 
-// MovieView.propTypes = {
-//   movie: PropTypes.shape({
-//     title: PropTypes.string.isRequired,
-//     description: PropTypes.string.isRequired,
-//     genre: PropTypes.string.isRequired,
-//     director: PropTypes.string.isRequired,
-//     imagePath: PropTypes.string.isRequired,
-//   }).isRequired
-// };
+MovieView.propTypes = {
+  movie: PropTypes.shape({
+    title: PropTypes.string,
+    description: PropTypes.string,
+    genre: PropTypes.string,
+    director: PropTypes.string,
+    imagePath: PropTypes.string,
+  }).isRequired
+};

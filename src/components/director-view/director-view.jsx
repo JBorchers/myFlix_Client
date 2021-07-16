@@ -6,22 +6,18 @@ import { MovieCard } from "../movie-card/movie-card";
 
 import { connect } from 'react-redux';
 
-// class DirectorView extends React.Component {
 export class DirectorView extends React.Component {
 
 
   render() {
     const { director, onBackClick, movie, directorsMovies } = this.props;
-    // const directorsMovies = movie.map(movies => movies.director.Name === director.Name);
 
     return (
       <div className="director-view">
         <h1 className="director-name">
-          {/* <h5><span className="label">Director: </span> */}
           <h1><span className="text-white">{director.Name}</span></h1>
         </h1>
         <h4 className="director-bio text-white">
-          {/* <span className="label">Bio: </span> */}
           <span className="value">{director.Bio}</span>
         </h4>
         <h4 className="director-birth text-white">
@@ -33,7 +29,6 @@ export class DirectorView extends React.Component {
         <Col md={6}>
           <div id="directorsMovies">
 
-            {/* <h5>Movies by this director:</h5> */}
             {directorsMovies.map(m => {
               return (
                 <Col md={12} key={m._id}>
@@ -44,18 +39,7 @@ export class DirectorView extends React.Component {
           </div>
         </Col>
 
-        {/* <div className="director-movies mb-3">
-          {directorsMovies.map(m => {
-            if (m.Director && m.Director.Name === director.Name) {
-              return (
-                <div className="director-card text-center mb-2" lg={3} md={6} key={m._id}>
-                  <Link to={`/movies/${m._id}`}>Movies</Link>
-                </div>
-              );
-            }
-          })}
-        </div> */}
-        <Button variant="secondary" size="sm" onClick={() => { onBackClick(null); }}>Back</Button>
+        <Button variant="info" size="sm" onClick={() => { onBackClick(null); }}>Back</Button>
       </div>
     );
   }
@@ -70,4 +54,11 @@ DirectorView.propTypes = {
   onBackClick: PropTypes.func.isRequired
 };
 
-// export default connect(mapStateToProps)(DirectorView)
+let mapStateToProps = state => {
+  return {
+    user: state.user,
+    movies: state.movies
+  }
+}
+
+export default connect(mapStateToProps)(DirectorView)

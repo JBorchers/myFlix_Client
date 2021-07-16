@@ -17,7 +17,6 @@ export class FavoritesView extends React.Component {
     let token = localStorage.getItem('token');
     let user = localStorage.getItem('user');
     let url =
-      // or movie.id?
       `${Config.API_URL}/users/${movie}` +
       localStorage.getItem("user") +
       "/movies/" +
@@ -28,8 +27,6 @@ export class FavoritesView extends React.Component {
       })
       .then((response) => {
         console.log(response);
-        // this.componentDidMount();
-        // location.reload();
         alert(movie.Title + " has been removed from your Favorites.");
       });
   }
