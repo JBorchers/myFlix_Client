@@ -1,0 +1,15 @@
+.card:hover {
+  transform: scale(1.03);
+  transition: 0.1s ease-in-out;
+}
+
+
+
+
+body {
+  margin-top: 20px;
+}
+.my-flix {
+  color: steelblue;
+}
+/*# sourceMappingURL=index.HASH_REF_2c2f3a3f47a6b32f9e15241474e7829d.css.map */

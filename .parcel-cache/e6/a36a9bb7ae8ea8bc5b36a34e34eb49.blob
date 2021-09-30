@@ -1,0 +1,6 @@
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+const Config = {
+    API_URL: 'https://borchers-movie-api.herokuapp.com'
+};
+exports.default = Config;

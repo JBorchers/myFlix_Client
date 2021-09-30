@@ -1,0 +1,16 @@
+h1 {
+  text-shadow: 2px 2px 3px #000000;
+  font-size: 90px;
+}
+
+.movie-view {
+    display: flex;
+}
+
+.movie-poster {
+    flex: 1;
+}  
+
+.movie-info {
+    margin-right: 20px;
+} 
