@@ -133,11 +133,12 @@ class MainView extends React.Component {
             <Navbar bg="dark" variant="dark" fixed="top" className="shadow">
               <Button variant="link" className="navbar-link ms-auto">
                 <Link to={`/`}>
-                  <Navbar.Brand >myFlix</Navbar.Brand>
+                  <Navbar.Brand >MyFlix</Navbar.Brand>
                 </Link>
               </Button>
               <Link to={`/users/${user}`}>
-                <Button variant="link" className="navbar-link text-light ms-auto">Profile</Button>
+                <Button variant="link" className="navbar-link text-light ms-auto"
+              >Profile</Button>
               </Link>
               <Link to={`/`}>
                 <Button variant="link" className="navbar-link text-light ms-end"

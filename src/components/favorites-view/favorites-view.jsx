@@ -2,6 +2,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Button, Card, Container, Row, Col } from 'react-bootstrap';
+import Config from '../../config.js';
 
 import { Link } from "react-router-dom";
 
@@ -17,12 +18,9 @@ export class FavoritesView extends React.Component {
     let token = localStorage.getItem('token');
     let user = localStorage.getItem('user');
     let url =
-      `${Config.API_URL}/users/${movie}` +
-      localStorage.getItem("user") +
-      "/movies/" +
-      movie._id;
+      `${Config.API_URL}/users/${user}/movies/${movie._id}`
     axios
-      .delete(url, {
+      .delete(url, null, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {

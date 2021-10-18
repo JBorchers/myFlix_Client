@@ -24,7 +24,7 @@ export class MovieView extends React.Component {
         alert('This movie has been added to your favorites list!');
       }).then(
         // reloads page after click
-        window.location.reload(false)
+        // window.location.reload(false)
       ).catch(
         function (error) {
           console.log(error)
