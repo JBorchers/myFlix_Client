@@ -6,7 +6,7 @@
 ### Description
 
 Internet movie database that allows registered users to browse movies by Title, Genre, Director.
-Users can change their username, email adress and birthday. While browsing the movies collection, users can add movies to their list of favorites.
+Users can change their username, email address and birthday. While browsing the movies collection, users can add movies to their list of favorites.
 
 ### Tools used
 
