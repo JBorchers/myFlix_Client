@@ -15,7 +15,7 @@ Users can change their username, email address and birthday. While browsing the 
 | Language          | JavaScript |
 | Library           | React      |
 | Route handling    | Axios      |
-| Styling Framework | Bootstrap  |
+| Styling library   | Bootstrap  |
 | State management  | Redux      |
 | API               | REST       |
 | Bundler           | Parcel     |
