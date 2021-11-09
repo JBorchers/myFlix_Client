@@ -21,10 +21,10 @@ export class MovieView extends React.Component {
     }).then(
       (response) => {
         console.log(response);
-        alert('This movie has been added to your favorites list!');
+        if(confirm('This movie has been added to your favorites list!'));
       }).then(
         // reloads page after click
-        // window.location.reload(false)
+        window.setTimeout(function(){location.reload()},3000)
       ).catch(
         function (error) {
           console.log(error)
