@@ -75,13 +75,7 @@ export function ProfileView(props) {
   function removeFavorite(movie) {
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
-    const url =
-      `${Config.API_URL}/users/${movie._id}` +
-      localStorage.getItem("user") +
-      "/movies/" +
-      movie._id;
-    axios
-      .delete(url, {
+    axios.delete(`${Config.API_URL}/users/${user}/movies/${movie._id}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
