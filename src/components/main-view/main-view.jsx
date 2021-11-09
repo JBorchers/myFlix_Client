@@ -199,7 +199,7 @@ class MainView extends React.Component {
           {/* profile view */}
           <Route path="/users/:username" render={() => {
             if (!user) return
-            return <Col>
+            return <Col lg={12} md={12}>
               <ProfileView onLoggedIn={user => this.onLoggedIn(user)}
                 movies={movies} user={user}
                 userData={userData}

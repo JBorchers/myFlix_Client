@@ -81,7 +81,7 @@ export function RegistrationView(props) {
         <h1 className="text-white">Sign Up for MyFlix!</h1>
         <Form handleSubmit={handleSubmit}>
           <div className="form-group">
-            <Form.Control type="text" value={username} className="shadow p-3 bg-white rounded" placeholder="Enter a unique username" onChange={e => setUsername(e.target.value)} />
+            <Form.Control type="text" value={username} className="shadow p-3 bg-white rounded" placeholder="Enter a unique username (must be more that 5 characters)" onChange={e => setUsername(e.target.value)} />
             {Object.keys(usernameError).map((key) => {
               return (
                 <div key={key} style={{ color: "red" }}>

@@ -34,18 +34,18 @@ export class FavoritesView extends React.Component {
     const { movies } = this.props;
 
     return (
-      <Container>
-        <Card className='fav-view shadow'>
-          <Card.Body>
-            <h2 className="profile-title d-flex justify-content-center text-danger">Your Favorite Movies</h2>
-            <Row className="fav-movies mb-3 justify-content-center">
-              {favoriteMovies.length === 0 && <div className='card-content'>You don't have any favorite movies yet!</div>}
-              <div className='favorites-container'>
-                {favoriteMovies.length > 0 && movies.filter(movie => {
-                  return movie._id === favoriteMovies.find((favMovie) => favMovie === movie._id)
-                }).map((movie) => {
+      
+        <Card className='movie-card shadow-sm mb-3'>
+        <h2 className="profile-title d-flex justify-content-center text-danger mt-3">Your Favorite Movies</h2>
+        <Row className="fav-movies">
+          {favoriteMovies.length === 0 && <div>You don't have any favorite movies yet!</div>}
+          <div className='favorite-movies__container justify-content-center'>
+            {favoriteMovies.length > 0 && movies.filter(movie => {
+              return movie._id === favoriteMovies.find((favMovie) => favMovie === movie._id)
+            }).map((movie) => {
                   return (
-                    <Col className="fav-card text-center mb-2" md={12} key={movie._id}>
+                    <div key={movie._id} className="favorites-container-item">
+                    <Col md={12} style={{ margin: '1em' }}>
                       <Link to={`/movies/${movie._id}`}>
                         <Card.Img className="fav-img" key={movie._id} src={movie.ImagePath} />
                       </Link>
@@ -54,13 +54,12 @@ export class FavoritesView extends React.Component {
                         </Button>
                       </Card.Body>
                     </Col>
+                    </div>
                   );
                 })}
               </div>
             </Row>
-          </Card.Body>
-        </Card>
-      </Container>
+          </Card>
     );
   }
 }
